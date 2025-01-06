@@ -1,5 +1,7 @@
 # CombatStats and Convenience MM7 mod
 
+https://github.com/malekitsu/maw-mod-mmmerge
+
 https://github.com/Malekitsu/MM6-MAW-Monster-Arts-and-Wonders
 
 https://github.com/GrayFace/MMExtension
