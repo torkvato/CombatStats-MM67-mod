@@ -1,5 +1,4 @@
-# dc_scripts
-Set of DC automation scripts
+# CombatStats and Convenience MM7 mod
 
 https://github.com/Malekitsu/MM6-MAW-Monster-Arts-and-Wonders
 
