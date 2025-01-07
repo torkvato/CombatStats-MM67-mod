@@ -6,8 +6,8 @@ EffectiveHitPointsWeights = {Phys = 0.75, Fire=0.05, Air=0.05, Water=0.05, Earth
 --EffectiveHitPointsWeights = {Phys = 0.5, Fire=0.1, Air=0.1, Water=0.1, Earth = 0.1, Mind=0.05,Body = .05} --
 
 CombatLogFile = "CombatLog.csv"
-StatsOutputFile = "DamageStats.txt"
-CombatLogSepatator = "\t"  -- combat log fields separator
+StatsOutputFile = "DamageStats.csv"
+CombatLogSeparator = "\t"  -- combat log fields separator
 
 --keybinds
 DamageMeterResetButton  = 82 -- 'R' button on the Char info screen
@@ -41,7 +41,7 @@ if CombatLogEnabled==1 then
 local file = io.open(CombatLogFile,"r")
     if not(file) then
         file = io.open(CombatLogFile,"w")
-        file:write(string.format("Timestamp%s#%sClass(Lvl)%sName%sTarget%sDamage%sDamageKind%sDamageSource\n",CombatLogSepatator,CombatLogSepatator,CombatLogSepatator,CombatLogSepatator,CombatLogSepatator,CombatLogSepatator,CombatLogSepatator))
+        file:write(string.format("Time%s#%sClass(Lvl)%sName%sTarget%sDamage%sDamageKind%sDamageSource\n",CombatLogSeparator,CombatLogSeparator,CombatLogSeparator,CombatLogSeparator,CombatLogSeparator,CombatLogSeparator,CombatLogSeparator))
         file:close()
     else 
         file:close()

@@ -14,12 +14,12 @@ function events.KeyDown(t)
             segment_data_reset_confirmation = 0; -- aborting reset without confirmation
         end
 
-        if (t.Key ~= 89) and (t.Key ~= DamageMeterExportutton) and (data_export_confirmation == 1) then -- not "y" key
+        if (t.Key ~= 89) and (t.Key ~= DamageMeterExportButton) and (data_export_confirmation == 1) then -- not "y" key
             data_export_confirmation = 0; -- aborting export without confirmation
         end
 
         if t.Key == 89 and (segment_data_reset_confirmation == 1) then -- "y" key
-            Game.ShowStatusText(string.format("Current map data reset."))
+            Game.ShowStatusText(string.format("Segment data reset."))
             segment_data_reset_confirmation = 0;
             local i
             for i = 0, Party.High do
@@ -28,8 +28,18 @@ function events.KeyDown(t)
             end
         end
         if t.Key == 89 and (data_export_confirmation == 1) then -- "y" key
-            Game.ShowStatusText(string.format("Exporting stats data to file: %s",StatsOutputFile))
-            data_export_confirmation = 0;            
+			Game.ShowStatusText(string.format("Exporting stats data to file: %s",StatsOutputFile))
+            data_export_confirmation = 0; 
+			
+			file = io.open(StatsOutputFile,"a")
+			local gameminutes = math.floor((Game.Time - vars.timestamps[0].SegmentStart)/const.Minute)    
+			file:write(string.format("Data exported: %s/%s/%s at %s:%s (%s)",Game.Year,Game.Month,Game.DayOfMonth,Game.Hour,Game.Minute, os.date("%Y/%m/%d %H:%M")) )
+			file:write(string.format("\nSegment data (%s game minutes since last reset)\n",gameminutes) .. DamageMeterCalculation(vars.damagemeter1,1))
+			file:write(string.format("\nCurrent map data: %s\n",Game.MapStats[Game.Map.MapStatsIndex].Name) .. DamageMeterCalculation(mapvars.damagemeter,1))
+			file:write(string.format("\nFull game data\n") .. DamageMeterCalculation(vars.damagemeter,1))
+			file:write("\n")
+       
+			file:close()			
         end
     end
 end
@@ -127,8 +137,8 @@ function events.CalcDamageToMonster(t)
 
             if CombatLogEnabled==1 then
                 local cname = Game.ClassNames[data.Player.Class]
-                local z = CombatLogSepatator
-                playerid = string.format("%s%s%9.9s(%s)%s%10.10s", ip, z, cname, data.Player:GetLevel(), z, data.Player.Name)
+                local z = CombatLogSeparator
+                playerid = string.format("%s%s%s(%s)%s%s", i, z, cname, data.Player:GetLevel(), z, data.Player.Name)
                 -- Timestamp #Player Name(Lvl) TargetName Damage DamageKind DamageSource
                 local msg = string.format("%s%s%s%s%s%s%s%s%s%s%s\n", Game.Time, z, playerid,  z, monName, z, t.Result, z, get_key_for_value(const.Damage, t.DamageKind),z, objmsg)
                 file = io.open(CombatLogFile, "a")
@@ -279,7 +289,7 @@ function events.Tick()
         if HP<fullHP then
             hpstr = StrColor(250, 250, 100, HP)     
         end
-        local HP_txt = StrColor(0, 255, 0, "HP, Vit ") .. string.format("%s/%s,%s\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", hpstr,fullHP, StrColor(0, 250, 0, vitality))
+        local HP_txt = StrColor(0, 255, 0, "HP,Vit ") .. string.format("%s/%s,%s\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", hpstr,fullHP, StrColor(0, 250, 0, vitality))
         local AC_txt = StrColor(230, 204, 128, "AC/Miss% ") .. string.format("%s/%s%%\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", AC,math.round(1000*(1-monster_hit_chance))/10)
         Game.GlobalTxt[108] = HP_txt
         Game.GlobalTxt[12] = AC_txt
@@ -338,10 +348,8 @@ function events.Tick()
             Game.GlobalTxt2[41] = "Full stats since game beginning\n" .. DamageMeterCalculation(vars.damagemeter)
             Game.GlobalTxt2[42] = Game.GlobalTxt2[41]
         else 
-        --local gameminutes = 0  
-          --  if vars.timestamps then
-                local gameminutes = math.floor((Game.Time - vars.timestamps[0].SegmentStart)/const.Minute)    
-            --end
+
+        local gameminutes = math.floor((Game.Time - vars.timestamps[0].SegmentStart)/const.Minute)    
         Game.GlobalTxt2[41] = string.format("Segment data (%s game minutes since [r]eset)\n",gameminutes) .. DamageMeterCalculation(vars.damagemeter1)
         Game.GlobalTxt2[42] = string.format("Current map data: %s, [ALT] for full\n",Game.MapStats[Game.Map.MapStatsIndex].Name).. DamageMeterCalculation(mapvars.damagemeter)            
         end
@@ -375,17 +383,13 @@ function events.Tick()
     end
 end
 
-function DamageMeterCalculation(V)
+function DamageMeterCalculation(V,mode)
     V = V or {}
     local out = ""
     local party_damage = 0
     local party_damage_m = 0
     local party_damage_r = 0
     local party_damage_s = 0
-    -- local player_damage_m = {[0]=0,[1]=0,[2]=0,[3]=0}
-    -- local player_damage_r = {[0]=0,[1]=0,[2]=0,[3]=0}
-    -- local player_damage_s = {[0]=0,[1]=0,[2]=0,[3]=0}
-    -- local player_damage   = {[0]=0,[1]=0,[2]=0,[3]=0}
 
     local player_dps_m = {[0]=0,[1]=0,[2]=0,[3]=0}
     local player_dps_r = {[0]=0,[1]=0,[2]=0,[3]=0}
@@ -395,14 +399,6 @@ function DamageMeterCalculation(V)
 
     
     for i = 0, Party.High do
-        
-        --V[i] = V[i] or {Damage = 0,ActiveTime = 1,Damage_Melee = 0, ActiveTime_Melee = 1,Damage_Ranged = 0,ActiveTime_Ranged = 1,Damage_Spell = 0, ActiveTime_Spell = 1} 
-               
-        -- player_damage[i]   = V[i].Damage
-        -- player_damage_m[i] = V[i].Damage_Melee
-        -- player_damage_r[i] = V[i].Damage_Ranged
-        -- player_damage_s[i] = V[i].Damage_Spell
-
         player_dps[i]   = math.round(const.RTSecond * 10*V[i].Damage / V[i].ActiveTime)/10
         player_dps_m[i] = math.round(const.RTSecond * 10*V[i].Damage_Melee / V[i].ActiveTime_Melee)/10
         player_dps_r[i] = math.round(const.RTSecond * 10*V[i].Damage_Ranged / V[i].ActiveTime_Ranged)/10
@@ -413,19 +409,9 @@ function DamageMeterCalculation(V)
         party_damage_r = party_damage_r + V[i].Damage_Ranged
         party_damage_s = party_damage_s + V[i].Damage_Spell
     end
- 
-    -- for i = 0, Party.High do
-    --     local cn =  Game.ClassNames[Party[i].Class]
-    --     local mp =  math.round(100 * player_damage_m[i] / party_damage_m)
-    --     local rp =  math.round(100 * player_damage_r[i] / party_damage_r)
-    --     local sp =  math.round(100 * player_damage_s[i] / party_damage_s)
-    --     local tp =  math.round(100 * player_damage[i]   / party_damage)
 
-    --     out = string.format("%s\n%-9.9s\t%15s%-3s\t%20s%-3s\t%25s%-3s\t%30s%-3s\t%35s%%", out,cn,'[',mp, '|',rp, '|',sp,'|',tp,']')
-    --     --out = string.format("%s\t%36s%-3s\t%42s%-3s\t%47s%-3s\t%53s dps", out,'[',player_dps_m[i], '|',player_dps_r[i], '|',player_dps[i] ,']')
-    -- end
-
-    out = out .. "\nDamage done (% to party total)"
+	if not(mode) then
+    out = out .. "\nDamage done (% to party's total)"
     out = out..StrColor(50, 255, 255,string.format("\nClass\t%11s%-9.9s\t%24s%-9.9s\t%37s%-9.9s\t%50s%-9.9s",'|',Game.ClassNames[Party[0].Class],'|',Game.ClassNames[Party[1].Class], '|',Game.ClassNames[Party[2].Class], '|',Game.ClassNames[Party[3].Class]))
     out = out..string.format("\nMelee\t%11s%5s%%\t%24s%5s%%\t%37s%5s%%\t%50s%5s%%",'|',math.round(1000 * V[0].Damage_Melee /party_damage_m)/10,'|',math.round(1000 * V[1].Damage_Melee /party_damage_m)/10, '|',math.round(1000 * V[2].Damage_Melee /party_damage_m)/10, '|',math.round(1000 * V[3].Damage_Melee /party_damage_m)/10)
     out = out..string.format("\nRange\t%11s%5s%%\t%24s%5s%%\t%37s%5s%%\t%50s%5s%%",'|',math.round(1000 * V[0].Damage_Ranged/party_damage_r)/10,'|',math.round(1000 * V[1].Damage_Ranged/party_damage_r)/10, '|',math.round(1000 * V[2].Damage_Ranged/party_damage_r)/10, '|',math.round(1000 * V[3].Damage_Ranged/party_damage_r)/10)
@@ -436,7 +422,29 @@ function DamageMeterCalculation(V)
     out = out..string.format("\nRange\t%11s%5s\t%24s%5s\t%37s%5s\t%50s%5s",'|',player_dps_r[0],'|',player_dps_r[1], '|',player_dps_r[2], '|',player_dps_r[3])
     out = out..string.format("\nSpell\t%11s%5s\t%24s%5s\t%37s%5s\t%50s%5s",'|',player_dps_s[0],'|',player_dps_s[1], '|',player_dps_s[2], '|',player_dps_s[3])
     out = out .. StrColor(255, 100, 100,string.format("\nTotal\t%11s%5s\t%24s%5s\t%37s%5s\t%50s%5s",'|',player_dps[0],'|',player_dps[1], '|',player_dps[2], '|',player_dps[3]))
+    else
+	-- Output to file preparation
+	local z = CombatLogSeparator
+	out = out..string.format("Stat\\Class%s%s(%s)%s%s(%s)%s%s(%s)%s%s(%s)\n",z,Game.ClassNames[Party[0].Class],Party[0]:GetLevel(),z,Game.ClassNames[Party[1].Class],Party[1]:GetLevel(), z,Game.ClassNames[Party[2].Class],Party[2]:GetLevel(), z,Game.ClassNames[Party[3].Class],Party[3]:GetLevel())
+    out = out..string.format("Melee DPS%s%s%s%s%s%s%s%s\n",z,player_dps_m[0],z,player_dps_m[1], z,player_dps_m[2], z,player_dps_m[3])
+	out = out..string.format("RangedDPS%s%s%s%s%s%s%s%s\n",z,player_dps_r[0],z,player_dps_r[1], z,player_dps_r[2], z,player_dps_r[3])
+	out = out..string.format("Spell DPS%s%s%s%s%s%s%s%s\n",z,player_dps_s[0],z,player_dps_s[1], z,player_dps_s[2], z,player_dps_s[3])
+	out = out..string.format("Total DPS%s%s%s%s%s%s%s%s\n",z,player_dps[0],z,player_dps[1], z,player_dps[2], z,player_dps[3])
+        
+    out = out..string.format("Melee %%%%%s%s%s%s%s%s%s%s\n",z,math.round(1000 * V[0].Damage_Melee /party_damage_m)/10,z,math.round(1000 * V[1].Damage_Melee /party_damage_m)/10, z,math.round(1000 * V[2].Damage_Melee /party_damage_m)/10, z,math.round(1000 * V[3].Damage_Melee /party_damage_m)/10)
+    out = out..string.format("Ranged%%%%%s%s%s%s%s%s%s%s\n",z,math.round(1000 * V[0].Damage_Ranged /party_damage_r)/10,z,math.round(1000 * V[1].Damage_Ranged /party_damage_r)/10, z,math.round(1000 * V[2].Damage_Ranged /party_damage_r)/10, z,math.round(1000 * V[3].Damage_Ranged /party_damage_r)/10)
+	out = out..string.format("Spell %%%%%s%s%s%s%s%s%s%s\n",z,math.round(1000 * V[0].Damage_Spell /party_damage_s)/10,z,math.round(1000 * V[1].Damage_Spell /party_damage_s)/10, z,math.round(1000 * V[2].Damage_Spell /party_damage_s)/10, z,math.round(1000 * V[3].Damage_Spell /party_damage_s)/10)
+	out = out..string.format("Total %%%%%s%s%s%s%s%s%s%s\n",z,math.round(1000 * V[0].Damage /party_damage)/10,z,math.round(1000 * V[1].Damage /party_damage)/10, z,math.round(1000 * V[2].Damage /party_damage)/10, z,math.round(1000 * V[3].Damage /party_damage)/10)
     
+	out = out..string.format("Melee Dmg%s%s%s%s%s%s%s%s\n",z,V[0].Damage_Melee,z,V[1].Damage_Melee, z,V[2].Damage_Melee, z,V[3].Damage_Melee)
+    out = out..string.format("RangedDmg%s%s%s%s%s%s%s%s\n",z,V[0].Damage_Ranged,z,V[1].Damage_Ranged, z,V[2].Damage_Ranged, z,V[3].Damage_Ranged)
+	out = out..string.format("Spell Dmg%s%s%s%s%s%s%s%s\n",z,V[0].Damage_Spell,z,V[1].Damage_Spell, z,V[2].Damage_Spell, z,V[3].Damage_Spell)
+	out = out..string.format("Total Dmg%s%s%s%s%s%s%s%s\n",z,V[0].Damage,z,V[1].Damage, z,V[2].Damage, z,V[3].Damage)
+	
+	out = out..string.format("ActiveTime%s%s%s%s%s%s%s%s\n",z,math.round(V[0].ActiveTime/const.RTSecond),z,math.round(V[1].ActiveTime/const.RTSecond), z,math.round(V[2].ActiveTime/const.RTSecond), z,math.round(V[3].ActiveTime/const.RTSecond))
+    
+    	
+	end
 
     return out
 end
