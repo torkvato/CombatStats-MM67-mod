@@ -1,7 +1,8 @@
 # CombatStats and Convenience MM7 mod
 
-## Mod do and do not
+## Mod features
 CombatStats and Convenience MM7 mod do not change the gameplay, the game mechanics or difficulties of the orignial game (well, Grayface-patched game)
+
 This is the same good old vanilla Might and Magic 7, without any attempts to make the eternal classic more difficult/interesting/new.
 
 However, for the convenience and in-depth analyis of the party the following features were introduced:
@@ -20,17 +21,18 @@ However, for the convenience and in-depth analyis of the party the following fea
     - Elements-Colored Resistances with average resistance percentage
     - Final Melee and Ranged damage metric in the form of thoroughly [calculated] DPS, for best weapon combination selection
     - Effective health ("Vitality"), employing HP, Armor Class (physical avoidance) and Magic resistances in single metric
-    - [Optional] Skill tooltips, like total Merchant discount or current Disarm skill vs. area difficulty [enabled by default]   
+    - Skill tooltips, like total Merchant discount or current Disarm skill vs. area difficulty [Optional, enabled by default]   
 - Convenience features
     - Automatic items sorting. Borrowed from MAW MMMerge mod, with minor changes.
     - Designated players can get alchemy ingredients and unidentified items in their packs  
-    - [Optional] Sharing max ID Item and Repair skills over the party [disabled by default]
-    - [Optional] Grandmaster ID Monster info with ALT pressed [disabled by default]
+    - Sharing max ID Item and Repair skills over the party [Optional, disabled by default]
+    - Grandmaster ID Monster info with ALT pressed [Optional, disabled by default]
     
 
+## Illustrations
 
-
-## Calculated Damage Metrics
+## Detailed descriptions
+### Calculated Damage Metrics
 
 - Hit percentage is calculated on the base of current To-Hit modifier against the mob with AC equal to the current player level
  P = (15 + PlayerAttack * 2) / (30 + PlayerAttack * 2 + PlayerLvl)
@@ -38,11 +40,11 @@ However, for the convenience and in-depth analyis of the party the following fea
 - Estimated DPS is calculated on the base average damage per hit that take into account:
     - Weapons base damage with Str/Heroism already accounted (stated in the vanilla part of the char screen)
     - Constant and temporary elemental damages on both weapons (and three artifacts/relics)
-    - Dagger Mastery tripling of the base weapon damage
+    - Dagger Mastery base damage tripling chance
     - Things are not taken into account: Weakness and Racial bonuses
 Average Damage is divided by current Recovery value in seconds to get displayed DPS ()
 
-## Estimated Damage metrics
+### Estimated Damage metrics
 
 https://github.com/malekitsu/maw-mod-mmmerge
 
@@ -50,7 +52,7 @@ https://github.com/Malekitsu/MM6-MAW-Monster-Arts-and-Wonders
 
 https://github.com/GrayFace/MMExtension
 
-## Vitality (Effective HP)
+### Vitality (Effective HP)
 Vitality is calculated by taking into account player physical hits avoidance chance (determined by AC) and magic resistances. 
 Currently, AC effect is taken with 65% weight, elemental magic resistances have 7.5% each, Mind and Body resistances 2.5% each. These weights are suitable for a party engaging in melee and having a thief.
 If you prefer traps that explode in your face and deal with with mobs from afar, surely the Elemental part should have a larger impact on the result. Alternative config is also included in the cmInit.lua file.  
