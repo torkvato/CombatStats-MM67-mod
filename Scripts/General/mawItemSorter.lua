@@ -1,13 +1,13 @@
 -- Borrowed from MAW with minor changes
 function events.KeyDown(t)
     if Game.CurrentScreen == 7 and Game.CurrentCharScreen == 103 then
-        if t.Key == 82 then
+        if t.Key == PlayerInventorySort then
             sortInventory(false)
             Game.ShowStatusText("Inventory sorted")
-        elseif t.Key == 84 then
+        elseif t.Key == PartyInventorySort then
             sortInventory(true)
             Game.ShowStatusText("All inventories have been sorted")
-        elseif t.Key == 69 then
+        elseif t.Key == AlchemyPlayerSet then
             vars.alchemyPlayer = vars.alchemyPlayer or -1		
             if vars.alchemyPlayer == Game.CurrentPlayer then
                 vars.alchemyPlayer = -1
@@ -16,12 +16,22 @@ function events.KeyDown(t)
                 vars.alchemyPlayer = Game.CurrentPlayer
                 Game.ShowStatusText(Party[Game.CurrentPlayer].Name .. " will now take alchemy items when sorting")
             end
+		elseif t.Key == IdentifyPlayerSet then
+            vars.identifyPlayer =  vars.identifyPlayer or -1		
+            if vars.identifyPlayer == Game.CurrentPlayer then
+                vars.identifyPlayer = -1
+                Game.ShowStatusText("No unidentified items preference when sorting")
+            else
+                vars.identifyPlayer = Game.CurrentPlayer
+                Game.ShowStatusText(Party[Game.CurrentPlayer].Name .. " will now take unidentified items when sorting")
+            end
+
         end
     end
 end
 
 function sortInventory(all)
-	evt.Add("Inventory", 0)
+	evt.Add("Items", 0)
 	
 	local itemList={}
 	local j=0
@@ -79,16 +89,14 @@ function sortInventory(all)
 			end
 		end
 		vars.alchemyPlayer=vars.alchemyPlayer or -1
+		vars.identifyPlayer=vars.identifyPlayer or -1
 		table.sort(itemList, function(a, b)
-			-- Custom function to find index of an item in alchemyItemsOrder
-			local function getIndexInOrder(number)
-				for index, value in ipairs(alchemyItemsOrder) do
-					if value == number then
-						return index
-					end
-				end
-				return nil -- Return nil if the item is not found
-			end
+			
+			if vars.identifyPlayer>=0 and (not(a["Identified"]) or not(b["Identified"]) )then  --Ensure that Unidentified items go first, evem befor alchemy
+				local aa = not(a["Identified"]) == true and 1 or not(a["Identified"])== false and 0
+				local bb = not(b["Identified"]) == true and 1 or not(b["Identified"])== false and 0
+				return aa*a["size"] > bb*b["size"]
+		    end
 
 			-- Special sorting for items with number >= 220 and < 300
 			if vars.alchemyPlayer>=0 then
@@ -102,13 +110,20 @@ function sortInventory(all)
 				end
 
 				-- Sorting according to alchemyItemsOrder
-				local indexA = getIndexInOrder(a["Number"])
-				local indexB = getIndexInOrder(b["Number"])
+				local indexA = table.find(alchemyItemsOrder,a["Number"])
+				local indexB = table.find(alchemyItemsOrder,b["Number"])
+				if indexA and a.Number<=1060 and a.Number>1050 and a.BonusStrength==0 then
+					indexA=indexA+10
+				end
+				if indexB and b.Number<=1060 and b.Number>1050 and b.BonusStrength==0 then
+					indexB=indexB+10
+				end
 				if indexA and indexB then -- If both items are in the list
 					return indexA < indexB
 				elseif indexA or indexB then -- If only one item is in the list, it goes first
 					return indexA ~= nil
 				end
+
 			end
 			
 			-- Original sorting logic
@@ -148,7 +163,12 @@ function sortInventory(all)
 					end
 				end
 			end
-			evt.Add("Inventory", itemList[i].Number)
+
+			if vars.identifyPlayer>=0 and not(itemList[i].Identified)  then
+				Game.CurrentPlayer = vars.identifyPlayer
+			end
+
+			evt.Add("Items", itemList[i].Number)
 			it=Mouse.Item
 			it.Bonus=itemList[i].Bonus
 			it.Bonus2=itemList[i].Bonus2
@@ -164,13 +184,12 @@ function sortInventory(all)
 			it.Refundable=itemList[i].Refundable
 			it.Stolen=itemList[i].Stolen
 			it.TemporaryBonus=itemList[i].TemporaryBonus
-			
+			evt.Add("Items", 0) --to give item to proper player 
 			Game.CurrentPlayer=lastPlayer
 		end
-		evt.Add("Inventory", 0)
---	table.clear(itemList)
+		--evt.Add("Inventory", 0)
 	end
-
+	table.clear(itemList)
 end	
 
 

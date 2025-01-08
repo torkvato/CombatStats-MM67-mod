@@ -1,19 +1,42 @@
 -- MM7 convenience and combatlog mod settings
 
 CombatLogEnabled = 1; -- Combatlog output to file
-SkillTooltipsEnabled = 1; -- Enchanced tooltips. Disarm vs Map Disarm, Merchant discount, etc
-EffectiveHitPointsWeights = {Phys = 0.75, Fire=0.05, Air=0.05, Water=0.05, Earth = 0.05, Mind=0.025,Body = .025} --melee party with Thief
---EffectiveHitPointsWeights = {Phys = 0.5, Fire=0.1, Air=0.1, Water=0.1, Earth = 0.1, Mind=0.05,Body = .05} --
+SkillTooltipsEnabled = 1; -- Enhanced skill tooltips. Disarm vs Map Disarm, Merchant discount, etc
+
+EffectiveHitPointsWeights = {Phys = 0.65, Fire=0.075, Air=0.075, Water=0.075, Earth = 0.075, Mind=0.025,Body = .025} --melee party with Thief
+--EffectiveHitPointsWeights = {Phys = 0.55, Fire=0.1, Air=0.1, Water=0.1, Earth = 0.1, Mind=0.025,Body = .025} --
 
 CombatLogFile = "CombatLog.csv"
-StatsOutputFile = "DamageStats.csv"
 CombatLogSeparator = "\t"  -- combat log fields separator
+StatsOutputFile = "DamageStats.csv"
 
---keybinds
-DamageMeterResetButton  = 82 -- 'R' button on the Char info screen
-DamageMeterExportButton = 85 -- 'U' button on the Char info screen
+
+--Keybinds
+-- CharacterInfo Screen
+DamageMeterResetButton  = 82 -- 'R' button on the Char info screen to Reset segment statistics data
+DamageMeterExportButton = 69 -- 'E' button on the Char info screen to Export statistics data
 AltDamageStatsButton = const.Keys.ALT -- Key for alternating between segment and full stats (with right click on DPS info)
---need to add [mmv(nil, 0x5C88F0, 0x5E4CB0)].array(55).EditPChar  'GlobalTxt2'  after GlobalTxt
+
+-- Inventory Screen
+PlayerInventorySort  = 82 -- 'R' - Sort only current inventory
+PartyInventorySort = 84 -- 'T' - Sort all inventories
+AlchemyPlayerSet = 89 -- 'Y' - Select/Unselect player for alchemy stuff
+IdentifyPlayerSet = 85 -- 'U'  - Select/Unselect player for unidentified stuff
+
+--Harmless cheats
+AltIdMonsterGM = 1 -- Press alt while identifing the monster to get whole info
+SharedIdentifyItem = 1 -- Id Item skill shared among party
+SharedRepair = 1 -- Repair skill shared among party
+
+
+
+
+
+
+
+
+
+
 
 
 -- Table of average additional elem damage on weapons vs Bonus2 property value
@@ -47,14 +70,16 @@ local file = io.open(CombatLogFile,"r")
         file:close()
     end
 end
----------------------------------
---HERE IS THE KEYBIND LIST--
----------------------------------
+
+
+--need to add [mmv(nil, 0x5C88F0, 0x5E4CB0)].array(55).EditPChar  'GlobalTxt2'  after GlobalTxt
+
+-- KEYBIND VALUES--
 --[[
 LBUTTON= 1	
 RBUTTON= 2	
 CANCEL= 3	
-MBUTTON= 4	NOT contiguous with L & RBUTTON
+MBUTTON = 4
 XBUTTON1= 5	
 XBUTTON2= 6	
 BACK= 8	

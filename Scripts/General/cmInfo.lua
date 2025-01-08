@@ -42,6 +42,8 @@ function events.KeyDown(t)
 			file:close()			
         end
     end
+
+
 end
 -- Combat logging
 function events.CalcDamageToMonster(t)
@@ -57,10 +59,10 @@ function events.CalcDamageToMonster(t)
 
             if t.Monster.NameId > 0 then monName = Game.PlaceMonTxt[t.Monster.NameId]  else monName = Game.MonstersTxt[t.Monster.Id].Name end
             
-            -- DPS is calculated as TOTAL damage done, divided by total amount of active time in REAL seconds
+            -- DPS is calculated as total damage done, divided by total active time in real seconds
             -- In-game time: 2 real seconds equal 1 in-game minute, 1 real second = 30 in-game seconds
-            -- 60 "recovery" ticks = 1 real second  = 30 in-game seconds
             -- 256 "Game.time" ticks = 1 in-game minute,  128 "Game.time" ticks = 30 in-game seconds = 1 real second (const.RTSecond)
+            -- 60 "recovery" ticks = 1 real second  = 30 in-game seconds = 128 ticks
             
             -- Active time - contuguous time when periods betwen successful hits less than 5 seconds  (5*128)
             local timedelta = Game.Time - vars.timestamps[i].LastTimeStamp;
@@ -90,7 +92,7 @@ function events.CalcDamageToMonster(t)
                     vars.timestamps[i].LastTimeStamp_Spell = Game.Time   
                 end 
 
-            else -- There was too large delay between hits, ignore the pause in active time statistics, but we may need to add last hit delay for the sake of accuracy               
+            else -- There was too large pause between hits, ignore the pause in active time statistics, but we may need to add last hit recovery for the sake of DPS accuracy               
                 vars.timestamps[i].LastTimeStamp = Game.Time
                 vars.damagemeter[i].ActiveTime = vars.damagemeter[i].ActiveTime + const.RTSecond-- Assume average hit delay about 1s 
                 vars.damagemeter1[i].ActiveTime = vars.damagemeter1[i].ActiveTime + const.RTSecond
@@ -230,21 +232,21 @@ function events.Tick()
         local addind = string.find(Game.StatsDescriptions[0], '\n')
 
         if addind then
-            Game.StatsDescriptions[0] = string.format("%s\n ToDamage modifier: %d", string.sub(Game.StatsDescriptions[0], 1, string.find(Game.StatsDescriptions[0], '\n')), Stat2Modifier(might))
-            Game.StatsDescriptions[1] = string.format("%s\n Intellect modifier: %d", string.sub(Game.StatsDescriptions[1], 1, string.find(Game.StatsDescriptions[1], '\n')), Stat2Modifier(intel))
-            Game.StatsDescriptions[2] = string.format("%s\n Personality modifier: %d", string.sub(Game.StatsDescriptions[2], 1, string.find(Game.StatsDescriptions[2], '\n')), Stat2Modifier(pers))
-            Game.StatsDescriptions[3] = string.format("%s\n Health modifier: %d", string.sub(Game.StatsDescriptions[3], 1, string.find(Game.StatsDescriptions[3], '\n')), Stat2Modifier(endu))
-            Game.StatsDescriptions[4] = string.format("%s\n ToHit modifier: %d", string.sub(Game.StatsDescriptions[4], 1, string.find(Game.StatsDescriptions[4], '\n')), Stat2Modifier(acc))
-            Game.StatsDescriptions[5] = string.format("%s\n AC and Recovery modifier: %d", string.sub(Game.StatsDescriptions[5], 1, string.find(Game.StatsDescriptions[5], '\n')), Stat2Modifier(speed))
-            Game.StatsDescriptions[6] = string.format("%s\n Resistances modifier: %d", string.sub(Game.StatsDescriptions[6], 1, string.find(Game.StatsDescriptions[6], '\n')), Stat2Modifier(luck))
+            Game.StatsDescriptions[0] = string.format("%s\n ToDamage modifier: %d, next limit: %s", string.sub(Game.StatsDescriptions[0], 1, string.find(Game.StatsDescriptions[0], '\n')), Stat2Modifier(might))
+            Game.StatsDescriptions[1] = string.format("%s\n Intellect modifier: %d, next limit: %s", string.sub(Game.StatsDescriptions[1], 1, string.find(Game.StatsDescriptions[1], '\n')), Stat2Modifier(intel))
+            Game.StatsDescriptions[2] = string.format("%s\n Personality modifier: %d, next limit: %s", string.sub(Game.StatsDescriptions[2], 1, string.find(Game.StatsDescriptions[2], '\n')), Stat2Modifier(pers))
+            Game.StatsDescriptions[3] = string.format("%s\n Health modifier: %d, next limit: %s", string.sub(Game.StatsDescriptions[3], 1, string.find(Game.StatsDescriptions[3], '\n')), Stat2Modifier(endu))
+            Game.StatsDescriptions[4] = string.format("%s\n ToHit modifier: %d, next limit: %s", string.sub(Game.StatsDescriptions[4], 1, string.find(Game.StatsDescriptions[4], '\n')), Stat2Modifier(acc))
+            Game.StatsDescriptions[5] = string.format("%s\n AC and Recovery modifier: %d, next limit: %s", string.sub(Game.StatsDescriptions[5], 1, string.find(Game.StatsDescriptions[5], '\n')), Stat2Modifier(speed))
+            Game.StatsDescriptions[6] = string.format("%s\n Resistances modifier: %d, next limit: %s", string.sub(Game.StatsDescriptions[6], 1, string.find(Game.StatsDescriptions[6], '\n')), Stat2Modifier(luck))
         else
-            Game.StatsDescriptions[0] = string.format("%s\n ToDamage modifier: %d", Game.StatsDescriptions[0], Stat2Modifier(might))
-            Game.StatsDescriptions[1] = string.format("%s\n Intellect modifier: %d", Game.StatsDescriptions[1], Stat2Modifier(intel))
-            Game.StatsDescriptions[2] = string.format("%s\n Personality modifier: %d", Game.StatsDescriptions[2], Stat2Modifier(pers))
-            Game.StatsDescriptions[3] = string.format("%s\n Health modifier: %d", Game.StatsDescriptions[3], Stat2Modifier(endu))
-            Game.StatsDescriptions[4] = string.format("%s\n ToHit modifier: %d", Game.StatsDescriptions[4], Stat2Modifier(acc))
-            Game.StatsDescriptions[5] = string.format("%s\n AC and Recovery modifier: %d", Game.StatsDescriptions[5], Stat2Modifier(speed))
-            Game.StatsDescriptions[6] = string.format("%s\n Resistances modifier: %d", Game.StatsDescriptions[6], Stat2Modifier(luck))
+            Game.StatsDescriptions[0] = string.format("%s\n ToDamage modifier: %d, next limit: %s", Game.StatsDescriptions[0], Stat2Modifier(might))
+            Game.StatsDescriptions[1] = string.format("%s\n Intellect modifier: %d, next limit: %s", Game.StatsDescriptions[1], Stat2Modifier(intel))
+            Game.StatsDescriptions[2] = string.format("%s\n Personality modifier: %d, next limit: %s", Game.StatsDescriptions[2], Stat2Modifier(pers))
+            Game.StatsDescriptions[3] = string.format("%s\n Health modifier: %d, next limit: %s", Game.StatsDescriptions[3], Stat2Modifier(endu))
+            Game.StatsDescriptions[4] = string.format("%s\n ToHit modifier: %d, next limit: %s", Game.StatsDescriptions[4], Stat2Modifier(acc))
+            Game.StatsDescriptions[5] = string.format("%s\n AC and Recovery modifier: %s, next limit: %d", Game.StatsDescriptions[5], Stat2Modifier(speed))
+            Game.StatsDescriptions[6] = string.format("%s\n Resistances modifier: %d, next limit:                  %s", Game.StatsDescriptions[6], Stat2Modifier(luck))
         end
 
         -- Resistances
@@ -285,14 +287,18 @@ function events.Tick()
 
         local avoidance = coeff * monster_hit_chance * EffectiveHitPointsWeights.Phys + R0[10]*EffectiveHitPointsWeights.Fire + R0[11]*EffectiveHitPointsWeights.Air + R0[12]*EffectiveHitPointsWeights.Water + R0[13]*EffectiveHitPointsWeights.Earth + R0[14]*EffectiveHitPointsWeights.Mind + R0[15]*EffectiveHitPointsWeights.Body
         local vitality = math.round(fullHP/avoidance)
-        local hpstr = HP 
-        if HP<fullHP then
-            hpstr = StrColor(250, 250, 100, HP)     
-        end
-        local HP_txt = StrColor(0, 255, 0, "HP,Vit ") .. string.format("%s/%s,%s\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", hpstr,fullHP, StrColor(0, 250, 0, vitality))
-        local AC_txt = StrColor(230, 204, 128, "AC/Miss% ") .. string.format("%s/%s%%\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", AC,math.round(1000*(1-monster_hit_chance))/10)
-        Game.GlobalTxt[108] = HP_txt
-        Game.GlobalTxt[12] = AC_txt
+        -- local hpstr = HP 
+        -- if HP<fullHP then
+        --     hpstr = StrColor(250, 250, 100, HP)     
+        -- end
+        --hpstr = hpstr .. "/" .. fullHP .. "," .. StrColor(0, 250, 0, vitality)
+        --local HP_txt = StrColor(0, 255, 0, "HP,Vit ") .. string.format("%s/%s,%s\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", hpstr,fullHP, StrColor(0, 250, 0, vitality))
+        --local HP_txt = StrColor(0, 255, 0, "HP,Vit ") .. string.format("%s\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", hpstr)
+        --local acstr =  AC .. ', ' .. math.round(1000*(1-monster_hit_chance))/10
+        --local AC_txt = StrColor(230, 204, 128, "AC/Miss% ") .. string.format("%s/%s%%\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",AC,math.round(1000*(1-monster_hit_chance))/10)
+        --local AC_txt = StrColor(230, 204, 128, "AC, Miss% ") .. string.format("%s%%\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",acstr)
+        --Game.GlobalTxt[108] = HP_txt
+        --Game.GlobalTxt[12] = AC_txt
 
         -- Attack and DPS calculations	
         local atk_m = pl:GetMeleeAttack()
@@ -304,6 +310,8 @@ function events.Tick()
         local dmg_r = (pl:GetRangedDamageMin() + pl:GetRangedDamageMax()) / 2
         local delay_r = pl:GetAttackDelay(true)
         local hitchance_r = (15 + atk_r * 2) / (30 + atk_r * 2 + lvl)
+
+        dmg_m = dmg_m + DaggerTriple(pl) -- Account Dagger master for chance to triple base weapon dmg
 
         -- Weapons element damage
         local slot = pl.ItemMainHand
@@ -338,11 +346,11 @@ function events.Tick()
         local dps_m = (dmg_m + elem_m) * hitchance_m / (delay_m / 60)
         local dps_r = (dmg_r + elem_r) * hitchance_r / (delay_r / 60)
 
-        local dps_m_txt = string.format("Melee:Hit %s%%,DPS %s\n\n\n\n\n\n\n\n\n\n\n\n\n\n", StrColor(255, 0, 0, math.round(100 * hitchance_m)), StrColor(255, 50, 50, math.round(dps_m * 10) / 10))
-        local dps_r_txt = string.format("Range:Hit %s%%,DPS %s\n\n\n\n\n\n\n\n\n\n\n\n\n\n", StrColor(255, 0, 0, math.round(100 * hitchance_r)), StrColor(255, 50, 50, math.round(dps_r * 10) / 10))
+        --local dps_m_txt = string.format("Melee:Hit %s%%,DPS %s\n\n\n\n\n\n\n\n\n\n\n\n\n\n", StrColor(255, 0, 0, math.round(100 * hitchance_m)), StrColor(255, 50, 50, math.round(dps_m * 10) / 10))
+        --local dps_r_txt = string.format("Range:Hit %s%%,DPS %s\n\n\n\n\n\n\n\n\n\n\n\n\n\n", StrColor(255, 0, 0, math.round(100 * hitchance_r)), StrColor(255, 50, 50, math.round(dps_r * 10) / 10))
         
-        Game.GlobalTxt[47] = dps_m_txt
-        Game.GlobalTxt[172] = dps_r_txt
+        Game.GlobalTxt[47] = string.format("M/R DPS: %s/%s\n\n\n\n\n\n\n\n\n\n\n\n\n\n", StrColor(255, 0, 0, math.round(dps_m * 10) / 10), StrColor(255, 255, 50, math.round(dps_r * 10) / 10))
+        Game.GlobalTxt[172] = string.format("Vit:%s Avoid:%s%%\n\n\n\n\n\n\n\n\n\n\n\n\n\n", StrColor(0, 255, 0, vitality),  StrColor(230, 204, 128,math.round(1000*(1-monster_hit_chance))/10))
 
         if Keys.IsPressed(const.Keys.ALT) then
             Game.GlobalTxt2[41] = "Full stats since game beginning\n" .. DamageMeterCalculation(vars.damagemeter)
@@ -351,7 +359,7 @@ function events.Tick()
 
         local gameminutes = math.floor((Game.Time - vars.timestamps[0].SegmentStart)/const.Minute)    
         Game.GlobalTxt2[41] = string.format("Segment data (%s game minutes since [r]eset)\n",gameminutes) .. DamageMeterCalculation(vars.damagemeter1)
-        Game.GlobalTxt2[42] = string.format("Current map data: %s, [ALT] for full\n",Game.MapStats[Game.Map.MapStatsIndex].Name).. DamageMeterCalculation(mapvars.damagemeter)            
+        Game.GlobalTxt2[42] = string.format("Current map: %s, [ALT] for full\n",Game.MapStats[Game.Map.MapStatsIndex].Name).. DamageMeterCalculation(mapvars.damagemeter)            
         end
         textsupdated = true
 
@@ -465,13 +473,17 @@ end
 function Stat2Modifier(stat)
     local StatsLimitValues = {0, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 25, 30, 35, 40, 50, 75, 100, 125, 150, 175, 200, 225, 250, 275, 300, 350, 400, 500}
     local StatsEffectsValues = {-6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 25, 30}
+    local found
+    local next
     for i1 = #StatsLimitValues, 1, -1 do
         if StatsLimitValues[i1] <= stat then
             found = StatsEffectsValues[i1]
+            next = StatsLimitValues[i1+1]
             break
         end
     end
-    return found
+    next = next or "Max"
+    return found, next
 end
 
 function StrColor(r, g, b, s)
@@ -512,6 +524,25 @@ end
 return coeff
 end
 
+function DaggerTriple(pl)
+    local extradamage = 0
+    local sdagger,mdagger = SplitSkill(pl:GetSkill(const.Skills.Dagger))
+    if mdagger>=3 then--master or GM
+        if pl.ItemMainHand>0 then mh = pl.Items[pl.ItemMainHand] end
+        -- 10% chance for triple base damage (double extra base)
+        if mh:T().Skill ==  const.Skills.Dagger then
+            extradamage = sdagger / 100 * 2 * (mh:T().Mod2 + (mh:T().Mod1DiceCount + mh:T().Mod1DiceCount * mh:T().Mod1DiceSides)/2)
+        end
+
+        if pl.ItemExtraHand > 0 then eh = pl.Items[pl.ItemExtraHand] end
+
+        if eh:T().Skill ==  const.Skills.Dagger then
+            extradamage = extradamage + sdagger / 100 * 2 * (eh:T().Mod2 + (eh:T().Mod1DiceCount + eh:T().Mod1DiceCount * eh:T().Mod1DiceSides)/2)
+        end
+        
+    end
+    return extradamage
+end
 
 -- function events.Action(t)
 -- 		Game.ShowStatusText("t.Action" .. t.Action)
@@ -534,3 +565,5 @@ end
 -- for k,v in pairs(tab) do
 -- print(k)
 -- end
+--Party[Game.CurrentPlayer].MightBase
+--mainhand = Party[Game.CurrentPlayer].Items[Party[Game.CurrentPlayer].ItemMainHand]

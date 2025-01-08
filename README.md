@@ -2,39 +2,47 @@
 
 ## Mod do and do not
 CombatStats and Convenience MM7 mod do not change the gameplay, the game mechanics or difficulties of the orignial game (well, Grayface-patched game)
-This is the same good old vanilla MM7, without any attempts to improve the classic.
+This is the same good old vanilla Might and Magic 7, without any attempts to make the eternal classic more difficult/interesting/new.
 
-However, for the convenience and in-depth analyis of the party the following *informational* features were added:
+However, for the convenience and in-depth analyis of the party the following features were introduced:
 
-- Enchanced character page
-    - Barrel-Colored Attributes (thx MAW) with current modifier value and next attribute milestone in the tooltip
-    - Elements-Colored Resistances with average resistance percentage
-    - Full Melee and Ranged damage metrics, including hit accuracy and resulting DPS, for best weapon combination selection
-    - Effective health ("Vitality"), employing HP, Armor Class (physical avoidance) and Magic resistances in single metric
-    - [Optional] Skill tooltips, like total Merchant discount or current Disarm skill vs. area difficulty
 - Combat log
     - Logging every [successful] damage dealt, with the timestamp, player, target, damage amount, kind and source (melee, ranged or specific spell)
     - CSV save format, customizable
     - You can do you own parsing and processing, but we already have some...
-- In-game damage staticstics / log parsing
-    - Accumulation of the damage data such as total damage dealt and average observed DPS for melee/ranged/magic
+- In-game damage statistics processing
+    - Accumulation of the damage data such as total damage dealt and average [observed] DPS for melee/ranged/magic
     - In-game tables for party members efficiency comparison
     - Selected segment / current map / overall game data in separate tables
     - Export of the statistics to the output file for future reference
+- Enhanced character page
+    - Barrel-Colored Attributes (thx MAW) with current modifier value and next attribute milestone in the tooltip
+    - Elements-Colored Resistances with average resistance percentage
+    - Final Melee and Ranged damage metric in the form of thoroughly [calculated] DPS, for best weapon combination selection
+    - Effective health ("Vitality"), employing HP, Armor Class (physical avoidance) and Magic resistances in single metric
+    - [Optional] Skill tooltips, like total Merchant discount or current Disarm skill vs. area difficulty [enabled by default]   
+- Convenience features
+    - Automatic items sorting. Borrowed from MAW MMMerge mod, with minor changes.
+    - Designated players can get alchemy ingredients and unidentified items in their packs  
+    - [Optional] Sharing max ID Item and Repair skills over the party [disabled by default]
+    - [Optional] Grandmaster ID Monster info with ALT pressed [disabled by default]
+    
 
 
 
-## Damage Metrics
+## Calculated Damage Metrics
 
-### Hit percentage is calculated on the base of current To-Hit modifier against the mob with AC equal to the current player level
- P = (15 + PlayerAttack*2)/(30 + PlayerAttack*2 + PlayerLvl)
+- Hit percentage is calculated on the base of current To-Hit modifier against the mob with AC equal to the current player level
+ P = (15 + PlayerAttack * 2) / (30 + PlayerAttack * 2 + PlayerLvl)
 
-### Estimated DPS is calculated on the base average damage per hit that take into account:
+- Estimated DPS is calculated on the base average damage per hit that take into account:
     - Weapons base damage with Str/Heroism already accounted (stated in the vanilla part of the char screen)
     - Constant and temporary elemental damages on both weapons (and three artifacts/relics)
     - Dagger Mastery tripling of the base weapon damage
     - Things are not taken into account: Weakness and Racial bonuses
 Average Damage is divided by current Recovery value in seconds to get displayed DPS ()
+
+## Estimated Damage metrics
 
 https://github.com/malekitsu/maw-mod-mmmerge
 
