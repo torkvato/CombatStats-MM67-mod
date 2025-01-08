@@ -30,6 +30,7 @@ However, for the convenience and in-depth analyis of the party the following fea
     
 
 ## Illustrations
+![image](https://github.com/user-attachments/assets/a9e3e856-e9e0-45f1-89d5-489c77e9db13)
 
 ## Detailed descriptions
 ### Calculated Damage Metrics
