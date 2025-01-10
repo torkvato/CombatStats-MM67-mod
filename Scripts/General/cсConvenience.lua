@@ -45,3 +45,23 @@ function events.Tick()
 			Party[3].Skills[const.Skills.Repair] = repair_skill_saved[3]
 		end
 end
+
+function events.KeyDown(t)
+if  Game.CurrentScreen == 0 and t.Key == 72 then -- "H" key
+
+local msg = ""
+msg = msg .. string.format('|\t%5sMon\t%10sTue |Wed |Thu |Fri |Sat |Sun |\n','|','|' )
+msg = msg .. string.format('|Harm|Era2|Tul2|Era1|Tul2|Era2|Tul2|Are4|\n' )
+msg = msg .. string.format('|Era |Tat2|Har2|Tat2|Dey3|Tat2|Har2|    |\n' )
+msg = msg .. string.format('|Era |Dey2|Tat2|Bra3|Har2|Avl4|Bra3|Eve7|\n' )
+msg = msg .. string.format('|Era |Avl4|    |Bra6|    |    |Tat2|    |\n' )
+msg = msg .. string.format('|Tul |Tat2|Har2|Tat2|Dey3|Tat2|Har2|    |\n' )
+msg = msg .. string.format('|Tul |Dey2|Tat2|Bra3|Har2|Avl4|Bra3|Eve7|\n' )
+msg = msg .. string.format('|Tul |Avl4|    |Bra6|    |    |Tat2|    |\n' )
+
+
+
+
+Message(msg)
+end
+end

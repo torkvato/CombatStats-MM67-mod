@@ -1,0 +1,285 @@
+function events.GameInitialized2()
+
+    Game.GlobalTxt[144] = StrColor(255, 0, 0, "Might")
+    Game.GlobalTxt[116] = StrColor(255, 128, 0, "Intellect")
+    Game.GlobalTxt[163] = StrColor(0, 127, 255, "Personality")
+    Game.GlobalTxt[75] = StrColor(0, 255, 0, "Endurance")
+    Game.GlobalTxt[1] = StrColor(250, 250, 0, "Accuracy")
+    Game.GlobalTxt[211] = StrColor(127, 0, 255, "Speed")
+    Game.GlobalTxt[136] = StrColor(255, 255, 255, "Luck")
+    Game.GlobalTxt[108] = StrColor(0, 255, 0, "Hit Points")
+    Game.GlobalTxt[212] = StrColor(0, 100, 255, "Spell Points")
+    Game.GlobalTxt[12] = StrColor(230, 204, 128, "Armor Class")
+
+    Game.GlobalTxt[87] = StrColor(255, 70, 70, "Fire")
+    Game.GlobalTxt[6] = StrColor(173, 216, 230, "Air")
+    Game.GlobalTxt[240] = StrColor(100, 180, 255, "Water")
+    Game.GlobalTxt[70] = StrColor(153, 76, 0, "Earth")
+    Game.GlobalTxt[142] = StrColor(200, 200, 255, "Mind")
+    Game.GlobalTxt[29] = StrColor(255, 192, 203, "Body")
+
+end
+
+
+
+function events.Tick()
+    if Game.CurrentCharScreen == 100 and Game.CurrentScreen == 7 then
+        local pl = Party[Game.CurrentPlayer]
+        local lvl = pl:GetLevel()
+        local AC = pl:GetArmorClass()
+        local fullHP = pl:GetFullHP()
+        local HP = pl.HP
+        
+        local might = pl:GetMight()
+        local intel = pl:GetIntellect()
+        local pers = pl:GetPersonality()
+        local endu = pl:GetEndurance()
+        local acc = pl:GetAccuracy()
+        local speed = pl:GetSpeed()
+        local luck = pl:GetLuck()
+
+        -- Stats modifiers
+        local addind = string.find(Game.StatsDescriptions[0], '\n')
+
+        if addind then
+            Game.StatsDescriptions[0] = string.format("%s\n ToDamage modifier: %d, next limit: %s", string.sub(Game.StatsDescriptions[0], 1, string.find(Game.StatsDescriptions[0], '\n')), Stat2Modifier(might))
+            Game.StatsDescriptions[1] = string.format("%s\n Intellect modifier: %d, next limit: %s", string.sub(Game.StatsDescriptions[1], 1, string.find(Game.StatsDescriptions[1], '\n')), Stat2Modifier(intel))
+            Game.StatsDescriptions[2] = string.format("%s\n Personality modifier: %d, next limit: %s", string.sub(Game.StatsDescriptions[2], 1, string.find(Game.StatsDescriptions[2], '\n')), Stat2Modifier(pers))
+            Game.StatsDescriptions[3] = string.format("%s\n Health modifier: %d, next limit: %s", string.sub(Game.StatsDescriptions[3], 1, string.find(Game.StatsDescriptions[3], '\n')), Stat2Modifier(endu))
+            Game.StatsDescriptions[4] = string.format("%s\n ToHit modifier: %d, next limit: %s", string.sub(Game.StatsDescriptions[4], 1, string.find(Game.StatsDescriptions[4], '\n')), Stat2Modifier(acc))
+            Game.StatsDescriptions[5] = string.format("%s\n AC and Recovery modifier: %d, next limit: %s", string.sub(Game.StatsDescriptions[5], 1, string.find(Game.StatsDescriptions[5], '\n')), Stat2Modifier(speed))
+            Game.StatsDescriptions[6] = string.format("%s\n Resistances modifier: %d, next limit: %s", string.sub(Game.StatsDescriptions[6], 1, string.find(Game.StatsDescriptions[6], '\n')), Stat2Modifier(luck))
+        else
+            Game.StatsDescriptions[0] = string.format("%s\n ToDamage modifier: %d, next limit: %s", Game.StatsDescriptions[0], Stat2Modifier(might))
+            Game.StatsDescriptions[1] = string.format("%s\n Intellect modifier: %d, next limit: %s", Game.StatsDescriptions[1], Stat2Modifier(intel))
+            Game.StatsDescriptions[2] = string.format("%s\n Personality modifier: %d, next limit: %s", Game.StatsDescriptions[2], Stat2Modifier(pers))
+            Game.StatsDescriptions[3] = string.format("%s\n Health modifier: %d, next limit: %s", Game.StatsDescriptions[3], Stat2Modifier(endu))
+            Game.StatsDescriptions[4] = string.format("%s\n ToHit modifier: %d, next limit: %s", Game.StatsDescriptions[4], Stat2Modifier(acc))
+            Game.StatsDescriptions[5] = string.format("%s\n AC and Recovery modifier: %s, next limit: %d", Game.StatsDescriptions[5], Stat2Modifier(speed))
+            Game.StatsDescriptions[6] = string.format("%s\n Resistances modifier: %d, next limit:                  %s", Game.StatsDescriptions[6], Stat2Modifier(luck))
+        end
+
+        -- Resistances
+        FireRes = pl:GetResistance(10)
+        AirRes = pl:GetResistance(11)
+        WaterRes = pl:GetResistance(12)
+        EarthRes = pl:GetResistance(13)
+        MindRes = pl:GetResistance(14)
+        BodyRes = pl:GetResistance(15)
+
+        local Resistances = {}
+        local ResistancesPerc = {}
+        local R0 = {}
+
+        for i = 10, 15 do
+            Resistances[i] = pl:GetResistance(i)
+
+            if Resistances[i] > 0 then
+                p = 1 - 30 / (30 + Resistances[i] + Stat2Modifier(luck))
+            else
+                p = 0;
+            end
+            ResistancesPerc[i] = 100 - math.round(1000 * (1 - p) + 500 * (1 - p) * p + 250 * (1 - p) * p ^ 2 + 125 * (1 - p) * p ^ 3 + 62.5 * p ^ 4) / 10;
+            R0[i] = (1 - p) + .5 * (1 - p) * p + .25 * (1 - p) * p ^ 2 + .125 * (1 - p) * p ^ 3 + .625 * p ^ 4;
+        end
+
+        Game.GlobalTxt[87] = StrColor(255, 70, 70, string.format("Fire\t            %s%%", ResistancesPerc[10]))
+        Game.GlobalTxt[6] = StrColor(173, 216, 230, string.format("Air\t            %s%s ", ResistancesPerc[11], "%"))
+        Game.GlobalTxt[240] = StrColor(100, 180, 255, string.format("Water\t            %s%s ", ResistancesPerc[12], "%"))
+        Game.GlobalTxt[70] = StrColor(153, 76, 0, string.format("Earth\t            %s%s ", ResistancesPerc[13], "%"))
+        Game.GlobalTxt[142] = StrColor(200, 200, 255, string.format("Mind\t            %s%s ", ResistancesPerc[14], "%"))
+        Game.GlobalTxt[29] = StrColor(255, 192, 203, string.format("Body\t            %s%s ", ResistancesPerc[15], "%"))
+
+        -- Effective HP
+        local monster_hit_chance = (5 + lvl*2)/(10 + lvl*2 + AC) -- Monster level assumed to be equal player lvl
+
+        local coeff = CheckPlateChain(pl)
+
+        local avoidance = coeff * monster_hit_chance * EffectiveHitPointsWeights.Phys + R0[10]*EffectiveHitPointsWeights.Fire + R0[11]*EffectiveHitPointsWeights.Air + R0[12]*EffectiveHitPointsWeights.Water + R0[13]*EffectiveHitPointsWeights.Earth + R0[14]*EffectiveHitPointsWeights.Mind + R0[15]*EffectiveHitPointsWeights.Body
+        local vitality = math.round(fullHP/avoidance)
+
+        -- Attack and DPS calculations	
+        local atk_m = pl:GetMeleeAttack()
+        local dmg_m = (pl:GetMeleeDamageMin() + pl:GetMeleeDamageMax()) / 2
+        local delay_m = pl:GetAttackDelay()
+        local hitchance_m = (15 + atk_m * 2) / (30 + atk_m * 2 + lvl)  --monster AC treated equal to Player Lvl
+
+        local atk_r = pl:GetRangedAttack()
+        local dmg_r = (pl:GetRangedDamageMin() + pl:GetRangedDamageMax()) / 2
+        local delay_r = pl:GetAttackDelay(true)
+        local hitchance_r = (15 + atk_r * 2) / (30 + atk_r * 2 + lvl)
+
+        dmg_m = dmg_m + DaggerTriple(pl) -- Account Dagger master for chance to triple base weapon dmg
+
+        -- Weapons element damage
+        local slot = pl.ItemMainHand
+        local it0 = (slot ~= 0 and pl.Items[slot])
+        local slot = pl.ItemExtraHand
+        local it1 = (slot ~= 0 and pl.Items[slot])
+        local slot = pl.ItemBow
+        local it2 = (slot ~= 0 and pl.Items[slot])
+
+        local elem_m = 0
+        local elem_r = 0
+        if it0 and (it0.Number == 501 or it0.Number == 507 or it0.Number == 517) then
+            elem_m = 10.5
+        end -- Iron feather, Ghoulsbane, Old Nick
+        if it1 and (it1.Number == 501 or it1.Number == 507 or it1.Number == 517) then
+            elem_m = elem_m + 10.5
+        end
+        if it2 and (it2.Number == 510) then
+            elem_r = 10.5
+        end -- Ulysses artifact
+
+        if it0 and const.bonus2damage[it0.Bonus2] then
+            elem_m = elem_m + const.bonus2damage[it0.Bonus2]
+        end
+        if it1 and const.bonus2damage[it1.Bonus2] then
+            elem_m = elem_m + const.bonus2damage[it1.Bonus2]
+        end
+        if it2 and const.bonus2damage[it2.Bonus2] then
+            elem_r = elem_r + const.bonus2damage[it2.Bonus2]
+        end
+
+        local dps_m = (dmg_m + elem_m) * hitchance_m / (delay_m / 60)
+        local dps_r = (dmg_r + elem_r) * hitchance_r / (delay_r / 60)
+
+        Game.GlobalTxt[47] = string.format("M/R DPS: %s/%s\n\n\n\n\n\n\n\n\n\n\n\n\n\n", StrColor(255, 0, 0, math.round(dps_m * 10) / 10), StrColor(255, 255, 50, math.round(dps_r * 10) / 10))
+        Game.GlobalTxt[172] = string.format("Vit:%s Avoid:%s%%\n\n\n\n\n\n\n\n\n\n\n\n\n\n", StrColor(0, 255, 0, vitality),  StrColor(230, 204, 128,math.round(1000*(1-monster_hit_chance))/10))
+
+        if Keys.IsPressed(const.Keys.ALT) then
+            Game.GlobalTxt2[41] = "Full stats since game beginning\n" .. DamageMeterCalculation(vars.damagemeter) .. string.format("\nMax Hit %s by %s",vars.Max.Dmg,Party[vars.Max.Player].Name)
+            Game.GlobalTxt2[42] = Game.GlobalTxt2[41]
+        else 
+
+        local gameminutes = math.floor((Game.Time - vars.timestamps[0].SegmentStart)/const.Minute)    
+        Game.GlobalTxt2[41] = string.format("Segment data (%s game minutes since [r]eset)\n",gameminutes) .. DamageMeterCalculation(vars.damagemeter1) .. string.format("\nMax Hit %s by %s",vars.Max1.Dmg,Party[vars.Max1.Player].Name)
+        Game.GlobalTxt2[42] = string.format("Current map: %s, [ALT] for full\n",Game.MapStats[Game.Map.MapStatsIndex].Name).. DamageMeterCalculation(mapvars.damagemeter) .. string.format("\nMax Hit %s by %s",mapvars.Max.Dmg,Party[mapvars.Max.Player].Name)           
+        end
+        textsupdated = true
+
+    elseif textsupdated and (Game.CurrentCharScreen ~= 100 or Game.CurrentScreen ~= 7) then
+        Game.GlobalTxt[87] = StrColor(255, 70, 70, "Fire")
+        Game.GlobalTxt[6] = StrColor(173, 216, 230, "Air")
+        Game.GlobalTxt[240] = StrColor(100, 180, 255, "Water")
+        Game.GlobalTxt[70] = StrColor(153, 76, 0, "Earth")
+        Game.GlobalTxt[142] = StrColor(200, 200, 255, "Mind")
+        Game.GlobalTxt[29] = StrColor(255, 192, 203, "Body")
+        textsupdated = false
+    end
+    if Game.CurrentCharScreen == 101 and Game.CurrentScreen == 7 and SkillTooltipsEnabled then
+        local pl = Party[Game.CurrentPlayer]
+        local msg = StrColor(255, 255, 0,string.format("\nTotal Skill:%d, Map Reqired: %d",pl:GetDisarmTrapTotalSkill(),2*Game.MapStats[Game.Map.MapStatsIndex].Lock))
+        local addind = string.find(Game.GlobalTxt2[29], '\n')        
+        if addind then
+            Game.GlobalTxt2[29] = string.sub(Game.GlobalTxt2[29], 1, string.find(Game.GlobalTxt2[29], '\n')) .. msg            
+        else
+            Game.GlobalTxt2[29] = Game.GlobalTxt2[29] .. msg           
+        end
+        local msg = StrColor(255, 255, 0,string.format("\nTotal merchant discount:%d",pl:GetMerchantTotalSkill()))
+        local addind = string.find(Game.GlobalTxt2[22], '\n')        
+        if addind then
+            Game.GlobalTxt2[22] = string.sub(Game.GlobalTxt2[22], 1, string.find(Game.GlobalTxt2[22], '\n')) .. msg            
+        else
+            Game.GlobalTxt2[22] = Game.GlobalTxt2[22] .. msg           
+        end
+    end
+end
+
+function Stat2Modifier(stat)
+    local StatsLimitValues = {0, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 25, 30, 35, 40, 50, 75, 100, 125, 150, 175, 200, 225, 250, 275, 300, 350, 400, 500}
+    local StatsEffectsValues = {-6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 25, 30}
+    local found
+    local next
+    for i1 = #StatsLimitValues, 1, -1 do
+        if StatsLimitValues[i1] <= stat then
+            found = StatsEffectsValues[i1]
+            next = StatsLimitValues[i1+1]
+            break
+        end
+    end
+    next = next or "Max"
+    return found, next
+end
+
+function StrColor(r, g, b, s)
+    return ('\f%.5d'):format(b and RGB(r, g, b) or r) .. ((s or not b and g) and (s or g) .. StrColor(0) or '')
+end
+
+function RGB(r, g, b)
+    return r:And(248) * 256 + g:And(252) * 8 + math.floor(b / 8)
+end
+
+function get_key_for_value(t, value)
+    for k, v in pairs(t) do
+        if v == value then
+            return k
+        end
+    end
+    return nil
+end
+function ptable(vars)
+for k,v in pairs(vars) do
+    print(k,v)
+end
+end
+
+function CheckPlateChain(pl)
+local coeff = 1
+local s,mplate = SplitSkill(pl:GetSkill(const.Skills.Plate))
+local s,mchain = SplitSkill(pl:GetSkill(const.Skills.Chain))
+local equippedarmor = 0
+
+if pl.ItemArmor>0 then equippedarmor = pl.Items[pl.ItemArmor]:T().Skill end
+
+if mplate>=3 and equippedarmor==11 then -- Plate mastery
+    coeff = 0.5
+elseif mchain==4 and equippedarmor==10 then --chain GM
+    coeff = 2/3
+end
+return coeff
+end
+
+function DaggerTriple(pl)
+    local extradamage = 0
+    local sdagger,mdagger = SplitSkill(pl:GetSkill(const.Skills.Dagger))
+    if mdagger>=3 then--master or GM
+        if pl.ItemMainHand>0 then mh = pl.Items[pl.ItemMainHand] end
+        -- 10% chance for triple base damage (double extra base)
+        if mh:T().Skill ==  const.Skills.Dagger then
+            extradamage = sdagger / 100 * 2 * (mh:T().Mod2 + (mh:T().Mod1DiceCount + mh:T().Mod1DiceCount * mh:T().Mod1DiceSides)/2)
+        end
+
+        if pl.ItemExtraHand > 0 then eh = pl.Items[pl.ItemExtraHand] end
+
+        if eh:T().Skill ==  const.Skills.Dagger then
+            extradamage = extradamage + sdagger / 100 * 2 * (eh:T().Mod2 + (eh:T().Mod1DiceCount + eh:T().Mod1DiceCount * eh:T().Mod1DiceSides)/2)
+        end
+        
+    end
+    return extradamage
+end
+
+-- function events.Action(t)
+-- 		Game.ShowStatusText("t.Action" .. t.Action)
+-- end
+
+-- > a:GetMeleeDamageMin() > a:GetMeleeDamageMax()
+
+-- file = io.open("test.txt", "w")
+-- for i=1,400 do
+-- 	file:write(string.format("%d - %s\n",i,Game.GlobalTxt[i]))
+-- end
+-- file:close()
+-- 587 - Attack Bonus
+-- 588 - Attack Damage
+-- 589 - Shoot Bonus
+-- 590 - Shoot Damage
+-- Game.GlobalTxt[47]="Condition"
+-- Game.GlobalTxt[172]="Quick Spell"
+
+-- for k,v in pairs(tab) do
+-- print(k)
+-- end
+--Party[Game.CurrentPlayer].MightBase
+--mainhand = Party[Game.CurrentPlayer].Items[Party[Game.CurrentPlayer].ItemMainHand]
