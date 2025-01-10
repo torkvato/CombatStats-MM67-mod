@@ -138,9 +138,8 @@ function events.CalcDamageToMonster(t)
             objmsg = DamageTypeParsing(data.Object)
 
             if CombatLogEnabled==1 then
-                local cname = Game.ClassNames[data.Player.Class]
                 local z = CombatLogSeparator
-                playerid = string.format("%s%s%s(%s)%s%s", i, z, cname, data.Player:GetLevel(), z, data.Player.Name)
+                playerid = string.format("%s%s%s(%s)%s%s", i, z, Game.ClassNames[data.Player.Class], data.Player:GetLevel(), z, data.Player.Name)
                 -- Timestamp #Player Name(Lvl) TargetName Damage DamageKind DamageSource
                 local msg = string.format("%s%s%s%s%s%s%s%s%s%s%s\n", Game.Time, z, playerid,  z, monName, z, t.Result, z, get_key_for_value(const.Damage, t.DamageKind),z, objmsg)
                 file = io.open(CombatLogFile, "a")
@@ -425,11 +424,13 @@ function DamageMeterCalculation(V,mode)
     out = out..string.format("\nRange\t%11s%5s%%\t%24s%5s%%\t%37s%5s%%\t%50s%5s%%",'|',math.round(1000 * V[0].Damage_Ranged/party_damage_r)/10,'|',math.round(1000 * V[1].Damage_Ranged/party_damage_r)/10, '|',math.round(1000 * V[2].Damage_Ranged/party_damage_r)/10, '|',math.round(1000 * V[3].Damage_Ranged/party_damage_r)/10)
     out = out..string.format("\nSpell\t%11s%5s%%\t%24s%5s%%\t%37s%5s%%\t%50s%5s%%",'|',math.round(1000 * V[0].Damage_Spell /party_damage_s)/10,'|',math.round(1000 * V[1].Damage_Spell /party_damage_s)/10, '|',math.round(1000 * V[2].Damage_Spell /party_damage_s)/10, '|',math.round(1000 * V[3].Damage_Spell /party_damage_s)/10)
     out = out .. StrColor(255, 100, 100,string.format("\nTotal\t%11s %4s%%\t%24s %4s%%\t%37s %4s%%\t%50s %4s%%",'|',math.round(1000*V[0].Damage/party_damage)/10,'|',math.round(1000*V[1].Damage/party_damage)/10,'|',math.round(1000*V[2].Damage/party_damage)/10,'|',math.round(1000 * V[3].Damage/ party_damage)/10))
+    out = out .. StrColor(255, 255, 255,string.format("\n\nParty DMG, M/R/S: %s%% / %s%% / %s%%",math.round(100*party_damage_m/party_damage ),math.round(100*party_damage_r/party_damage ),math.round(100*party_damage_s/party_damage)))
     out = out .. "\n\nDPS (damage per real second)"
     out = out..string.format("\nMelee\t%11s%5s\t%24s%5s\t%37s%5s\t%50s%5s",'|',player_dps_m[0],'|',player_dps_m[1], '|',player_dps_m[2], '|',player_dps_m[3])
     out = out..string.format("\nRange\t%11s%5s\t%24s%5s\t%37s%5s\t%50s%5s",'|',player_dps_r[0],'|',player_dps_r[1], '|',player_dps_r[2], '|',player_dps_r[3])
     out = out..string.format("\nSpell\t%11s%5s\t%24s%5s\t%37s%5s\t%50s%5s",'|',player_dps_s[0],'|',player_dps_s[1], '|',player_dps_s[2], '|',player_dps_s[3])
     out = out .. StrColor(255, 100, 100,string.format("\nTotal\t%11s%5s\t%24s%5s\t%37s%5s\t%50s%5s",'|',player_dps[0],'|',player_dps[1], '|',player_dps[2], '|',player_dps[3]))
+    out = out .. StrColor(255, 255, 255,string.format("\n\nParty DPS, M/R/S/Tot: %s / %s / %s / %s",player_dps_m[0]+player_dps_m[1]+player_dps_m[2]+player_dps_m[3],player_dps_r[0]+player_dps_r[1]+player_dps_r[2]+player_dps_r[3],player_dps_s[0]+player_dps_s[1]+player_dps_s[2]+player_dps_s[3],player_dps[0]+player_dps[1]+player_dps[2]+player_dps[3]))
     else
 	-- Output to file preparation
 	local z = CombatLogSeparator
