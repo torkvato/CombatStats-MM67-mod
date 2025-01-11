@@ -1,5 +1,5 @@
 function events.GameInitialized2()
-
+    schedulenotealreadyadded = false
     Game.GlobalTxt[144] = StrColor(255, 0, 0, "Might")
     Game.GlobalTxt[116] = StrColor(255, 128, 0, "Intellect")
     Game.GlobalTxt[163] = StrColor(0, 127, 255, "Personality")
@@ -17,6 +17,7 @@ function events.GameInitialized2()
     Game.GlobalTxt[70] = StrColor(153, 76, 0, "Earth")
     Game.GlobalTxt[142] = StrColor(200, 200, 255, "Mind")
     Game.GlobalTxt[29] = StrColor(255, 192, 203, "Body")
+
 
 end
 
@@ -223,6 +224,13 @@ for k,v in pairs(vars) do
     print(k,v)
 end
 end
+
+-- local file = io.open('autonotedebug.txt',"a")
+-- for k,v in pairs(t.Autonote) do
+-- 			file:write(tostring(k) .. ' ' .. tostring(v) .. '\n')
+-- end
+-- file:close()
+
 
 function CheckPlateChain(pl)
 local coeff = 1

@@ -22,9 +22,10 @@ However, for the convenience and in-depth analyis of the party the following fea
     - Final Melee and Ranged damage metric in the form of thoroughly [calculated] DPS, for best weapon combination selection
     - Effective health ("Vitality"), employing HP, Armor Class (physical avoidance) and Magic resistances in single metric
     - Skill tooltips, like total Merchant discount or current Disarm skill vs. area difficulty [Optional, enabled by default]   
-- Convenience features
+- Convenience features	
     - Automatic items sorting. Borrowed from MAW MMMerge mod, with minor changes.
     - Designated players can get alchemy ingredients and unidentified items in their packs  
+    - Travel schedule in Autonotes (Seer tab) [Optional, enabled by default]	
     - Sharing max ID Item and Repair skills over the party [Optional, disabled by default]
     - Grandmaster ID Monster info with ALT pressed [Optional, disabled by default]
     
@@ -62,3 +63,4 @@ TODO
 Встроенный комбат лог последних ударов
 Полученные удары
 Рекорды
+Расписание
