@@ -31,38 +31,39 @@ However, for the convenience and in-depth analyis of the party the following fea
     - Full Travel Schedule in Autonotes (Seer tab) [Optional, enabled by default]	
     - Sharing max ID Item and Repair skills over the party [Optional, disabled by default]
     - Grandmaster ID Monster info with ALT pressed [Optional, disabled by default]
-    
+
+## Installation
+ - MM7 GOG version
+ - Grayface latest MM7 patch: https://grayface.github.io/mm/#GrayFace-MM7-Patch
+ - [Unreleased] MMExtension v2.3: https://github.com/GrayFace/MMExtension 
+ - This mod: 
+Instead of two last steps, one can download whole packege with last stable release
 
 ## Acknowledgments
 This mod is the fulfillment of a long-standing dream, a dream to see in detail what is happening with a team of heroes, a dream to get real data for endless debates about who is better.\
 For a long time, I had no idea how to approach this task, until I saw the MAW mod\
-[https://github.com/malekitsu/maw-mod-mmmerge]
+https://github.com/malekitsu/maw-mod-mmmerge
 
-and fall into it's thrill enjoying both gameplay and new knowledges about modding.\
+and fall into it's thrill enjoying both gameplay and new knowledges about modding.
 
-The MAW mod developed by **Malekith** and his team was simply a revelation for me.\
+The MAW mod developed by **Malekith** and his team was simply a revelation for me.
 From there I borrowed many things that first appeared in MAW - attributes colors, display of DPS and Vitality stats and, of course, the wonderful inventory auto-sort, without which I now simply cannot play.\
 But direct code snatching was not the main thing - the MAW mod showed me that everything is possible, and showed how it can be done, peeking into its code I discovered for myself both Lua and MMExtension.
 
-
 Another great person who actually made any MM modding possible and **Grayface**, author of MMExtension. We just cant underestimate his impact on the MM community, both modders and gamers.
 
-## Installation
- - MM7 GOG version
- - Grayface latest patch
- - [Unreleased] MMExtension v2.3
- - This mod last
 
-Instead of two last steps, one can download whole packege with last stable release
-
-![image](https://github.com/user-attachments/assets/a9e3e856-e9e0-45f1-89d5-489c77e9db13)
 
 
 ### Combat log
 ### In-game combat log
+![image](https://github.com/user-attachments/assets/9d772466-850e-4028-a236-58e3fd3a6d5c)
+
 ### Observed damage statistics
 **Damage done**
-**Observed DPS** 
+**Observed DPS**
+![image](https://github.com/user-attachments/assets/fc77963c-196b-4448-b2b7-a148eb8a0734)
+
 **Damage taken**
 **Records**
 
@@ -84,6 +85,7 @@ Instead of two last steps, one can download whole packege with last stable relea
 Vitality is calculated by taking into account player physical hits avoidance chance (determined by AC) and magic resistances. 
 Currently, AC effect is taken with 65% weight, elemental magic resistances have 7.5% each, Mind and Body resistances 2.5% each. These weights are suitable for a party engaging in melee and having a thief.
 If you prefer traps that explode in your face and deal with with mobs from afar, surely the Elemental part should have a larger impact on the result. Alternative config is also included in the cmInit.lua file.  
+![image](https://github.com/user-attachments/assets/af850de2-4130-4086-9869-45d0ba30b621)
 
 
 ## Default keybinds
@@ -107,7 +109,7 @@ If corresponding option in mild cheats section is enabled, [ALT] while checking 
 
 
 
-https://github.com/malekitsu/maw-mod-mmmerge
+
 
 https://github.com/Malekitsu/MM6-MAW-Monster-Arts-and-Wonders
 
