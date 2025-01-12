@@ -94,25 +94,15 @@ If you prefer traps that explode in your face and deal with with mobs from afar,
 [H], as it was in MM9. This overlaps Wendell Tweed history notes, so if you can access them through book or rebind the key in the Menu
 **Damage statistics**\
 [Right-click] in the Player Stats screen: clicking on DPS stat will lead to segment data, clicking on Vitality will lead to map data\
-[ALT]+[Right-click] lead to Full stat since the beginning of the game
-[E] followed by [Y] for export of the tables to file
-[R] followed by [Y] for segment data reset
-**Inventory management**
-[R] for sorting current player inventory
-[T] for sorting party inventory
-[Y] for select/unselect designated player for Alchemy
-[U] for select/unselect designated player for Unidentified items
-**Travel schedule**
-[N] - Travel schedule is added as Seer note and acessible via Seer tab in Autonotes 
-**ID Monster**
-If corresponding option in mild cheats section is enabled, [ALT] while checking monster stats will give full GM information
-
-
-
-
-
-https://github.com/Malekitsu/MM6-MAW-Monster-Arts-and-Wonders
-
-https://github.com/GrayFace/MMExtension
-
-
+[ALT]+[Right-click] lead to Full stat since the beginning of the game\
+[E] followed by [Y] for export of the tables to file\
+[R] followed by [Y] for segment data reset\
+**Inventory management**\
+[R] for sorting current player inventory\
+[T] for sorting party inventory\
+[Y] for select/unselect designated player for Alchemy\
+[U] for select/unselect designated player for Unidentified items\
+**Travel schedule**\
+[N] - Travel schedule is added as Seer note and acessible via Seer tab in Autonotes\ 
+**ID Monster**\
+If corresponding option in mild cheats section is enabled, [ALT] while checking monster stats will give full GM information\
