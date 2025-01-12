@@ -40,7 +40,7 @@ However, for the convenience and in-depth analyis of the party the following fea
 ## Detailed descriptions
 ### Calculated Damage Metrics
 
-- Hit percentage is calculated on the base of current To-Hit modifier against the mob with AC equal to the current player level
+- Hit percentage is calculated on the base of current To-Hit modifier against the mob with AC equal to the current player level\
  P = (15 + PlayerAttack * 2) / (30 + PlayerAttack * 2 + PlayerLvl)
 
 - Estimated DPS is calculated on the base average damage per hit that take into account:
