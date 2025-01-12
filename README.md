@@ -1,9 +1,12 @@
 # CombatStats and Convenience MM7 mod
 
 ## Mod features
-CombatStats and Convenience MM7 mod do not change the gameplay, the game mechanics or difficulties of the orignial game (well, Grayface-patched game)
+CombatStats and Convenience MM7 mod do not affect the gameplay, the game mechanics or difficulties of the orignial game (well, Grayface-patched game)
 
-This is the same good old vanilla Might and Magic 7, without any attempts to make the eternal classic more difficult/interesting/new.
+So this mod can work with any saved game (no need for a new game), and saves will be intact if you remove it (but why?).
+
+Basicelly,it is the same good old vanilla Might and Magic 7, without any attempts to make the eternal classic more difficult/interesting/new.
+
 
 However, for the convenience and in-depth analyis of the party the following features were introduced:
 
