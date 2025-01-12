@@ -7,22 +7,25 @@ This is the same good old vanilla Might and Magic 7, without any attempts to mak
 
 However, for the convenience and in-depth analyis of the party the following features were introduced:
 
-- Combat log
-    - Logging every [successful] damage dealt, with the timestamp, player, target, damage amount, kind and source (melee, ranged or specific spell)
+- **Classic Combat log**
+    - Logging every damage dealt (and received), with the timestamp, player, target, damage amount, kind and source (melee, ranged or specific spell)
     - CSV save format, customizable
-    - You can do you own parsing and processing, but we already have some...
-- In-game damage statistics processing
+    - You can do you own parsing and processing, but we already have some implemented in the mod for game stats
+- **In-game mini combat log**
+    -  MM9-style, showing the details of the last dozen party/monsters hits
+    -  Colored for ease of use
+- **In-game damage statistics processing**
     - Accumulation of the damage data such as total damage dealt and average [observed] DPS for melee/ranged/magic
     - In-game tables for party members efficiency comparison
     - Selected segment / current map / overall game data in separate tables
     - Export of the statistics to the output file for future reference
-- Enhanced character page
+- **Enhanced character page**
     - Barrel-Colored Attributes (thx MAW) with current modifier value and next attribute milestone in the tooltip
     - Elements-Colored Resistances with average resistance percentage
     - Final Melee and Ranged damage metric in the form of thoroughly [calculated] DPS, for best weapon combination selection
     - Effective health ("Vitality"), employing HP, Armor Class (physical avoidance) and Magic resistances in single metric
     - Skill tooltips, like total Merchant discount or current Disarm skill vs. area difficulty [Optional, enabled by default]   
-- Convenience features	
+- **Convenience features**	
     - Automatic items sorting. Borrowed from MAW MMMerge mod, with minor changes.
     - Designated players can get alchemy ingredients and unidentified items in their packs  
     - Travel schedule in Autonotes (Seer tab) [Optional, enabled by default]	
