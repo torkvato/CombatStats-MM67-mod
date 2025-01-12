@@ -1,63 +1,37 @@
 -- MM7 convenience and combatlog mod settings
 
-CombatLogEnabled = 1; -- Combatlog output to file 0: disabled, 1 - Player damage only, 2 - Player and Monster damage
-SkillTooltipsEnabled = 1; -- Enhanced skill tooltips. Disarm vs Map Disarm, Merchant discount, etc
-
-EffectiveHitPointsWeights = {Phys = 0.65, Fire=0.075, Air=0.075, Water=0.075, Earth = 0.075, Mind=0.025,Body = .025} --melee party with Thief
---EffectiveHitPointsWeights = {Phys = 0.55, Fire=0.1, Air=0.1, Water=0.1, Earth = 0.1, Mind=0.025,Body = .025} --
-
+-- Combat log options
+CombatLogEnabled = 2; -- Combatlog output to file 0: disabled, 1 - Player damage only, 2 - Player and Monster damage
 CombatLogFile = "CombatLog.csv"
 CombatLogSeparator = "\t"  -- combat log fields separator
 StatsOutputFile = "DamageStats.csv"
+MinilogEntriesNumber = 16  -- number of entries for in-game combat log (L)
+
+
+--Stats and tooltips
+SkillTooltipsEnabled = 1; -- Enhanced skill tooltips. Disarm vs Map Disarm, Merchant discount, etc
+AvoidanceWeights = {Phys = 0.65, Fire=0.075, Air=0.075, Water=0.075, Earth = 0.075, Mind=0.025,Body = .025} --melee party with Thief
+--AvoidanceWeights = {Phys = 0.55, Fire=0.1, Air=0.1, Water=0.1, Earth = 0.1, Mind=0.025,Body = .025} --
 
 
 --Keybinds
+MiniLogButton = const.Keys.H -- MM9-style mini combat log 
 -- CharacterInfo Screen
-DamageMeterResetButton  = 82 -- 'R' button on the Char info screen to Reset segment statistics data
-DamageMeterExportButton = 69 -- 'E' button on the Char info screen to Export statistics data
-AltDamageStatsButton = const.Keys.ALT -- Key for alternating between segment and full stats (with right click on DPS info)
-
+DamageMeterResetButton  = const.Keys.R -- 'R' button on the Char info screen to Reset segment statistics data
+DamageMeterExportButton = const.Keys.E -- 'E' button on the Char info screen to Export statistics data
 -- Inventory Screen
-PlayerInventorySort  = 82 -- 'R' - Sort only current inventory
-PartyInventorySort = 84 -- 'T' - Sort all inventories
-AlchemyPlayerSet = 89 -- 'Y' - Select/Unselect player for alchemy stuff
-IdentifyPlayerSet = 85 -- 'U'  - Select/Unselect player for unidentified stuff
+PlayerInventorySortButton  = const.Keys.R -- 'R' - Sort only current inventory
+PartyInventorySortButton   = const.Keys.T -- 'T' - Sort all inventories
+AlchemyPlayerSetButton     = const.Keys.Y -- 'Y' - Select/Unselect player for alchemy stuff
+IdentifyPlayerSetButton    = const.Keys.U -- 'U'  - Select/Unselect player for unidentified stuff
 
 --Harmless cheats
-AltIdMonsterGM = 1 -- Press alt while identifing the monster to get whole info
+AltIdMonsterGM = 1 -- Press alt while identifing the monster to get whole info at GM level
 SharedIdentifyItem = 1 -- Id Item skill shared among party
 SharedRepair = 1 -- Repair skill shared among party
 TravelScheduleAutoNote = 1 -- Add Travel schedule to Seer Autonotes
 
-
-
-
-    -- msg = ""
-	-- msg = msg .. string.format('    \t%11sMON \t%20sTUE \t%29sWED \t%38sTHU \t%47sFRI \t%56sSAT \t%65sSUN \n','|','|','|','|','|','|','|')
-	-- msg = msg .. string.format('Har \t%11sEra2\t%20sTul2\t%29sEra2\t%38sTul2\t%47sEra2\t%56sTul2\t%65sAre4\n','|','|','|','|','|','|','|')
-	-- msg = msg .. string.format('Era \t%11sTat2\t%20sHar2\t%29sTat2\t%38sDey3\t%47sTat2\t%56sHar2\t%65s    \n','|','|','|','|','|','|','|')
-	-- msg = msg .. string.format('    \t%11sDey2\t%20sTat2\t%29sBra3\t%38sHar2\t%47sAvl4\t%56sBra3\t%65sEve7\n','|','|','|','|','|','|','|')
-	-- msg = msg .. string.format('    \t%11sAvl4\t%20s    \t%29sBra6\t%38s    \t%47s    \t%56sTat2\t%65s    \n','|','|','|','|','|','|','|')
-	-- msg = msg .. string.format('Tul \t%11sTat2\t%20sHar2\t%29sTat2\t%38sDey3\t%47sTat2\t%56sHar2\t%65s    \n','|','|','|','|','|','|','|')
-	-- msg = msg .. string.format('    \t%11sDey2\t%20sTat2\t%29sBra3\t%38sHar2\t%47sAvl4\t%56sBra3\t%65sEve7\n','|','|','|','|','|','|','|')
-	-- msg = msg .. string.format('    \t%11sAvl4\t%20s    \t%29sBra6\t%38s    \t%47s    \t%56sTat2\t%65s    \n','|','|','|','|','|','|','|')
-	-- msg = msg .. string.format('Avl \t%11sTul3\t%20sTul3\t%29sDey5\t%38sTul3\t%47sTul3\t%56sTul3\t%65sDey5\n','|','|','|','|','|','|','|')
-	-- msg = msg .. string.format('    \t%11s    \t%20sEra4\t%29sTul3\t%38sTat5\t%47s    \t%56sEra4\t%65s    \n','|','|','|','|','|','|','|')
-	
-	-- msg = msg .. string.format('Bra \t%11sEra3\t%20sHar5\t%29sEra3\t%38sEve1\t%47sEra3\t%56sHar5\t%65sEra3\n','|','|','|','|','|','|','|')
-	-- msg = msg .. string.format('    \t%11sTat4\t%20sEve1\t%29sTat4\t%38s    \t%47sTat4\t%56sEra6\t%65sTul6\n','|','|','|','|','|','|','|')
-	
-	-- msg = msg .. string.format('Dey \t%11sEra3\t%20sTul2\t%29sEra3\t%38sTul2\t%47sEra3\t%56sTul2\t%65s    \n','|','|','|','|','|','|','|')
-	
-	-- msg = msg .. string.format('Tat \t%11sBra4\t%20sEra2\t%29sBra4\t%38sEra2\t%47s    \t%56sEra2\t%65sEve5\n','|','|','|','|','|','|','|')
-	-- msg = msg .. string.format('    \t%11s    \t%20sEra2\t%29s    \t%38sEra2\t%47s    \t%56sAvl5\t%65s    \n','|','|','|','|','|','|','|')
-	
-	-- msg = msg .. string.format('Eve \t%11sTat4\t%20s    \t%29sTat4\t%38s    \t%47sTat4\t%56sTul6\t%65s    ','|','|','|','|','|','|','|')
-
-
-
-
-
+F = {}
 
 -- Table of average additional elem damage on weapons vs Bonus2 property value
 const.bonus2damage={}
@@ -78,13 +52,32 @@ const.bonus2damage[46] = 15
 const.bonus2damage[67] = 5
 const.bonus2damage[68] = 7
 
-const.Mastery = {[0] = "x",[1] = "N", [2] = "E", [3] = "M", [4] = "GM"}
+const.Mastery = {[0] = "x",[1] = "N", [2] = "E", [3] = "M", [4] = "G"}
 
-if CombatLogEnabled==1 then
+const.DamageColor = {
+Fire = {255, 70, 70}, 
+Air = {173, 216, 230}, 
+Water = {100, 180, 255},
+Earth = {153, 76, 0},
+
+Phys = {255, 255,255},
+Magic = {0, 255, 0},
+
+Spirit = {100, 200, 255},
+Mind = {200, 115, 255}, 
+Body = {75, 255, 255},
+ 
+Light = {250, 250, 0},
+Dark = {127, 0, 255}, 
+Energy = {255, 0, 0}, 
+ }
+
+
+if CombatLogEnabled>0 then
 local file = io.open(CombatLogFile,"r")
     if not(file) then
         file = io.open(CombatLogFile,"w")
-        file:write(string.format("Time%s#%sClass(Lvl)%sName%sTarget%sDamage%sDamageKind%sDamageSource\n",CombatLogSeparator,CombatLogSeparator,CombatLogSeparator,CombatLogSeparator,CombatLogSeparator,CombatLogSeparator,CombatLogSeparator))
+        file:write(string.format("Time    %s#%sClass(Lvl)%sPlayer%sDir%sMonster%sDamage%sKind%sSource\n",CombatLogSeparator,CombatLogSeparator,CombatLogSeparator,CombatLogSeparator,CombatLogSeparator,CombatLogSeparator,CombatLogSeparator,CombatLogSeparator))
         file:close()
     else 
         file:close()

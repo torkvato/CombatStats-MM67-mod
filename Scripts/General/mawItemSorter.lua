@@ -1,13 +1,13 @@
 -- Borrowed from MAW with minor changes
 function events.KeyDown(t)
-    if Game.CurrentScreen == 7 and Game.CurrentCharScreen == 103 then
-        if t.Key == PlayerInventorySort then
+    if Game.CurrentScreen == const.Screens.Inventory and Game.CurrentCharScreen == const.CharScreens.Inventory  then
+        if t.Key == PlayerInventorySortButton then
             sortInventory(false)
             Game.ShowStatusText("Inventory sorted")
-        elseif t.Key == PartyInventorySort then
+        elseif t.Key == PartyInventorySortButton then
             sortInventory(true)
             Game.ShowStatusText("All inventories have been sorted")
-        elseif t.Key == AlchemyPlayerSet then
+        elseif t.Key == AlchemyPlayerSetButton then
             vars.alchemyPlayer = vars.alchemyPlayer or -1		
             if vars.alchemyPlayer == Game.CurrentPlayer then
                 vars.alchemyPlayer = -1
@@ -16,7 +16,7 @@ function events.KeyDown(t)
                 vars.alchemyPlayer = Game.CurrentPlayer
                 Game.ShowStatusText(Party[Game.CurrentPlayer].Name .. " will now take alchemy items when sorting")
             end
-		elseif t.Key == IdentifyPlayerSet then
+		elseif t.Key == IdentifyPlayerSetButton then
             vars.identifyPlayer =  vars.identifyPlayer or -1		
             if vars.identifyPlayer == Game.CurrentPlayer then
                 vars.identifyPlayer = -1

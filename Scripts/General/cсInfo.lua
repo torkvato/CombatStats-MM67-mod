@@ -18,7 +18,6 @@ function events.GameInitialized2()
     Game.GlobalTxt[142] = StrColor(200, 200, 255, "Mind")
     Game.GlobalTxt[29] = StrColor(255, 192, 203, "Body")
 
-
 end
 
 
@@ -96,7 +95,7 @@ function events.Tick()
 
         local coeff = CheckPlateChain(pl)
 
-        local avoidance = coeff * monster_hit_chance * EffectiveHitPointsWeights.Phys + R0[10]*EffectiveHitPointsWeights.Fire + R0[11]*EffectiveHitPointsWeights.Air + R0[12]*EffectiveHitPointsWeights.Water + R0[13]*EffectiveHitPointsWeights.Earth + R0[14]*EffectiveHitPointsWeights.Mind + R0[15]*EffectiveHitPointsWeights.Body
+        local avoidance = coeff * monster_hit_chance * AvoidanceWeights.Phys + R0[10]*AvoidanceWeights.Fire + R0[11]*AvoidanceWeights.Air + R0[12]*AvoidanceWeights.Water + R0[13]*AvoidanceWeights.Earth + R0[14]*AvoidanceWeights.Mind + R0[15]*AvoidanceWeights.Body
         local vitality = math.round(fullHP/avoidance)
 
         -- Attack and DPS calculations	
@@ -110,7 +109,7 @@ function events.Tick()
         local delay_r = pl:GetAttackDelay(true)
         local hitchance_r = (15 + atk_r * 2) / (30 + atk_r * 2 + lvl)
 
-        dmg_m = dmg_m + DaggerTriple(pl) -- Account Dagger master for chance to triple base weapon dmg
+        dmg_m = dmg_m + DaggerTriple(pl) + HammerhandsExtra(pl)-- Account Dagger master for chance to triple base weapon dmg and Hammerhanda buff
 
         -- Weapons element damage
         local slot = pl.ItemMainHand
@@ -149,13 +148,12 @@ function events.Tick()
         Game.GlobalTxt[172] = string.format("Vit:%s Avoid:%s%%\n\n\n\n\n\n\n\n\n\n\n\n\n\n", StrColor(0, 255, 0, vitality),  StrColor(230, 204, 128,math.round(1000*(1-monster_hit_chance))/10))
 
         if Keys.IsPressed(const.Keys.ALT) then
-            Game.GlobalTxt2[41] = "Full stats since game beginning\n" .. DamageMeterCalculation(vars.damagemeter) .. string.format("\nMax Hit %s by %s",vars.Max.Dmg,Party[vars.Max.Player].Name)
-            Game.GlobalTxt2[42] = Game.GlobalTxt2[41]
+            Game.GlobalTxt2[41] = "Full stats since game beginning, [E] for export\n" .. DamageMeterCalculation(vars.damagemeter) 
+            Game.GlobalTxt2[42] = PartyRecordsTxt()
         else 
 
-        local gameminutes = math.floor((Game.Time - vars.timestamps[0].SegmentStart)/const.Minute)    
-        Game.GlobalTxt2[41] = string.format("Segment data (%s game minutes since [r]eset)\n",gameminutes) .. DamageMeterCalculation(vars.damagemeter1) .. string.format("\nMax Hit %s by %s",vars.Max1.Dmg,Party[vars.Max1.Player].Name)
-        Game.GlobalTxt2[42] = string.format("Current map: %s, [ALT] for full\n",Game.MapStats[Game.Map.MapStatsIndex].Name).. DamageMeterCalculation(mapvars.damagemeter) .. string.format("\nMax Hit %s by %s",mapvars.Max.Dmg,Party[mapvars.Max.Player].Name)           
+        Game.GlobalTxt2[41] = string.format("Segment: %s since [r]eset, [ALT] for more\n",GameTimePassed()) .. DamageMeterCalculation(vars.damagemeter1) 
+        Game.GlobalTxt2[42] = string.format("Current map: %s, [ALT] for full\n",Game.MapStats[Game.Map.MapStatsIndex].Name).. DamageMeterCalculation(mapvars.damagemeter)      
         end
         textsupdated = true
 
@@ -203,35 +201,6 @@ function Stat2Modifier(stat)
     return found, next
 end
 
-function StrColor(r, g, b, s)
-    return ('\f%.5d'):format(b and RGB(r, g, b) or r) .. ((s or not b and g) and (s or g) .. StrColor(0) or '')
-end
-
-function RGB(r, g, b)
-    return r:And(248) * 256 + g:And(252) * 8 + math.floor(b / 8)
-end
-
-function get_key_for_value(t, value)
-    for k, v in pairs(t) do
-        if v == value then
-            return k
-        end
-    end
-    return nil
-end
-function ptable(vars)
-for k,v in pairs(vars) do
-    print(k,v)
-end
-end
-
--- local file = io.open('autonotedebug.txt',"a")
--- for k,v in pairs(t.Autonote) do
--- 			file:write(tostring(k) .. ' ' .. tostring(v) .. '\n')
--- end
--- file:close()
-
-
 function CheckPlateChain(pl)
 local coeff = 1
 local s,mplate = SplitSkill(pl:GetSkill(const.Skills.Plate))
@@ -252,21 +221,73 @@ function DaggerTriple(pl)
     local extradamage = 0
     local sdagger,mdagger = SplitSkill(pl:GetSkill(const.Skills.Dagger))
     if mdagger>=3 then--master or GM
-        if pl.ItemMainHand>0 then mh = pl.Items[pl.ItemMainHand] end
-        -- 10% chance for triple base damage (double extra base)
-        if mh:T().Skill ==  const.Skills.Dagger then
-            extradamage = sdagger / 100 * 2 * (mh:T().Mod2 + (mh:T().Mod1DiceCount + mh:T().Mod1DiceCount * mh:T().Mod1DiceSides)/2)
+        if pl.ItemMainHand>0 then 
+			mh = pl.Items[pl.ItemMainHand]
+        -- Skill% chance for triple base damage (double extra base)
+			if mh:T().Skill ==  const.Skills.Dagger then
+				extradamage = sdagger / 100 * 2 * (mh:T().Mod2 + (mh:T().Mod1DiceCount + mh:T().Mod1DiceCount * mh:T().Mod1DiceSides)/2)
+			end
+		end
+		
+        if pl.ItemExtraHand > 0 then 
+			eh = pl.Items[pl.ItemExtraHand]
+			if eh:T().Skill ==  const.Skills.Dagger then
+				extradamage = extradamage + sdagger / 100 * 2 * (eh:T().Mod2 + (eh:T().Mod1DiceCount + eh:T().Mod1DiceCount * eh:T().Mod1DiceSides)/2)
+			end
         end
-
-        if pl.ItemExtraHand > 0 then eh = pl.Items[pl.ItemExtraHand] end
-
-        if eh:T().Skill ==  const.Skills.Dagger then
-            extradamage = extradamage + sdagger / 100 * 2 * (eh:T().Mod2 + (eh:T().Mod1DiceCount + eh:T().Mod1DiceCount * eh:T().Mod1DiceSides)/2)
-        end
-        
     end
     return extradamage
 end
+
+
+function HammerhandsExtra(pl)
+    local extradamage = 0
+    --both hands empty and buffed
+    if pl.SpellBuffs[const.PlayerBuff.Hammerhands].ExpireTime>0 and  pl.ItemMainHand==0 and pl.ItemExtraHand==0 then
+    
+    extradamage = pl.SpellBuffs[const.PlayerBuff.Hammerhands].Power
+    end
+    return extradamage
+end
+
+
+function GameTimePassed()
+local gameminutes = math.floor((Game.Time - vars.timestamps[0].SegmentStart)/const.Minute)
+local days = math.floor(gameminutes/60/24)    
+local hours = math.floor((gameminutes%(60*24))/60)
+local mins = gameminutes%60
+return string.format("%dd%02dh%02dm",days,hours,mins)
+end
+
+
+function get_key_for_value(t, value)
+    for k, v in pairs(t) do
+        if v == value then
+            return k
+        end
+    end
+    return nil
+end
+
+function ptable(vars)
+	for k,v in pairs(vars) do
+		print(k,v)
+	end
+end
+
+function ftable(vars)
+	local file = io.open('debugout.txt','a')
+	for k,v in pairs(vars) do
+		file:write(tostring(k) .. ' ' .. tostring(v) .. '\n')
+	end
+	file:write('\n')
+	file:close()
+end
+
+
+
+
+
 
 -- function events.Action(t)
 -- 		Game.ShowStatusText("t.Action" .. t.Action)

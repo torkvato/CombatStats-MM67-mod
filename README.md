@@ -47,7 +47,14 @@ But direct code snatching was not the main thing - the MAW mod showed me that ev
 
 Another great person who actually made any MM modding possible and **Grayface**, author of MMExtension. We just cant underestimate his impact on the MM community, both modders and gamers.
 
-## Illustrations
+## Installation
+ - MM7 GOG version
+ - Grayface latest patch
+ - [Unreleased] MMExtension v2.3
+ - This mod last
+
+Instead of two last steps, one can download whole packege with last stable release
+
 ![image](https://github.com/user-attachments/assets/a9e3e856-e9e0-45f1-89d5-489c77e9db13)
 
 
