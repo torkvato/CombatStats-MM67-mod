@@ -8,10 +8,10 @@ Basically,it is the same good old vanilla Might and Magic 7, without any attempt
 
 However, for the convenience and in-depth analyis of the party the following features were introduced:
 
-- **Classic Combat log**
+- **Classic Combat log file**
     - Logging every damage dealt (and received), with the timestamp, player, target, damage amount, kind and source (melee, ranged or specific spell)
     - CSV save format, customizable
-    - You can do you own parsing and processing, but we already have some implemented in the mod for game stats
+    - You can do you own parsing and processing, but essential things already implemented in-game
 - **In-game mini combat log**
     -  MM9-style, showing the details of the last dozen party/monsters hits
     -  Colored for ease of use
@@ -27,9 +27,8 @@ However, for the convenience and in-depth analyis of the party the following fea
     - Effective health ("Vitality"), employing HP, Armor Class (physical avoidance) and Magic resistances in single metric
     - Skill tooltips, like total Merchant discount or current Disarm skill vs. area difficulty [Optional, enabled by default]   
 - **Convenience features**	
-    - Automatic items sorting. Borrowed from MAW MMMerge mod, with minor changes.
-    - Designated players can get alchemy ingredients and unidentified items in their packs  
-    - Travel schedule in Autonotes (Seer tab) [Optional, enabled by default]	
+    - Automatic items sorting. Borrowed from MAW MMMerge mod, with minor changes (alchemy/unidentified items sorting). 
+    - Full Travel Schedule in Autonotes (Seer tab) [Optional, enabled by default]	
     - Sharing max ID Item and Repair skills over the party [Optional, disabled by default]
     - Grandmaster ID Monster info with ALT pressed [Optional, disabled by default]
     
