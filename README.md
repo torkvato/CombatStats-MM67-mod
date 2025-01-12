@@ -47,20 +47,35 @@ Another great person who actually made any MM modding possible and **Grayface**,
 ## Illustrations
 ![image](https://github.com/user-attachments/assets/a9e3e856-e9e0-45f1-89d5-489c77e9db13)
 
-## Detailed descriptions
-### Calculated Damage Metrics
 
+### Combat log
+### In-game combat log
+### Observed damage statistics
+**Damage done**
+**Observed DPS** 
+**Damage taken**
+**Records**
+
+### Calculated statistics
+**Damage per second, DPS**
 - Hit percentage is calculated on the base of current To-Hit modifier against the mob with AC equal to the current player level\
- P = (15 + PlayerAttack * 2) / (30 + PlayerAttack * 2 + PlayerLvl)
+ *P = (15 + PlayerAttack * 2) / (30 + PlayerAttack * 2 + AC)*
 
-- Estimated DPS is calculated on the base average damage per hit that take into account:
+- Estimated DPS is calculated on the base average damage that take into account
     - Weapons base damage with Str/Heroism already accounted (stated in the vanilla part of the char screen)
     - Constant and temporary elemental damages on both weapons (and three artifacts/relics)
     - Dagger Mastery base damage tripling chance
-    - Things are not taken into account: Weakness and Racial bonuses
-Average Damage is divided by current Recovery value in seconds to get displayed DPS ()
+    - Hammerhands buff
+    - Chance to miss against AC=CurrentLvl
+    Things are not taken into account: Weakness, Racial featurs bonuses, Monster Resistances
+    Average Damage is divided by current Recovery value in seconds to get the final displayed DPS, that include all factors that affect damage output, and thus can be used for weapons comparison
 
-### Estimated Damage metrics
+**Vitality (Effective HP)**
+Vitality is calculated by taking into account player physical hits avoidance chance (determined by AC) and magic resistances. 
+Currently, AC effect is taken with 65% weight, elemental magic resistances have 7.5% each, Mind and Body resistances 2.5% each. These weights are suitable for a party engaging in melee and having a thief.
+If you prefer traps that explode in your face and deal with with mobs from afar, surely the Elemental part should have a larger impact on the result. Alternative config is also included in the cmInit.lua file.  
+
+
 
 https://github.com/malekitsu/maw-mod-mmmerge
 
@@ -68,10 +83,6 @@ https://github.com/Malekitsu/MM6-MAW-Monster-Arts-and-Wonders
 
 https://github.com/GrayFace/MMExtension
 
-### Vitality (Effective HP)
-Vitality is calculated by taking into account player physical hits avoidance chance (determined by AC) and magic resistances. 
-Currently, AC effect is taken with 65% weight, elemental magic resistances have 7.5% each, Mind and Body resistances 2.5% each. These weights are suitable for a party engaging in melee and having a thief.
-If you prefer traps that explode in your face and deal with with mobs from afar, surely the Elemental part should have a larger impact on the result. Alternative config is also included in the cmInit.lua file.  
 
 TODO
 Встроенный комбат лог последних ударов
