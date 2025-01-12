@@ -36,8 +36,8 @@ However, for the convenience and in-depth analyis of the party the following fea
 
 ## Acknowledgments
 This mod is the fulfillment of a long-standing dream, a dream to see in detail what is happening with a team of heroes, a dream to get real data for endless debates about who is better.\
-For a long time, I had no idea how to approach this task, until I saw the MAW mod [https://github.com/malekitsu/maw-mod-mmmerge
-] and fall into it's thrill for a long time.\
+For a long time, I had no idea how to approach this task, until I saw the MAW mod\[https://github.com/malekitsu/maw-mod-mmmerge
+] and fall into it's thrill enjoying both gameplay and new knowledges about modding.\
 The MAW mod developed by **Malekith** and his team was simply a revelation for me.\
 From there I borrowed many things that first appeared in MAW - attributes colors, display of DPS and Vitality stats and, of course, the wonderful inventory auto-sort, without which I now simply cannot play.\
 But direct code snatching was not the main thing - the MAW mod showed me that everything is possible, and showed how it can be done, peeking into its code I discovered for myself both Lua and MMExtension.
