@@ -28,7 +28,7 @@ However, for the convenience and in-depth analyis of the party the following fea
     - Skill tooltips, like total Merchant discount or current Disarm skill vs. area difficulty [Optional, enabled by default]   
 - **Convenience features**	
     - Automatic items sorting. Borrowed from MAW MMMerge mod, with minor changes (alchemy/unidentified items sorting). 
-    - Full Travel Schedule in Autonotes (Seer tab) [Optional, enabled by default]	
+    - Full Travel Schedule / World map in Autonotes (Seer tab) [Optional, enabled by default]	
     - Sharing max ID Item and Repair skills over the party [Optional, disabled by default]
     - Grandmaster ID Monster info with ALT pressed [Optional, disabled by default]
 
@@ -158,6 +158,6 @@ If you prefer traps that explode in your face and deal with with mobs from afar,
 [Y] for select/unselect designated player for Alchemy\
 [U] for select/unselect designated player for Unidentified items\
 **Travel schedule**\
-[N] - Travel schedule is added as Seer note and acessible via Seer tab in Autonotes   
+[N] - Travel schedule and World Map are added as Seer note and acessible via Seer tab in Autonotes   
 **ID Monster**\
 If corresponding option in mild cheats section is enabled, [ALT] while checking monster stats will give full GM information\

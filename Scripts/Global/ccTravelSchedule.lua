@@ -26,4 +26,22 @@ Autonote(':SeerTravelSchedule', 3, msg)
 SuppressSound(true) -- disable annoying ding
 AddAutonote(':SeerTravelSchedule')
 SuppressSound(false)
+
+-- s = ""
+-- for i=14,255 do
+-- s = s .. string.char(i)
+-- if (i%40)==0 then s = s .. "\n" end
+-- Message(s)
+local msg1 = ""
+msg1 = msg1 .. "\n                [Shoals]-[Avlee]"
+msg1 = msg1 .. "\n                                   |"
+msg1 = msg1 .. "\n[The Pit ]-[Deyja]-[Tularean]  [LandGiants]"
+msg1 = msg1 .. "\n                    |              |                  |"
+msg1 = msg1 .. "\n[Tatalia ]-[Erathia]-[Harmondale] [Nighon]"
+msg1 = msg1 .. "\n                    |              |                  |"
+msg1 = msg1 .. "\n[Celeste]-[Bracada]-[Burrows]-[StoneCity]"
+Autonote(':SeerWorldMap', 3, msg1)
+SuppressSound(true) -- disable annoying ding
+AddAutonote(':SeerWorldMap')
+SuppressSound(false)
 end
