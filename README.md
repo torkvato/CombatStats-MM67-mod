@@ -68,7 +68,7 @@ Another great person who actually made any MM modding possible and **Grayface**,
 ### Combat log
 Enabling the combat log option will create the .csv file in the game directory, and log any [successful] hit in it.\
 You can disable the combat log fully (CombatLogEnabled=0), log only party damage (CombatLogEnabled=1) and party and monsters damage (CombatLogEnabled=2)\
-Also in config file you can specify the log separator, but changing the order and adding new data will require more detailed code changes\
+Also in config file you can specify the log separator, but changing the order and adding new data will require more detailed code changes
 
 Combat log is constantly appended with new records, so it will keep everything even if you reload game or have a new party.\
 Any log management should be done manually.
