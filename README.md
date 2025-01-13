@@ -107,6 +107,10 @@ Here you also can [E]xport this tables in the file for further usage.
 
 
 **Observed DPS**
+DPS, or damage per second is the most important metric of the combat proficiency. Here we calculate is by a total damage inflicted by the player, divided by the total active time\
+Calculation of active time can be tricky and controversial. Currently, active time is calculated from the first successful hit and ended if there are no successful hits within 5seconds.
+DPS is calculated for each party member independently and over the same three data accumulation pools: map, full, and resettable segment.
+
 ![image](https://github.com/user-attachments/assets/fc77963c-196b-4448-b2b7-a148eb8a0734)
 
 **Damage taken**
