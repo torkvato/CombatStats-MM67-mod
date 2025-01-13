@@ -41,6 +41,8 @@ Instead of two last steps, one can download whole package with last stable relea
 **https://drive.google.com/file/d/1-Q_2YfdmWr18vBhJOxPIJjXPreb9W3Ih**
 
 - Uninstall: run ccUninst.bat in Scripts folder. The game flow is not affected by mod installation and deinstallation
+- Bug reportin and support in the TG group - https://t.me/+WAc2jt1nvT1iMzIy
+
 
 **Configuration**
 You can check the available config options in the Scripts/General/ccInit.lua file
