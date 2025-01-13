@@ -33,15 +33,60 @@ SuppressSound(false)
 -- if (i%40)==0 then s = s .. "\n" end
 -- Message(s)
 local msg1 = ""
-msg1 = msg1 .. "\n                [Shoals]-[Avlee]"
+msg1 = msg1 .. "\n\n\n                [Shoals]-[Avlee]"
 msg1 = msg1 .. "\n                                   |"
 msg1 = msg1 .. "\n[The Pit ]-[Deyja]-[Tularean]  [LandGiants]"
 msg1 = msg1 .. "\n                    |              |                  |"
 msg1 = msg1 .. "\n[Tatalia ]-[Erathia]-[Harmondale] [Nighon]"
 msg1 = msg1 .. "\n                    |              |                  |"
-msg1 = msg1 .. "\n[Celeste]-[Bracada]-[Burrows]-[StoneCity]"
+msg1 = msg1 .. "\n[Celeste]-[Bracada]-[Burrows]-[StoneCity]\n\n\n"
 Autonote(':SeerWorldMap', 3, msg1)
 SuppressSound(true) -- disable annoying ding
 AddAutonote(':SeerWorldMap')
 SuppressSound(false)
+
+local msg2 = ""
+msg2 = msg2 .. string.format('SWOR\t%13sAXE \t%22sSPEAR\t%32sMACE\t%41sSTAF\t%50sDAGG\t%61sBOW\n','|','|','|','|','|','|')
+msg2 = msg2 .. string.format('e Era\t%13sHar\t%22sTat\t%32sEra\t%41sHar\t%50sTul\t%61sTul\n','|','|','|','|','|','|')
+msg2 = msg2 .. string.format('e Tat\t%13sAvl\t%22sAvl\t%32sSto\t%41sNig\t%50sBra\t%61sBra\n','|','|','|','|','|','|')
+msg2 = msg2 .. string.format('m Dey\t%13sSto\t%22sTul\t%32sTat\t%41sBra\t%50sNig\t%61sNig\n','|','|','|','|','|','|')
+msg2 = msg2 .. string.format('g Har\t%13sTat\t%22sSto\t%32sDey\t%41sAvl\t%50sTat\t%61sHar\n','|','|','|','|','|','|')
+msg2 = msg2 .. '\n'
+msg2 = msg2 .. string.format('FIRE \t%13sAIR\t%22sWATR\t%32sERTH\t%41sSPIRT\t%50sMIND\t%61sBODY\n','|','|','|','|','|','|')
+msg2 = msg2 .. string.format('e Tul\t%13sTul\t%22sTul\t%32sHar\t%41sHar\t%50sEra\t%61sHar\n','|','|','|','|','|','|')
+msg2 = msg2 .. string.format('e Tat\t%13sTat\t%22sAvl\t%32sSto\t%41sTat\t%50sNig\t%61sEra\n','|','|','|','|','|','|')
+msg2 = msg2 .. string.format('m Har\t%13sAvl\t%22sNig\t%32sTul\t%41sEra\t%50sAvl\t%61sTat\n','|','|','|','|','|','|')
+msg2 = msg2 .. string.format('g Era\t%13sBra\t%22sHar\t%32sDey\t%41sTul\t%50sTat\t%61sAvl\n','|','|','|','|','|','|')
+msg2 = msg2 .. '\n'
+msg2 = msg2 .. string.format('ARMS \t%13sDISA\t%22sMRCH\t%32sALCH\t%41sID.IT\t%50sID.M\t%61sRep\n','|','|','|','|','|','|')
+msg2 = msg2 .. string.format('e Tat\t%13sTul,Er\t%22sTul\t%32sTul\t%41sHar\t%50sTul\t%61sHar\n','|','|','|','|','|','|')
+msg2 = msg2 .. string.format('e Dey\t%13sTat\t%22sSto\t%32sBra\t%41sNig\t%50sNig\t%61sSto\n','|','|','|','|','|','|')
+msg2 = msg2 .. string.format('m Avl\t%13sHar\t%22sEve\t%32sNig\t%41sBra\t%50sAvl\t%61sTat\n','|','|','|','|','|','|')
+msg2 = msg2 .. string.format('g LoG\t%13sNig\t%22sBra\t%32sAvl\t%41sTul\t%50sHar\t%61sEra\n','|','|','|','|','|','|')
+
+Autonote(':SeerTeachers1', 3, msg2)
+SuppressSound(true) -- disable annoying ding
+AddAutonote(':SeerTeachers1')
+SuppressSound(false)
+
+local msg3 = ""
+msg3 = msg3 .. string.format('LTHR\t%13sCHN\t%22sPLATE\t%32sSHLD\t%41sBB\t%50sUNRM\t%61sDODG\n','|','|','|','|','|','|')
+msg3 = msg3 .. string.format('e Har\t%13sTul\t%22sTat\t%32sEra\t%41sBra\t%50sHar\t%61sHar\n','|','|','|','|','|','|')
+msg3 = msg3 .. string.format('e Avl\t%13sTat\t%22sSto\t%32s\t%41sSto\t%50sBra\t%61sBra\n','|','|','|','|','|','|')
+msg3 = msg3 .. string.format('m Nig\t%13sAvl\t%22sEra\t%32sTat\t%41sDey\t%50sEve\t%61sEve\n','|','|','|','|','|','|')
+msg3 = msg3 .. string.format('g Tul\t%13sDey\t%22sBra\t%32sEve\t%41sNig\t%50sEra\t%61sEra\n','|','|','|','|','|','|')
+msg3 = msg3 .. '\n'
+msg3 = msg3 .. string.format('LIGHT\t%13sDARK\t%22sMEDT\t%32sLRNG\t%41sPERC\t%50sSTEAL\t%61sBLSTR\n','|','|','|','|','|','|')
+msg3 = msg3 .. string.format('e Bra\t%13sDey\t%22sDey\t%32sBra\t%41sHar  \t%50sHar,Er   \t%61sCel,Pt\n','|','|','|','|','|','|')
+msg3 = msg3 .. string.format('e    \t%13s\t%22sAvl\t%32sNig\t%41sDey\t%50sNig   \t%61sCel,Pt\n','|','|','|','|','|','|')
+msg3 = msg3 .. string.format('m Cel\t%13sPit\t%22sBra\t%32sNig\t%41sTul  \t%50sDey   \t%61sCel,Pt\n','|','|','|','|','|','|')
+msg3 = msg3 .. string.format('g Cel\t%13sPit\t%22sAvl\t%32sEve\t%41sDey  \t%50sTat   \t%61sCel,Pt\n','|','|','|','|','|','|')
+
+Autonote(':SeerTeachers2', 3, msg3)
+SuppressSound(true) -- disable annoying ding
+AddAutonote(':SeerTeachers2')
+SuppressSound(false)
+
+
+
 end
