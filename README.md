@@ -93,8 +93,8 @@ In-game combat log have less field due to lack of space, but currently shows the
 ![image](https://github.com/user-attachments/assets/9d772466-850e-4028-a236-58e3fd3a6d5c)
 
 ### Combat statists
-**Damage done**
-Mod accumulated and damage dealt by party and monsters.\
+**Damage done**\
+Mod accumulates and stores damage dealt by party and monsters.\
 Damage divided in the three categories: *Melee*, *Ranged* (bows and blasters) and *Spell*, each category processed individually per party member.
 
 Also, there are three distinct accumulation pools: 
@@ -106,7 +106,7 @@ Statistics summaries can be accessed by [Right=click] in the DPS/Vitality area o
 Here you also can [E]xport this tables in the file for further usage.
 
 
-**Observed DPS**
+**Observed DPS**\
 DPS, or damage per second is the most important metric of the combat proficiency. Here we calculate is by a total damage inflicted by the player, divided by the total active time\
 Calculation of active time can be tricky and controversial. Currently, active time is calculated from the first successful hit and ended if there are no successful hits within 5seconds.
 DPS is calculated for each party member independently and over the same three data accumulation pools: map, full, and resettable segment.
