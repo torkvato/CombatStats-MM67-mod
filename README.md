@@ -63,7 +63,7 @@ Another great person who actually made any MM modding possible and **Grayface**,
 
 
 
-## Detauled description
+## Detailed description
 
 ### Combat log
 Enabling the combat log option will create the .csv file in the game directory, and log any [successful] hit in it.\
