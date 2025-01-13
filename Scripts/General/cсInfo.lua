@@ -148,12 +148,14 @@ function events.Tick()
         Game.GlobalTxt[172] = string.format("Vit:%s Avoid:%s%%\n\n\n\n\n\n\n\n\n\n\n\n\n\n", StrColor(0, 255, 0, vitality),  StrColor(230, 204, 128,math.round(1000*(1-monster_hit_chance))/10))
 
         if Keys.IsPressed(const.Keys.ALT) then
-            Game.GlobalTxt2[41] = "Full stats since game beginning, [E] for export\n" .. DamageMeterCalculation(vars.damagemeter) 
-            Game.GlobalTxt2[42] = PartyRecordsTxt()
+            Game.GlobalTxt2[41] = PartyRecordsTxt()
+            Game.GlobalTxt2[42] = "Full stats since game beginning, [E] for export\n" .. DamageMeterCalculation(vars.damagemeter) 
+            
         else 
-
-        Game.GlobalTxt2[41] = string.format("Segment: %s since [r]eset, [ALT] for more\n",GameTimePassed()) .. DamageMeterCalculation(vars.damagemeter1) 
-        Game.GlobalTxt2[42] = string.format("Current map: %s, [ALT] for full\n",Game.MapStats[Game.Map.MapStatsIndex].Name).. DamageMeterCalculation(mapvars.damagemeter)      
+        
+        Game.GlobalTxt2[41] = string.format("Current map: %s, [ALT] for more\n",Game.MapStats[Game.Map.MapStatsIndex].Name).. DamageMeterCalculation(mapvars.damagemeter)      
+        Game.GlobalTxt2[42] = string.format("Segment: %s since [r]eset, [ALT] for full\n",GameTimePassed()) .. DamageMeterCalculation(vars.damagemeter1) 
+        
         end
         textsupdated = true
 

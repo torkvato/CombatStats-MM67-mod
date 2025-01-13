@@ -36,7 +36,7 @@ However, for the convenience and in-depth analyis of the party the following fea
  - MM7 GOG version
  - Grayface latest MM7 patch: https://grayface.github.io/mm/#GrayFace-MM7-Patch
  - [Unreleased] MMExtension v2.3: https://github.com/GrayFace/MMExtension 
- - This mod: 
+ - This mod. 
 Instead of two last steps, one can download whole packege with last stable release
 
 ## Acknowledgments
@@ -51,7 +51,6 @@ From there I borrowed many things that first appeared in MAW - attributes colors
 But direct code snatching was not the main thing - the MAW mod showed me that everything is possible, and showed how it can be done, peeking into its code I discovered for myself both Lua and MMExtension.
 
 Another great person who actually made any MM modding possible and **Grayface**, author of MMExtension. We just cant underestimate his impact on the MM community, both modders and gamers.
-
 
 
 
@@ -73,11 +72,11 @@ Another great person who actually made any MM modding possible and **Grayface**,
  *P = (15 + PlayerAttack * 2) / (30 + PlayerAttack * 2 + AC)*
 
 - Estimated DPS is calculated on the base average damage that take into account
+    - Chance to miss against AC=CurrentLvl
     - Weapons base damage with Str/Heroism already accounted (stated in the vanilla part of the char screen)
-    - Constant and temporary elemental damages on both weapons (and three artifacts/relics)
+    - Constant and temporary elemental damage on both weapons (and artifacts/relics)
     - Dagger Mastery base damage tripling chance
     - Hammerhands buff
-    - Chance to miss against AC=CurrentLvl
     Things are not taken into account: Weakness, Racial featurs bonuses, Monster Resistances
     Average Damage is divided by current Recovery value in seconds to get the final displayed DPS, that include all factors that affect damage output, and thus can be used for weapons comparison
 

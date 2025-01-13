@@ -313,18 +313,18 @@ end
 function PartyRecordsTxt()
     local msg=StrColor(255, 100,100, "Record damage")
     msg = msg..StrColor(50, 255, 255,string.format("\nData\t%10sMelee\t%27sRanged\t%44sSpell",'|','|','|'))
-    msg = msg .. string.format("\nSegm\t%10s%s %s\t%27s%s %s\t%44s%s %s",'|',Party[vars.Max1.Melee.Player].Name,vars.Max1.Melee.Dmg,'|', Party[vars.Max1.Ranged.Player].Name,vars.Max1.Ranged.Dmg, '|', Party[vars.Max1.Spell.Player].Name,vars.Max1.Spell.Dmg)
     msg = msg .. string.format("\nMap \t%10s%s %s\t%27s%s %s\t%44s%s %s",'|',Party[mapvars.Max.Melee.Player].Name,mapvars.Max.Melee.Dmg,'|', Party[mapvars.Max.Ranged.Player].Name,mapvars.Max.Ranged.Dmg, '|', Party[mapvars.Max.Spell.Player].Name,mapvars.Max.Spell.Dmg)
-    msg = msg .. string.format("\nFull\t%10s%s %s\t%27s%s %s\t%44s%s %s",'|',Party[vars.Max.Melee.Player].Name,vars.Max.Melee.Dmg,'|', Party[vars.Max.Ranged.Player].Name,vars.Max.Ranged.Dmg, '|', Party[vars.Max.Spell.Player].Name,vars.Max.Spell.Dmg)
+    msg = msg .. string.format("\nSegm\t%10s%s %s\t%27s%s %s\t%44s%s %s",'|',Party[vars.Max1.Melee.Player].Name,vars.Max1.Melee.Dmg,'|', Party[vars.Max1.Ranged.Player].Name,vars.Max1.Ranged.Dmg, '|', Party[vars.Max1.Spell.Player].Name,vars.Max1.Spell.Dmg)
+        msg = msg .. string.format("\nFull\t%10s%s %s\t%27s%s %s\t%44s%s %s",'|',Party[vars.Max.Melee.Player].Name,vars.Max.Melee.Dmg,'|', Party[vars.Max.Ranged.Player].Name,vars.Max.Ranged.Dmg, '|', Party[vars.Max.Spell.Player].Name,vars.Max.Spell.Dmg)
 
     local tsegm = vars.damagemeter1[0].Damage_Received + vars.damagemeter1[1].Damage_Received + vars.damagemeter1[2].Damage_Received + vars.damagemeter1[3].Damage_Received
     local tmap  = mapvars.damagemeter[0].Damage_Received + mapvars.damagemeter[1].Damage_Received + mapvars.damagemeter[2].Damage_Received + mapvars.damagemeter[3].Damage_Received
     local tfull = vars.damagemeter[0].Damage_Received + vars.damagemeter[1].Damage_Received + vars.damagemeter[2].Damage_Received + vars.damagemeter[3].Damage_Received
     
-    msg = msg .. StrColor(255, 100,100, "\n\nReceived damage %%")
+    msg = msg .. StrColor(255, 100,100, "\n\nDamage taken, Party %%")
     msg = msg..StrColor(50, 255, 255,string.format("\nData\t%10s%-9.9s\t%24s%-9.9s\t%37s%-9.9s\t%50s%-9.9s",'|',Game.ClassNames[Party[0].Class],'|',Game.ClassNames[Party[1].Class], '|',Game.ClassNames[Party[2].Class], '|',Game.ClassNames[Party[3].Class]))
-    msg = msg..string.format("\nSegm\t%10s%5s%%\t%24s%5s%%\t%37s%5s%%\t%50s%5s%%",'|',math.round(100*vars.damagemeter1[0].Damage_Received/tsegm),'|',math.round(100*vars.damagemeter1[1].Damage_Received/tsegm), '|',math.round(100*vars.damagemeter1[2].Damage_Received/tsegm), '|',math.round(100*vars.damagemeter1[3].Damage_Received/tsegm))
     msg = msg..string.format("\nMap \t%10s%5s%%\t%24s%5s%%\t%37s%5s%%\t%50s%5s%%",'|',math.round(100*mapvars.damagemeter[0].Damage_Received/tmap),'|',math.round(100*mapvars.damagemeter[1].Damage_Received/tmap), '|',math.round(100*mapvars.damagemeter[2].Damage_Received/tmap), '|',math.round(100*mapvars.damagemeter[3].Damage_Received/tmap))
+    msg = msg..string.format("\nSegm\t%10s%5s%%\t%24s%5s%%\t%37s%5s%%\t%50s%5s%%",'|',math.round(100*vars.damagemeter1[0].Damage_Received/tsegm),'|',math.round(100*vars.damagemeter1[1].Damage_Received/tsegm), '|',math.round(100*vars.damagemeter1[2].Damage_Received/tsegm), '|',math.round(100*vars.damagemeter1[3].Damage_Received/tsegm))
     msg = msg..string.format("\nFull\t%10s%5s%%\t%24s%5s%%\t%37s%5s%%\t%50s%5s%%",'|',math.round(100*vars.damagemeter[0].Damage_Received/tfull),'|',math.round(100*vars.damagemeter[1].Damage_Received/tfull), '|',math.round(100*vars.damagemeter[2].Damage_Received/tfull), '|',math.round(100*vars.damagemeter[3].Damage_Received/tfull))
 
     return msg
