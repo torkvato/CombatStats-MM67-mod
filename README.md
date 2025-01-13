@@ -38,7 +38,7 @@ However, for the convenience and in-depth analyis of the party the following fea
  - Unreleased MMExtension v2.3: https://github.com/GrayFace/MMExtension 
  - This mod. 
 Instead of two last steps, one can download whole package with last stable release\
-**https://drive.google.com/file/d/1ySkbRrRHyBweAInl4GZynx8VSK38kYRL**
+**https://drive.google.com/file/d/1-Q_2YfdmWr18vBhJOxPIJjXPreb9W3Ih**
 
 - Uninstall: run ccUninst.bat in Scripts folder. The game flow is not affected by mod installation and deinstallation
 
