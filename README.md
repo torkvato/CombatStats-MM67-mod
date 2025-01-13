@@ -36,7 +36,7 @@ However, for the convenience and in-depth analyis of the party the following fea
  - MM7 GOG version (do not forget to set WinXP compatibility options)
  - Grayface latest MM7 patch (tested for 2.5.7): https://grayface.github.io/mm/#GrayFace-MM7-Patch
  - Unreleased MMExtension v2.3: https://github.com/GrayFace/MMExtension 
- - This mod. Latest version in the repository\
+ - This mod. Latest version in the repository
  
 Instead of two last steps, one can download whole package with last stable release\
 **https://drive.google.com/file/d/1-Q_2YfdmWr18vBhJOxPIJjXPreb9W3Ih**
@@ -160,4 +160,4 @@ If you prefer traps that explode in your face and deal with with mobs from afar,
 **Travel schedule**\
 [N] - Travel schedule is added as Seer note and acessible via Seer tab in Autonotes   
 **ID Monster**\
-If corresponding option in mild cheats section is enabled, [ALT] while checking monster stats will give full GM information\
+If corresponding option in mild cheats section is enabled, [ALT] while checking monster stats will give full GM information
