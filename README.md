@@ -72,8 +72,23 @@ Also in config file you can specify the log separator, but changing the order an
 Combat log is constantly appended with new records, so it will keep everything even if you reload game or have a new party.\
 Any log management should be done manually.
 
+Fields are:
+- Timestamp in game ticks. 256 ticks = 1 in-game minute = 2 realtime seconds = 120 "weapon recovery" points.\
+- Player# (0-3)
+- Player class and lvl
+- Player name 
+- Hit direction indicator, point toward target
+- Monster name
+- Damage inflicted
+- Damage kind (Fire, Air, Dark, etc)
+- Damage source, either melee hit, ranged shoot (bow/blaster) or certain spell with its Skill and Mastery
+
+Since the game treat each case of damage separately, hitting with elementrary enchanted weapon will give two lines in combat log. Same with Shotgun/AoE spells (except Armageddon)
+
 ### In-game combat history
 Besides output to the file, damage done and received can be viewed in MM9-style combat history (default key -[H] )
+In-game combat log have less field due to lack of space, but currently shows the mod level for reference
+
 ![image](https://github.com/user-attachments/assets/9d772466-850e-4028-a236-58e3fd3a6d5c)
 
 ### Combat statists
@@ -94,7 +109,17 @@ Here you also can [E]xport this tables in the file for further usage.
 ![image](https://github.com/user-attachments/assets/fc77963c-196b-4448-b2b7-a148eb8a0734)
 
 **Damage taken**
+Damage taken per each party member is accumulated over map/full game/segment and shoun in one of the [ALT-Click] tables.
+Currently it is divided between melee/ranged/spell.
+
+Only damage originated from monsters (and fellow casters) is counted. 
+Traps and fall damage have no "author" and is not [yet] included in the statictic.
+
 **Records**
+Mod will record best hits with melee, ranged and magic separately (also, independently for three data sets: map, full and segment)\
+To overcome the problem of several damage kinds/several damage sources per hit, accumulation logic is added.\
+Damage counted as one hit if it happens in the same timestamp, done by same player and against monster with the same name.\
+So melee hit with Phys+Fire damage will be summed, Fireball against group of same-named monsters will be summed but againt group of different monsters not.
 
 ### Calculated statistics
 **Damage per second, DPS**
@@ -120,7 +145,7 @@ If you prefer traps that explode in your face and deal with with mobs from afar,
 ## Default keybinds
 
 **Combat history**\
-[H], as it was in MM9. This overlaps Wendell Tweed history notes, so if you can access them through book or rebind the key in the Menu
+[H], as it was in MM9. This overlaps Wendell Tweed history notes, so if you really need his works, you can access them through book or rebind the key in the Menu
 **Damage statistics**\
 [Right-click] in the Player Stats screen: clicking on DPS stat will lead to segment data, clicking on Vitality will lead to map data\
 [ALT]+[Right-click] lead to Full stat since the beginning of the game\
