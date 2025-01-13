@@ -60,17 +60,34 @@ Another great person who actually made any MM modding possible and **Grayface**,
 
 
 
+## Detauled description
+
 ### Combat log
 Enabling the combat log option will create the .csv file in the game directory, and log any [successful] hit in it.\
 You can disable the combat log fully (CombatLogEnabled=0), log only party damage (CombatLogEnabled=1) and party and monsters damage (CombatLogEnabled=2)\
 Also in config file you can specify the log separator, but changing the order and adding new data will require more detailed code changes\
 
+Combat log is constantly appended with new records, so it will keep everything even if you reload game or have a new party.\
+Any log management should be done manually.
+
 ### In-game combat history
 Besides output to the file, damage done and received can be viewed in MM9-style combat history (default key -[H] )
 ![image](https://github.com/user-attachments/assets/9d772466-850e-4028-a236-58e3fd3a6d5c)
 
-### Observed damage statistics
+### Combat statists
 **Damage done**
+Mod accumulated and damage dealt by party and monsters.\
+Damage divided in the three categories: *Melee*, *Ranged* (bows and blasters) and *Spell*, each category processed individually per party member.
+
+Also, there are three distinct accumulation pools: 
+- Map/location data: specific for certain indoor/outdoor area, persists till map respawn (in 2 years or so)
+- Full data: Overall stats from the very beginning
+- Segment data: statistics since last manual reset ([R] in Character page)
+
+Statistics summaries can be accessed by [Right=click] in the DPS/Vitality area of Character page\
+Here you also can [E]xport this tables in the file for further usage.
+
+
 **Observed DPS**
 ![image](https://github.com/user-attachments/assets/fc77963c-196b-4448-b2b7-a148eb8a0734)
 
