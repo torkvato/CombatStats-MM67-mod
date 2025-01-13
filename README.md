@@ -33,11 +33,18 @@ However, for the convenience and in-depth analyis of the party the following fea
     - Grandmaster ID Monster info with ALT pressed [Optional, disabled by default]
 
 ## Installation
- - MM7 GOG version
- - Grayface latest MM7 patch: https://grayface.github.io/mm/#GrayFace-MM7-Patch
- - [Unreleased] MMExtension v2.3: https://github.com/GrayFace/MMExtension 
+ - MM7 GOG version (do not forget to set WinXP compatibility options)
+ - Grayface latest MM7 patch (tested for 2.5.7): https://grayface.github.io/mm/#GrayFace-MM7-Patch
+ - Unreleased MMExtension v2.3: https://github.com/GrayFace/MMExtension 
  - This mod. 
-Instead of two last steps, one can download whole packege with last stable release
+Instead of two last steps, one can download whole packege with last stable release and copy after patching\
+https://drive.google.com/file/d/1ySkbRrRHyBweAInl4GZynx8VSK38kYRL
+
+- Uninstall: run ccUninst.bat in Scripts folder. The game flow is not affected by mod installation and deinstallation
+
+
+**Configuration**
+You can check the available config options in the Scripts/General/ccInit.lua file
 
 ## Acknowledgments
 This mod is the fulfillment of a long-standing dream, a dream to see in detail what is happening with a team of heroes, a dream to get real data for endless debates about who is better.\
@@ -55,7 +62,12 @@ Another great person who actually made any MM modding possible and **Grayface**,
 
 
 ### Combat log
-### In-game combat log
+Enabling the combat log option will create the .csv file in the game directory, and log any [successful] hit in it.\
+You can disable the combat log fully (CombatLogEnabled=0), log only party damage (CombatLogEnabled=1) and party and monsters damage (CombatLogEnabled=2)\
+Also in config file you can specify the log separator, but changing the order and adding new data will require more detailed code changes\
+
+### In-game combat history
+Besides output to the file, damage done and received can be viewed in MM9-style combat history (default key -[H] )
 ![image](https://github.com/user-attachments/assets/9d772466-850e-4028-a236-58e3fd3a6d5c)
 
 ### Observed damage statistics
