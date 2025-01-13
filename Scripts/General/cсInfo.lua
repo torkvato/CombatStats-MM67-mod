@@ -80,7 +80,7 @@ function events.Tick()
                 p = 0;
             end
             ResistancesPerc[i] = 100 - math.round(1000 * (1 - p) + 500 * (1 - p) * p + 250 * (1 - p) * p ^ 2 + 125 * (1 - p) * p ^ 3 + 62.5 * p ^ 4) / 10;
-            R0[i] = (1 - p) + .5 * (1 - p) * p + .25 * (1 - p) * p ^ 2 + .125 * (1 - p) * p ^ 3 + .625 * p ^ 4;
+            R0[i] = (1 - p) + .5 * (1 - p) * p + .25 * (1 - p) * p ^ 2 + .125 * (1 - p) * p ^ 3 + .0625 * p ^ 4;
         end
 
         Game.GlobalTxt[87] = StrColor(255, 70, 70, string.format("Fire\t            %s%%", ResistancesPerc[10]))
