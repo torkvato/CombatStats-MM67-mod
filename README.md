@@ -132,8 +132,8 @@ So melee hit with Phys+Fire damage will be summed, Fireball against group of sam
     - Weapons base damage with Str/Heroism already accounted (stated in the vanilla part of the char screen)
     - Constant and temporary elemental damage on both weapons (and artifacts/relics)
     - Dagger Mastery base damage tripling chance
-    - Hammerhands buff
-    Things are not taken into account: Weakness, Racial featurs bonuses, Monster Resistances
+    - Hammerhands buff\
+    Things are not taken into account: Weakness, Racial featurs bonuses, Monster Resistances\
     Average Damage is divided by current Recovery value in seconds to get the final displayed DPS, that include all factors that affect damage output, and thus can be used for weapons comparison
 
 **Vitality (Effective HP)**
