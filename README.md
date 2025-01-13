@@ -37,11 +37,10 @@ However, for the convenience and in-depth analyis of the party the following fea
  - Grayface latest MM7 patch (tested for 2.5.7): https://grayface.github.io/mm/#GrayFace-MM7-Patch
  - Unreleased MMExtension v2.3: https://github.com/GrayFace/MMExtension 
  - This mod. 
-Instead of two last steps, one can download whole packege with last stable release and copy after patching\
-https://drive.google.com/file/d/1ySkbRrRHyBweAInl4GZynx8VSK38kYRL
+Instead of two last steps, one can download whole package with last stable release\
+**https://drive.google.com/file/d/1ySkbRrRHyBweAInl4GZynx8VSK38kYRL**
 
 - Uninstall: run ccUninst.bat in Scripts folder. The game flow is not affected by mod installation and deinstallation
-
 
 **Configuration**
 You can check the available config options in the Scripts/General/ccInit.lua file
