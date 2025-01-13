@@ -36,7 +36,8 @@ However, for the convenience and in-depth analyis of the party the following fea
  - MM7 GOG version (do not forget to set WinXP compatibility options)
  - Grayface latest MM7 patch (tested for 2.5.7): https://grayface.github.io/mm/#GrayFace-MM7-Patch
  - Unreleased MMExtension v2.3: https://github.com/GrayFace/MMExtension 
- - This mod. 
+ - This mod. Latest version in the repository\
+ 
 Instead of two last steps, one can download whole package with last stable release\
 **https://drive.google.com/file/d/1-Q_2YfdmWr18vBhJOxPIJjXPreb9W3Ih**
 
