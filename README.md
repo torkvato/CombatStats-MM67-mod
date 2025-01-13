@@ -36,7 +36,7 @@ However, for the convenience and in-depth analyis of the party the following fea
  - MM7 GOG version (do not forget to set WinXP compatibility options)
  - Grayface latest MM7 patch (tested for 2.5.7): https://grayface.github.io/mm/#GrayFace-MM7-Patch
  - Unreleased MMExtension v2.3: https://github.com/GrayFace/MMExtension 
- - This mod. Latest version in the repository\
+ - This mod. Latest version in the repository
  
 Instead of two last steps, one can download whole package with last stable release\
 **https://drive.google.com/file/d/1-Q_2YfdmWr18vBhJOxPIJjXPreb9W3Ih**
@@ -63,12 +63,12 @@ Another great person who actually made any MM modding possible and **Grayface**,
 
 
 
-## Detauled description
+## Detailed description
 
 ### Combat log
 Enabling the combat log option will create the .csv file in the game directory, and log any [successful] hit in it.\
 You can disable the combat log fully (CombatLogEnabled=0), log only party damage (CombatLogEnabled=1) and party and monsters damage (CombatLogEnabled=2)\
-Also in config file you can specify the log separator, but changing the order and adding new data will require more detailed code changes\
+Also in config file you can specify the log separator, but changing the order and adding new data will require more detailed code changes
 
 Combat log is constantly appended with new records, so it will keep everything even if you reload game or have a new party.\
 Any log management should be done manually.
@@ -93,8 +93,8 @@ In-game combat log have less field due to lack of space, but currently shows the
 ![image](https://github.com/user-attachments/assets/9d772466-850e-4028-a236-58e3fd3a6d5c)
 
 ### Combat statists
-**Damage done**
-Mod accumulated and damage dealt by party and monsters.\
+**Damage done**\
+Mod accumulates and stores damage dealt by party and monsters.\
 Damage divided in the three categories: *Melee*, *Ranged* (bows and blasters) and *Spell*, each category processed individually per party member.
 
 Also, there are three distinct accumulation pools: 
@@ -106,7 +106,11 @@ Statistics summaries can be accessed by [Right=click] in the DPS/Vitality area o
 Here you also can [E]xport this tables in the file for further usage.
 
 
-**Observed DPS**
+**Observed DPS**\
+DPS, or damage per second is the most important metric of the combat proficiency. Here we calculate is by a total damage inflicted by the player, divided by the total active time\
+Calculation of active time can be tricky and controversial. Currently, active time is calculated from the first successful hit and ended if there are no successful hits within 5seconds.
+DPS is calculated for each party member independently and over the same three data accumulation pools: map, full, and resettable segment.
+
 ![image](https://github.com/user-attachments/assets/fc77963c-196b-4448-b2b7-a148eb8a0734)
 
 **Damage taken**
@@ -132,8 +136,8 @@ So melee hit with Phys+Fire damage will be summed, Fireball against group of sam
     - Weapons base damage with Str/Heroism already accounted (stated in the vanilla part of the char screen)
     - Constant and temporary elemental damage on both weapons (and artifacts/relics)
     - Dagger Mastery base damage tripling chance
-    - Hammerhands buff
-    Things are not taken into account: Weakness, Racial featurs bonuses, Monster Resistances
+    - Hammerhands buff\
+    Things are not taken into account: Weakness, Racial featurs bonuses, Monster Resistances\
     Average Damage is divided by current Recovery value in seconds to get the final displayed DPS, that include all factors that affect damage output, and thus can be used for weapons comparison
 
 **Vitality (Effective HP)**
@@ -160,4 +164,4 @@ If you prefer traps that explode in your face and deal with with mobs from afar,
 **Travel schedule**\
 [N] - Travel schedule and World Map are added as Seer note and acessible via Seer tab in Autonotes   
 **ID Monster**\
-If corresponding option in mild cheats section is enabled, [ALT] while checking monster stats will give full GM information\
+If corresponding option in mild cheats section is enabled, [ALT] while checking monster stats will give full GM information
