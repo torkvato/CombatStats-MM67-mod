@@ -6,9 +6,11 @@ msg = msg .. string.format('Har \t%11sEra2\t%20sTul2\t%29sEra2\t%38sTul2\t%47sEr
 msg = msg .. string.format('Era \t%11sTat2\t%20sHar2\t%29sTat2\t%38sDey3\t%47sTat2\t%56sHar2\t%65s    \n','|','|','|','|','|','|','|')
 msg = msg .. string.format('    \t%11sDey2\t%20sTat2\t%29sBra3\t%38sHar2\t%47sAvl4\t%56sBra3\t%65sEve7\n','|','|','|','|','|','|','|')
 msg = msg .. string.format('    \t%11sAvl4\t%20s    \t%29sBra6\t%38s    \t%47s    \t%56sTat2\t%65s    \n','|','|','|','|','|','|','|')
-msg = msg .. string.format('Tul \t%11sTat2\t%20sHar2\t%29sTat2\t%38sDey3\t%47sTat2\t%56sHar2\t%65s    \n','|','|','|','|','|','|','|')
-msg = msg .. string.format('    \t%11sDey2\t%20sTat2\t%29sBra3\t%38sHar2\t%47sAvl4\t%56sBra3\t%65sEve7\n','|','|','|','|','|','|','|')
-msg = msg .. string.format('    \t%11sAvl4\t%20s    \t%29sBra6\t%38s    \t%47s    \t%56sTat2\t%65s    \n','|','|','|','|','|','|','|')
+
+msg = msg .. string.format('Tul \t%11sAvl3\t%20sHar2\t%29sAvl3\t%38sHar2\t%47sAvl3\t%56sHar2\t%65sDey2\n','|','|','|','|','|','|','|')
+msg = msg .. string.format('    \t%11sBra6\t%20sDey2\t%29sBra6\t%38sAvl3\t%47sDey2\t%56sAvl3\t%65sEve7\n','|','|','|','|','|','|','|')
+msg = msg .. string.format('    \t%11s    \t%20sAvl3\t%29s    \t%38s    \t%47s    \t%56s    \t%65s    \n','|','|','|','|','|','|','|')
+
 msg = msg .. string.format('Avl \t%11sTul3\t%20sTul3\t%29sDey5\t%38sTul3\t%47sTul3\t%56sTul3\t%65sDey5\n','|','|','|','|','|','|','|')
 msg = msg .. string.format('    \t%11s    \t%20sEra4\t%29sTul3\t%38sTat5\t%47s    \t%56sEra4\t%65s    \n','|','|','|','|','|','|','|')
 	
