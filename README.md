@@ -162,9 +162,11 @@ If you prefer traps that explode in your face and deal with with mobs from afar,
 [Y] for select/unselect designated player for Alchemy\
 [U] for select/unselect designated player for Unidentified items\
 **Extra Notes**\
-[N] Extra notes added to the Seer tab in Autonotes\
+[N] Extra notes added to the Seer tab in Autonotes
 - Travel schedule
 - World Map
 - Teacher table
+
 **ID Monster**\
 If corresponding option in mild cheats section is enabled, [ALT] while checking monster stats will give full GM information
+![изображение](https://github.com/user-attachments/assets/3dab06e0-7dfb-44da-a8cd-d3c2e0be0c9f)
