@@ -39,7 +39,7 @@ However, for the convenience and in-depth analyis of the party the following fea
  - This mod. Latest version in the repository
  
 Instead of two last steps, one can download whole package with last stable release\
-**https://drive.google.com/file/d/1-Q_2YfdmWr18vBhJOxPIJjXPreb9W3Ih**
+**https://drive.google.com/file/d/1d-jrk6c59oIQVuf44gHe7W3GgHkodMEo**
 
 - Uninstall: run ccUninst.bat in Scripts folder. The game flow is not affected by mod installation and deinstallation
 - Bug reportin and support in the TG group - https://t.me/+WAc2jt1nvT1iMzIy
