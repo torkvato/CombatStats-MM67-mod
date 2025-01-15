@@ -12,13 +12,15 @@ function events.Tick()
 		--Shared ID item
 		if Game.CurrentScreen == 7  and Game.CurrentCharScreen == 103 and not(id_item_party) and Keys.IsPressed(const.Keys.RBUTTON) and SharedIdentifyItem==1 then
 			id_item_party = true
-			id_item_skill_saved = {[0]=Party[0].Skills[const.Skills.IdentifyItem],[1]=Party[1].Skills[const.Skills.IdentifyItem],[2]=Party[2].Skills[const.Skills.IdentifyItem],[3]=Party[3].Skills[const.Skills.IdentifyItem]}
-			maxskill = 0
+			local s = const.Skills.IdentifyItem
+			local maxskill = 0
 			for _, pl in Party do
-				local sk = pl.Skills[const.Skills.IdentifyItem]
+				local sk = pl:GetSkill(s)
 				if maxskill<sk then maxskill = sk end
-			end
-			Party[Game.CurrentPlayer].Skills[const.Skills.IdentifyItem] = maxskill 
+			end					
+			id_item_skill_saved = {[0]=Party[0].Skills[s],[1]=Party[1].Skills[s],[2]=Party[2].Skills[s],[3]=Party[3].Skills[s]}
+			local current_bonus = Party[Game.CurrentPlayer]:GetSkill(s) - Party[Game.CurrentPlayer].Skills[s]
+			Party[Game.CurrentPlayer].Skills[s] = maxskill - current_bonus
 		elseif not(Keys.IsPressed(const.Keys.RBUTTON)) and id_item_party then
 			id_item_party = false
 			Party[0].Skills[const.Skills.IdentifyItem] = id_item_skill_saved[0]
@@ -30,13 +32,15 @@ function events.Tick()
 				--Shared Repair
 		if Game.CurrentScreen == 7  and Game.CurrentCharScreen == 103 and not(repair_party) and Keys.IsPressed(const.Keys.RBUTTON) and SharedRepair==1 then
 			repair_party = true
-			repair_skill_saved = {[0]=Party[0].Skills[const.Skills.Repair],[1]=Party[1].Skills[const.Skills.Repair],[2]=Party[2].Skills[const.Skills.Repair],[3]=Party[3].Skills[const.Skills.Repair]}
-			maxskill = 0
+			local s = const.Skills.Repair
+			local maxskill = 0
 			for _, pl in Party do
-				local sk = pl.Skills[const.Skills.Repair]
+				local sk = pl:GetSkill(s)
 				if maxskill<sk then maxskill = sk end
-			end
-			Party[Game.CurrentPlayer].Skills[const.Skills.Repair] = maxskill 
+			end					
+			repair_skill_saved = {[0]=Party[0].Skills[s],[1]=Party[1].Skills[s],[2]=Party[2].Skills[s],[3]=Party[3].Skills[s]}
+			local current_bonus = Party[Game.CurrentPlayer]:GetSkill(s) - Party[Game.CurrentPlayer].Skills[s]
+			Party[Game.CurrentPlayer].Skills[s] = maxskill - current_bonus
 		elseif not(Keys.IsPressed(const.Keys.RBUTTON)) and repair_party then
 			repair_party = false
 			Party[0].Skills[const.Skills.Repair] = repair_skill_saved[0]
