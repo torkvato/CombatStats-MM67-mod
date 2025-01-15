@@ -23,7 +23,7 @@ function events.KeyDown(t)
             segment_data_reset_confirmation = 0;
             local i
             for i = 0, Party.High do
-                vars.damagemeter1[i]={Damage = 0, Damage_Melee = 0, Damage_Ranged = 0, Damage_Spell = 0, ActiveTime = 1, ActiveTime_Melee = 1, ActiveTime_Ranged = 1,ActiveTime_Spell = 1}
+                vars.damagemeter1[i]={Damage = 0, Damage_Melee = 0, Damage_Ranged = 0, Damage_Spell = 0,Damage_Received=0, ActiveTime = 1, ActiveTime_Melee = 1, ActiveTime_Ranged = 1,ActiveTime_Spell = 1}
                 vars.timestamps[i].SegmentStart = Game.Time          
             end
             vars.Max1 = {Melee = {Dmg = 0, Player = 0}, Ranged = {Dmg = 0, Player = 0}, Spell = {Dmg = 0, Player = 0}} 
