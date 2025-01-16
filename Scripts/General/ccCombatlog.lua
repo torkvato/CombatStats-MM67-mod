@@ -68,9 +68,13 @@ function events.CalcDamageToMonster(t)
             monName = string.format("%s(%s)",monName,t.Monster.Level)
             -- DPS is calculated as total damage done, divided by total active time in real seconds
             -- In-game time: 2 real seconds equal 1 in-game minute, 1 real second = 30 in-game seconds
-            -- 256 "Game.time" ticks = 1 in-game minute,  128 "Game.time" ticks = 30 in-game seconds = 1 real second (const.RTSecond)
-            -- 60 "recovery" ticks = 1 real second  = 30 in-game seconds = 128 ticks
-            
+            -- 256 "Game.time" ticks = 1 in-game minute, (const.Minute = 256)
+            -- 128 "Game.time" ticks = 30 in-game seconds = 1 real second (const.RTSecond = 128)
+            -- 60 "weapon recovery" = 1 real second  = 30 in-game seconds = 128 ticks
+            -- One turn-based round = 100 "weapon recovery" = 50 game seconds = 46.8750 Game.time ticks (!)
+            -- Party[pl].RecoveryDelay = "recovery"/2.133333 = measured in Game.time ticks
+            -- 1s = 60r = 128gt = 30gs;  r = 128/60*gt
+
             -- Active time - contuguous time when periods betwen successful hits less than 6 seconds
             local timedelta = Game.Time - vars.timestamps[i].LastTimeStamp;
 
@@ -249,7 +253,7 @@ function DamageMeterCalculation(V,mode)
     out = out..string.format("\nRange\t%11s%5s%%\t%24s%5s%%\t%37s%5s%%\t%50s%5s%%",'|',math.round(100 * V[0].Damage_Ranged/party_damage_r),'|',math.round(100 * V[1].Damage_Ranged/party_damage_r), '|',math.round(100 * V[2].Damage_Ranged/party_damage_r), '|',math.round(100 * V[3].Damage_Ranged/party_damage_r))
     out = out..string.format("\nSpell\t%11s%5s%%\t%24s%5s%%\t%37s%5s%%\t%50s%5s%%",'|',math.round(100 * V[0].Damage_Spell /party_damage_s),'|',math.round(100 * V[1].Damage_Spell /party_damage_s), '|',math.round(100 * V[2].Damage_Spell /party_damage_s), '|',math.round(100 * V[3].Damage_Spell /party_damage_s))
     out = out .. StrColor(255, 100, 100,string.format("\nTotal\t%11s %4s%%\t%24s %4s%%\t%37s %4s%%\t%50s %4s%%",'|',math.round(100*V[0].Damage/party_damage),'|',math.round(100*V[1].Damage/party_damage),'|',math.round(100*V[2].Damage/party_damage),'|',math.round(100 * V[3].Damage/ party_damage)))
-        out = out .. "\n\nDPS (damage per real second)"
+    out = out .. "\n\nDPS (damage per real second)"
     out = out..string.format("\nMelee\t%11s%5s\t%24s%5s\t%37s%5s\t%50s%5s",'|',player_dps_m[0],'|',player_dps_m[1], '|',player_dps_m[2], '|',player_dps_m[3])
     out = out..string.format("\nRange\t%11s%5s\t%24s%5s\t%37s%5s\t%50s%5s",'|',player_dps_r[0],'|',player_dps_r[1], '|',player_dps_r[2], '|',player_dps_r[3])
     out = out..string.format("\nSpell\t%11s%5s\t%24s%5s\t%37s%5s\t%50s%5s",'|',player_dps_s[0],'|',player_dps_s[1], '|',player_dps_s[2], '|',player_dps_s[3])
@@ -276,6 +280,9 @@ function DamageMeterCalculation(V,mode)
 	out = out..string.format("Total Dmg%s%s%s%s%s%s%s%s\n",z,V[0].Damage,z,V[1].Damage, z,V[2].Damage, z,V[3].Damage)
 	
 	out = out..string.format("ActiveTime%s%s%s%s%s%s%s%s\n",z,math.round(V[0].ActiveTime/const.RTSecond),z,math.round(V[1].ActiveTime/const.RTSecond), z,math.round(V[2].ActiveTime/const.RTSecond), z,math.round(V[3].ActiveTime/const.RTSecond))
+
+    out = out..string.format("ReceivedDamage%s%s%s%s%s%s%s%s\n",z,V[0].Damage_Received,z,V[1].Damage_Received, z,V[2].Damage_Received, z,V[3].Damage_Received)
+    out = out..string.format("ReceivedDPS%s%s%s%s%s%s%s%s\n",z,math.round(const.RTSecond * 10*V[0].Damage_Received/V[0].ActiveTime)/10,z,math.round(const.RTSecond * 10*V[1].Damage_Received/V[1].ActiveTime)/10, z,math.round(const.RTSecond * 10*V[2].Damage_Received/V[2].ActiveTime)/10, z,math.round(const.RTSecond * 10*V[3].Damage_Received/V[3].ActiveTime)/10)
     	
 	end
 

@@ -30,6 +30,7 @@ AltIdMonsterGM = 1 -- Press alt while identifing the monster to get whole info a
 SharedIdentifyItem = 1 -- Id Item skill shared among party
 SharedRepair = 1 -- Repair skill shared among party
 TravelScheduleAutoNote = 1 -- Add Travel schedule to Seer Autonotes
+TrainingDummy = 1 -- ALT-L to call the Training Dummy
 
 F = {}
 

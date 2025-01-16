@@ -102,6 +102,9 @@ function events.Tick()
         local atk_m = pl:GetMeleeAttack()
         local dmg_m = (pl:GetMeleeDamageMin() + pl:GetMeleeDamageMax()) / 2
         local delay_m = pl:GetAttackDelay()
+
+        if delay_m < Game.MinMeleeRecoveryTime then delay_m = Game.MinMeleeRecoveryTime end
+        
         local hitchance_m = (15 + atk_m * 2) / (30 + atk_m * 2 + lvl)  --monster AC treated equal to Player Lvl
 
         local atk_r = pl:GetRangedAttack()
@@ -149,8 +152,7 @@ function events.Tick()
 
         if Keys.IsPressed(const.Keys.ALT) then
             Game.GlobalTxt2[41] = PartyRecordsTxt()
-            Game.GlobalTxt2[42] = "Full stats since game beginning, [E] for export\n" .. DamageMeterCalculation(vars.damagemeter) 
-            
+            Game.GlobalTxt2[42] = "Full stats since game beginning, [E] for export\n" .. DamageMeterCalculation(vars.damagemeter)             
         else 
         
         Game.GlobalTxt2[41] = string.format("Current map: %s, [ALT] for more\n",Game.MapStats[Game.Map.MapStatsIndex].Name).. DamageMeterCalculation(mapvars.damagemeter)      
