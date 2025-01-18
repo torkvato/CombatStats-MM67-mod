@@ -82,13 +82,37 @@ msg3 = msg3 .. string.format('LIGHT\t%13sDARK\t%22sMEDT\t%32sLRNG\t%41sPERC\t%50
 msg3 = msg3 .. string.format('e Bra\t%13sDey\t%22sDey\t%32sBra\t%41sHar  \t%50sHar,Er   \t%61sCel,Pt\n','|','|','|','|','|','|')
 msg3 = msg3 .. string.format('e    \t%13s\t%22sAvl\t%32sNig\t%41sDey\t%50sNig   \t%61sCel,Pt\n','|','|','|','|','|','|')
 msg3 = msg3 .. string.format('m Cel\t%13sPit\t%22sBra\t%32sNig\t%41sTul  \t%50sDey   \t%61sCel,Pt\n','|','|','|','|','|','|')
-msg3 = msg3 .. string.format('g Cel\t%13sPit\t%22sAvl\t%32sEve\t%41sDey  \t%50sTat   \t%61sCel,Pt\n','|','|','|','|','|','|')
+msg3 = msg3 .. string.format('g Cel\t%13sPit\t%22sAvl\t%32sEve\t%41sDey  \t%50sTat   \t%61sCel,Pt\n\n\n\n\n\n','|','|','|','|','|','|')
 
 Autonote(':SeerTeachers2', 3, msg3)
 SuppressSound(true) -- disable annoying ding
 AddAutonote(':SeerTeachers2')
 SuppressSound(false)
 
+local msg = ""
+msg = msg .. string.format('EXPERT-LAYERED\n')
+msg = msg .. string.format('Harden:GY\t%20sBless:GR\t%38sHeroism:PR\t%56sHaste:OR\n','|','|','|')
+msg = msg .. string.format('WaterB:PY\t%20sPresrv:OB\t%38sStoneS:OY\t%56sRechrg:GB\n','|','|','|')
+msg = msg .. string.format('Shield:PB\t%20sC.Insn:GO\t%38sR.Fear:PO\t%56sR.Curse:PG\n','|','|','|')
+msg = msg .. string.format('MASTER-WHITE\n')
+msg = msg .. string.format('Mght:PR-P\t%20sInt:GY-G\t%38sPers:GB-G\t%56sEnd:PB-P\n','|','|','|')
+msg = msg .. string.format('Acc:OY-O\t%20sSpd:OR-O\t%38sLck:PB-PR\t%56sShck:PR-O\n','|','|','|')
+msg = msg .. string.format('Swft:GB-P\t%20sSwft:PB-G\t%38sNoxi:GY-P\t%56sNoxi:GB-O\n','|','|','|')
+msg = msg .. string.format('Frz:PB-O\t%20sFlm:OY-P\t%38sFlm:OR-P\t%56sFlm:OR-G\n','|','|','|')
+msg = msg .. string.format('Cur:OY-OR\t%20sRst:OR-OY\t%38sRest:GY-PR\t%56sPwr:GB-GY\n','|','|','|')
+msg = msg .. string.format('Prlz:OY-G\t%20sPrlz:GY-O\t%38sBod:OY-GB\t%56sMnd:GB-PR\n','|','|','|')
+msg = msg .. string.format('Fire:OR-GY\t%20sAir:OR-PB\t%38sWtr:GY-PB\t%56sErth:OY-PR\n','|','|','|')
+msg = msg .. string.format('GRAND-BLACK\n')
+msg = msg .. string.format('Mght:PR-P-O\t%26sInt:GY-G-O\t%48sPers:GB-G-P\n','|','|')
+msg = msg .. string.format('Endr:PB-P-G\t%26sAcc:OY-O-G\t%48sSpd:OR-O-P\n','|','|')
+msg = msg .. string.format('Lck:PB-PR-OY\t%26sStone2Fl:(OY-G,GY-O)-PR\n','|')
+msg = msg .. string.format('DrgnSlay:(OY-P,OR-P,OR-G)-PB\nRejuv:(OR-OY,GY-PR)-(OB,GR)')
+
+
+Autonote(':AlchRecipes', 3, msg)
+SuppressSound(true) -- disable annoying ding
+AddAutonote(':AlchRecipes')
+SuppressSound(false)
 
 
 end

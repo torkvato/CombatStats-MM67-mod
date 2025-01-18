@@ -25,12 +25,12 @@ However, for the convenience and in-depth analyis of the party the following fea
     - Elements-Colored Resistances with average resistance percentage
     - Final Melee and Ranged damage metric in the form of thoroughly [calculated] DPS, for best weapon combination selection
     - Effective health ("Vitality"), employing HP, Armor Class (physical avoidance) and Magic resistances in single metric
-    - Skill tooltips, like total Merchant discount or current Disarm skill vs. area difficulty [Optional, enabled by default]   
+    - Skill tooltips, like total Merchant discount or current Disarm skill vs. area difficulty [Optional]   
 - **Convenience features**	
     - Automatic items sorting. Borrowed from MAW MMMerge mod, with minor changes (alchemy/unidentified items sorting). 
-    - Full Travel Schedule / World map /Teachers table in Autonotes (Seer tab) [Optional, enabled by default]	
-    - Sharing max ID Item and Repair skills over the party [Optional, disabled by default]
-    - Grandmaster ID Monster info with ALT pressed [Optional, disabled by default]
+    - Full Travel Schedule / World map / Teachers / Alchemy Recipes table in Autonotes (Seer tab) [Optional]	
+    - Sharing max ID Item and Repair skills over the party [Optional]
+    - Grandmaster ID Monster info with ALT pressed [Optional]
 
 ## Installation
  - MM7 GOG version (do not forget to set WinXP compatibility options)
@@ -131,9 +131,10 @@ So melee hit with Phys+Fire damage will be summed, Fireball against group of sam
 **Damage per second, DPS**
 - Hit percentage is calculated on the base of current To-Hit modifier against the mob with AC equal to the current player level\
  *P = (15 + PlayerAttack * 2) / (30 + PlayerAttack * 2 + AC)*
+For the calculation, we use rough monster progress skaling, and their AC (and Lvl) assumed to be 3x Party Lvl (but not larger than 100)
 
 - Estimated DPS is calculated on the base average damage that take into account
-    - Chance to miss against AC=CurrentLvl
+    - Chance to miss
     - Weapons base damage with Str/Heroism already accounted (stated in the vanilla part of the char screen)
     - Constant and temporary elemental damage on both weapons (and artifacts/relics)
     - Dagger Mastery base damage tripling chance

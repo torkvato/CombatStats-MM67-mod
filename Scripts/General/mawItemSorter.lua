@@ -31,6 +31,8 @@ function events.KeyDown(t)
 end
 
 function sortInventory(all)
+	local lastPlayer = Game.CurrentPlayer
+
     evt.Add("Items", 0)
 
     local itemList = {}
@@ -57,7 +59,6 @@ function sortInventory(all)
                 if it.Number > 0 then
                     j = j + 1
                     itemList[j] = {}
-                    -- iterating doesn't seem to work
                     itemList[j]["Bonus"] = it.Bonus
                     itemList[j]["Bonus2"] = it.Bonus2
                     itemList[j]["BonusExpireTime"] = it.BonusExpireTime
@@ -88,18 +89,25 @@ function sortInventory(all)
                 pl.Inventory[i] = 0
             end
         end
+
         vars.alchemyPlayer = vars.alchemyPlayer or -1
         vars.identifyPlayer = vars.identifyPlayer or -1
         table.sort(itemList, function(a, b)
 
-            if vars.identifyPlayer >= 0 and (not (a["Identified"]) or not (b["Identified"])) then -- Ensure that Unidentified items go first, evem befor alchemy
+            if vars.identifyPlayer >= 0 and (not (a["Identified"]) or not (b["Identified"])) then -- Ensure that Unidentified items go first, even before alchemy
                 local aa = not (a["Identified"]) == true and 1 or not (a["Identified"]) == false and 0
                 local bb = not (b["Identified"]) == true and 1 or not (b["Identified"]) == false and 0
                 return aa * a["size"] > bb * b["size"]
             end
 
             if vars.alchemyPlayer >= 0 then
-
+				--Put Items with Alchemy bonus to Alchemy player, just in case
+				if a["Bonus"]==17 and b["Bonus"]==17 then
+					return a["size"] > b["size"]
+				elseif  a["Bonus"]==17 or b["Bonus"]==17 then
+					return a["Bonus"]==17
+				end
+					
                 -- Sorting according to alchemyItemsOrder
                 local indexA = table.find(alchemyItemsOrder, a["Number"])
                 local indexB = table.find(alchemyItemsOrder, b["Number"])
@@ -145,34 +153,28 @@ function sortInventory(all)
 
     if itemList[1] then
 
-        lastPlayer = Game.CurrentPlayer
         local alchemy_item_counter = 0
-        local partynext = {
-            [0] = 1,
-            [1] = 2,
-            [2] = 3,
-            [3] = 2
-        }
-        vars.alchemyPlayer = vars.alchemyPlayer or -1
+		local alchemy_space_counter = 0
+        local partynext = {[0] = 1,[1] = 2,[2] = 3,[3] = 2}
+        local temp_alchemy_player = vars.alchemyPlayer or -1
 
         for i = 1, #itemList do
             if vars.alchemyPlayer >= 0 then
                 if table.find(alchemyItemsOrder, itemList[i].Number) or
-                    (itemList[i].Number >= 220 and itemList[i].Number < 300) then
-
+                    (itemList[i].Number >= 200 and itemList[i].Number < 300) or itemList[i].Bonus==17 then
+					alchemy_space_counter = alchemy_space_counter + itemList[i].size	
                     alchemy_item_counter = alchemy_item_counter + 1
-                    if alchemy_item_counter > 111 - 1 then
-                        Game.CurrentPlayer = partynext[vars.alchemyPlayer]
-                    else
-                        Game.CurrentPlayer = vars.alchemyPlayer
-                    end
+                    if alchemy_item_counter > 111 - 1 or alchemy_space_counter>(9*14-2) then
+						alchemy_item_counter = 0
+						alchemy_space_counter = 0
+						temp_alchemy_player = partynext[temp_alchemy_player]
+					end
+					Game.CurrentPlayer = temp_alchemy_player
                 end
-            end
-
-            if vars.identifyPlayer >= 0 and not (itemList[i].Identified) then
+            elseif vars.identifyPlayer >= 0 and not (itemList[i].Identified) then
                 Game.CurrentPlayer = vars.identifyPlayer
             end
-
+			
             evt.Add("Items", itemList[i].Number)
             it = Mouse.Item
             it.Bonus = itemList[i].Bonus
@@ -189,10 +191,10 @@ function sortInventory(all)
             it.Refundable = itemList[i].Refundable
             it.Stolen = itemList[i].Stolen
             it.TemporaryBonus = itemList[i].TemporaryBonus
-            evt.Add("Items", 0) -- to give item to proper player 
-            Game.CurrentPlayer = lastPlayer
+			evt.Add("Items", 0) -- to give item to proper player 
+			Game.CurrentPlayer = lastPlayer            
         end
-        -- evt.Add("Inventory", 0)
+         evt.Add("Inventory", 0)
     end
     table.clear(itemList)
 end
@@ -200,9 +202,8 @@ end
 -- Define the alchemyItemsOrder list for reference in sorting
 
 -- Empty, cat, rby RBY RBY
--- alchemyItemsOrder = { 220, 215,216,217,218,219, 200, 205, 210, 201, 206, 211, 202, 207,212, 203, 208, 213, 204, 209, 214, }
-alchemyItemsOrder = {220, 215, 216, 217, 218, 219, 204, 209, 214, 203, 208, 213, 202, 207, 212, 201, 206, 211, 200, 205,
-                     210}
+  alchemyItemsOrder = { 220, 215, 216, 217, 218, 219, 200, 205, 210, 201, 206, 211, 202, 207, 212, 203, 208, 213, 204, 209, 214}
+-- alchemyItemsOrder = {220, 215, 216, 217, 218, 219, 204, 209, 214, 203, 208, 213, 202, 207, 212, 201, 206, 211, 200, 205, 210}
 
 -- for i=1,Game.ItemsTxt.High do print(i,Game.ItemsTxt[i].Name) end
 

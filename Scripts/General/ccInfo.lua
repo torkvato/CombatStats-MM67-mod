@@ -91,7 +91,8 @@ function events.Tick()
         Game.GlobalTxt[29] = StrColor(255, 192, 203, string.format("Body\t            %s%s ", ResistancesPerc[15], "%"))
 
         -- Effective HP
-        local monster_hit_chance = (5 + lvl*2)/(10 + lvl*2 + AC) -- Monster level assumed to be equal player lvl
+        local monAC_LvL = math.min(100,3*lvl)
+        local monster_hit_chance = (5 + monAC_LvL*2)/(10 + monAC_LvL*2 + AC) 
 
         local coeff = CheckPlateChain(pl)
 
@@ -105,12 +106,12 @@ function events.Tick()
 
         if delay_m < Game.MinMeleeRecoveryTime then delay_m = Game.MinMeleeRecoveryTime end
         
-        local hitchance_m = (15 + atk_m * 2) / (30 + atk_m * 2 + lvl)  --monster AC treated equal to Player Lvl
+        local hitchance_m = (15 + atk_m * 2) / (30 + atk_m * 2 + monAC_LvL)  --monster AC treated equal to Player Lvl
 
         local atk_r = pl:GetRangedAttack()
         local dmg_r = (pl:GetRangedDamageMin() + pl:GetRangedDamageMax()) / 2
         local delay_r = pl:GetAttackDelay(true)
-        local hitchance_r = (15 + atk_r * 2) / (30 + atk_r * 2 + lvl)
+        local hitchance_r = (15 + atk_r * 2) / (30 + atk_r * 2 + monAC_LvL)
 
         dmg_m = dmg_m + DaggerTriple(pl) + HammerhandsExtra(pl)-- Account Dagger master for chance to triple base weapon dmg and Hammerhanda buff
 
