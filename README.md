@@ -148,6 +148,21 @@ Currently, AC effect is taken with 65% weight, elemental magic resistances have 
 If you prefer traps that explode in your face and deal with with mobs from afar, surely the Elemental part should have a larger impact on the result. Alternative config is also included in the cmInit.lua file.  
 ![image](https://github.com/user-attachments/assets/af850de2-4130-4086-9869-45d0ba30b621)
 
+## Inventory management
+Very useful feature of the mod is one-button sorting of the whole party or single player inventory ([T] and [R] buttons)
+Sorting rearrange the inventorty by putting largest items first and filling the gaps with smaller ones, allowing to free some space.
+Additionally, one can set up designated player for alchemy-related items ([Y]).
+Upon sorting, this player will get the following items in the following order:
+1. Gear with +Alchemy bonus, if it is exist
+2. Empty bottles, Catalyst bottles and all simple potions: R,B,Y,P,O,G
+3. Catalysts in the order of increasing strenght
+4. Ingredients in R-B-Y order
+5. The rest of the potions - layered, white and black
+
+If Alchemy player inventory is full (2 spaces is always saved), next player will get the items. For the last (fourth) player, next player will be the third
+
+Those who do not want to use even "mild" cheats and share ID. Item skills among the party, can set player for them ([U])
+
 
 ## Default keybinds
 
