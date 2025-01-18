@@ -75,7 +75,7 @@ Combat log is constantly appended with new records, so it will keep everything e
 Any log management should be done manually.
 
 Fields are:
-- Timestamp in game ticks. 256 ticks = 1 in-game minute = 2 realtime seconds = 120 "weapon recovery" points.\
+- Timestamp in game ticks. 256 ticks = 1 in-game minute = 2 realtime seconds = 120 "weapon recovery" points.
 - Player# (0-3)
 - Player class and lvl
 - Player name 
@@ -130,7 +130,7 @@ So melee hit with Phys+Fire damage will be summed, Fireball against group of sam
 ### Calculated statistics
 **Damage per second, DPS**
 - Hit percentage is calculated on the base of current To-Hit modifier against the mob with AC equal to the current player level\
- *P = (15 + PlayerAttack * 2) / (30 + PlayerAttack * 2 + AC)*
+ *P = (15 + PlayerAttack * 2) / (30 + PlayerAttack * 2 + AC)*\
 For the calculation, we use rough monster progress skaling, and their AC (and Lvl) assumed to be 3x Party Lvl (but not larger than 100)
 
 - Estimated DPS is calculated on the base average damage that take into account
