@@ -168,6 +168,7 @@ If you prefer traps that explode in your face and deal with with mobs from afar,
 - Travel schedule
 - World Map
 - Teachers table
+- Alchemy recipes
 
 **ID Monster**\
 If corresponding option in mild cheats section is enabled, [ALT] while checking monster stats will give full GM information
