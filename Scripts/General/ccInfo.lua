@@ -1,6 +1,6 @@
 function events.GameInitialized2()
     schedulenotealreadyadded = false
-    Game.GlobalTxt[144] = StrColor(255, 0, 0, Game.GlobalTxt[144] )
+    Game.GlobalTxt[144] = StrColor(255, 0, 0, '-'..Game.GlobalTxt[144] )
     Game.GlobalTxt[116] = StrColor(255, 128, 0, "Intellect")
     Game.GlobalTxt[163] = StrColor(0, 127, 255, "Personality")
     Game.GlobalTxt[75] = StrColor(0, 255, 0, "Endurance")
@@ -60,12 +60,12 @@ function events.Tick()
         end
 
         -- Resistances
-        FireRes = pl:GetResistance(10)
-        AirRes = pl:GetResistance(11)
+        FireRes  = pl:GetResistance(10)
+        AirRes   = pl:GetResistance(11)
         WaterRes = pl:GetResistance(12)
         EarthRes = pl:GetResistance(13)
-        MindRes = pl:GetResistance(14)
-        BodyRes = pl:GetResistance(15)
+        MindRes  = pl:GetResistance(14)
+        BodyRes  = pl:GetResistance(15)
 
         local Resistances = {}
         local ResistancesPerc = {}
@@ -89,6 +89,18 @@ function events.Tick()
         Game.GlobalTxt[70] = StrColor(153, 76, 0, string.format("Earth\t            %s%s ", ResistancesPerc[13], "%"))
         Game.GlobalTxt[142] = StrColor(200, 200, 255, string.format("Mind\t            %s%s ", ResistancesPerc[14], "%"))
         Game.GlobalTxt[29] = StrColor(255, 192, 203, string.format("Body\t            %s%s ", ResistancesPerc[15], "%"))
+
+        --Bad things
+        --Chance that an enemy will succeed in doing some bad thing to you is 30/(30 + LuckEffect + OtherEffect), where OtherEffect depends on that particular thing:
+        local msg = StrColor(255, 70, 70,string.format("Bad things chances: Luck+additional stat:\n"))
+        msg = msg.. string.format("Age, Disease, Sleep (End): %d%%\n",math.round(3000/(30+Stat2Modifier(luck)+Stat2Modifier(endu))))
+        msg = msg.. string.format("Curse (Pers): - %d%%\n",math.round(3000/(30+Stat2Modifier(luck)+Stat2Modifier(pers))))
+        msg = msg.. string.format("DrainSP, Dispel(Pers+Int) %d%%\n",math.round( 3000/(30+Stat2Modifier(luck)+(Stat2Modifier(pers)+Stat2Modifier(intel))/2) ))
+        msg = msg.. string.format("Paralyze,Insane (Mind Res.): %d%%\n",math.round(3000/(30+Stat2Modifier(luck)+MindRes)))
+        msg = msg.. string.format("Death, Eradication, Poison (Body Res.): %d%%\n",math.round(3000/(30+Stat2Modifier(luck)+BodyRes)))
+        for i=0,5 do
+        Game.GlobalTxt2[50+i] = msg
+        end
 
         -- Effective HP
         local monAC_LvL = math.min(100,3*lvl)

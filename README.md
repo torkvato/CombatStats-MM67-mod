@@ -22,7 +22,7 @@ However, for the convenience and in-depth analyis of the party the following fea
     - Export of the statistics to the output file for future reference
 - **Enhanced character page**
     - Barrel-Colored Attributes (thx MAW) with current modifier value and next attribute milestone in the tooltip
-    - Elements-Colored Resistances with average resistance percentage
+    - Elements-Colored Resistances with average resistance percentage and "bad things" chances
     - Final Melee and Ranged damage metric in the form of thoroughly [calculated] DPS, for best weapon combination selection
     - Effective health ("Vitality"), employing HP, Armor Class (physical avoidance) and Magic resistances in single metric
     - Skill tooltips, like total Merchant discount or current Disarm skill vs. area difficulty [Optional]   
