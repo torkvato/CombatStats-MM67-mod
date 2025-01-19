@@ -5,7 +5,24 @@ CombatLogEnabled = 2; -- Combatlog output to file 0: disabled, 1 - Player damage
 CombatLogFile = "CombatLog.csv"
 CombatLogSeparator = "\t"  -- combat log fields separator
 StatsOutputFile = "DamageStats.csv"
-MinilogEntriesNumber = 16  -- number of entries for in-game combat log (L)
+MinilogEntriesNumber = 16  -- number of entries for in-game combat log (L), 16 is max
+
+
+-- Convenience and Harmless cheats options
+AltIdMonsterGM = 1 -- Press alt while identifing the monster to get whole info at GM level
+SharedIdentifyItem = 1 -- Id Item skill shared among party
+SharedRepair = 1 -- Repair skill shared among party
+
+BuffExpirationAlert=1 -- Notification about buffs expriration
+BuffListAlert = {'Haste', 'Invisibility', 'FeatherFall', 'Bless', 'Regeneration'}
+
+--Useful information 
+TravelScheduleAutoNote = 1 -- Add Travel schedule to Seer Autonotes
+MapAutoNote = 1 -- Add Travel schedule to Seer Autonotes
+TeachersTableAutoNote = 1 -- Add Travel schedule to Seer Autonotes
+AlchemyRecipesAutoNote = 1 -- Add Travel schedule to Seer Autonotes
+
+TrainingDummy = 1 -- ALT-L to call the Training Dummy
 
 
 --Stats and tooltips
@@ -25,12 +42,6 @@ PartyInventorySortButton   = const.Keys.T -- 'T' - Sort all inventories
 AlchemyPlayerSetButton     = const.Keys.Y -- 'Y' - Select/Unselect player for alchemy stuff
 IdentifyPlayerSetButton    = const.Keys.U -- 'U'  - Select/Unselect player for unidentified stuff
 
---Harmless cheats
-AltIdMonsterGM = 1 -- Press alt while identifing the monster to get whole info at GM level
-SharedIdentifyItem = 1 -- Id Item skill shared among party
-SharedRepair = 1 -- Repair skill shared among party
-TravelScheduleAutoNote = 1 -- Add Travel schedule to Seer Autonotes
-TrainingDummy = 1 -- ALT-L to call the Training Dummy
 
 F = {}
 
@@ -84,7 +95,7 @@ local file = io.open(CombatLogFile,"r")
         file:close()
     end
 end
-
+nextbuffdurationcheck = 0
 
 --need to add [mmv(nil, 0x5C88F0, 0x5E4CB0)].array(55).EditPChar  'GlobalTxt2'  after GlobalTxt
 

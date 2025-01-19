@@ -29,3 +29,8 @@ Scripts/Structs/01 common structs.lua
 Scripts/Structs/02 Increase Facets Limit.lua
 /Data
 /ExeMods
+Scripts/General/SPELLS.TXT
+Scripts/General/GlobalTxt2.txt
+Scripts/General/GlobalTxt.txt
+Scripts/General/PlaceMon.txt
+Scripts/General/mm6hd.lua

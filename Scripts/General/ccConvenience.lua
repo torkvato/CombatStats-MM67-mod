@@ -48,9 +48,5 @@ function events.Tick()
 			Party[2].Skills[const.Skills.Repair] = repair_skill_saved[2]
 			Party[3].Skills[const.Skills.Repair] = repair_skill_saved[3]
 		end
-
-		-- if Game.CurrentScreen == const.Screens.SelectTarget then
-		-- Game.EscMessage('Gotcha!')
-		-- end
-
+		
 end

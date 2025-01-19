@@ -1,6 +1,6 @@
 function events.GameInitialized2()
     schedulenotealreadyadded = false
-    Game.GlobalTxt[144] = StrColor(255, 0, 0, "Might")
+    Game.GlobalTxt[144] = StrColor(255, 0, 0, Game.GlobalTxt[144] )
     Game.GlobalTxt[116] = StrColor(255, 128, 0, "Intellect")
     Game.GlobalTxt[163] = StrColor(0, 127, 255, "Personality")
     Game.GlobalTxt[75] = StrColor(0, 255, 0, "Endurance")
@@ -274,11 +274,21 @@ function get_key_for_value(t, value)
     return nil
 end
 
-function ptable(vars)
-	for k,v in pairs(vars) do
-		print(k,v)
-	end
+function pt(tbl)
+    local msg = "{"
+    for k, v in pairs(tbl) do
+        msg = msg .. tostring(k) .. " = "
+        if type(v) == "table" then
+            pt(v)
+        else
+            msg = msg .. tostring(v)
+        end
+        msg = msg .. ", "
+    end
+    msg = msg .. "}"
+    print(msg)
 end
+
 
 function ftable(vars)
 	local file = io.open('debugout.txt','a')

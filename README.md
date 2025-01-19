@@ -31,6 +31,7 @@ However, for the convenience and in-depth analyis of the party the following fea
     - Full Travel Schedule / World map / Teachers / Alchemy Recipes table in Autonotes (Seer tab) [Optional]	
     - Sharing max ID Item and Repair skills over the party [Optional]
     - Grandmaster ID Monster info with ALT pressed [Optional]
+    - Buff expiration alert (No more weakness from missed Haste) [Optional]
 
 ## Installation
  - MM7 GOG version (do not forget to set WinXP compatibility options)
@@ -162,6 +163,15 @@ Upon sorting, this player will get the following items in the following order:
 If Alchemy player inventory is full (2 spaces is always saved), next player will get the items. For the last (fourth) player, next player will be the third
 
 Those who do not want to use even "mild" cheats and share ID. Item skills among the party, can set player for them ([U])
+
+## Additional convenience features
+
+**Reference information**\
+Useful information about game is summarized in the several convenient tables, including full Stables/Boats schedule, inter-regions travel map, techer locations (region only) and full Alchemy compendium.
+Each section can be independently enabled/disabled in the Scripts/ccInit.lua file.
+
+**Id item and Repair skill share**
+
 
 
 ## Default keybinds

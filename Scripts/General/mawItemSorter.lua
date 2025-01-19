@@ -202,7 +202,7 @@ end
 -- Define the alchemyItemsOrder list for reference in sorting
 
 -- Empty, cat, rby RBY RBY
-  alchemyItemsOrder = { 220, 215, 216, 217, 218, 219, 200, 205, 210, 201, 206, 211, 202, 207, 212, 203, 208, 213, 204, 209, 214}
+  alchemyItemsOrder = { 220, 221,222,223,224,225,226,227, 215, 216, 217, 218, 219, 200, 205, 210, 201, 206, 211, 202, 207, 212, 203, 208, 213, 204, 209, 214}
 -- alchemyItemsOrder = {220, 215, 216, 217, 218, 219, 204, 209, 214, 203, 208, 213, 202, 207, 212, 201, 206, 211, 200, 205, 210}
 
 -- for i=1,Game.ItemsTxt.High do print(i,Game.ItemsTxt[i].Name) end
