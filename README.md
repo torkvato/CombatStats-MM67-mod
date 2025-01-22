@@ -172,7 +172,12 @@ Each section can be independently enabled/disabled in the Scripts/ccInit.lua fil
 
 **Id item and Repair skill share**
 
+**Buffs expiration alarm**
+List of tracked buffs can be configured in Scripts/ccInit.lua
+Refer https://grayface.github.io/mm/ext/ref/#const.PartyBuff and https://grayface.github.io/mm/ext/ref/#const.PlayerBuff for exact name reference
 
+**Simple alarm clock**
+Set it in the init file with the simple 24h format, for example, "17:30". Leave it empty "" to disable
 
 ## Default keybinds
 

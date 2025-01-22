@@ -13,8 +13,12 @@ AltIdMonsterGM = 1 -- Press alt while identifing the monster to get whole info a
 SharedIdentifyItem = 1 -- Id Item skill shared among party
 SharedRepair = 1 -- Repair skill shared among party
 
+--Buff monitor
 BuffExpirationAlert=1 -- Notification about buffs expiration
 BuffListAlert = {'Haste', 'Invisibility', 'FeatherFall', 'Bless', 'Heroism', 'Fly'}
+
+--Alarmclock
+AlarmClockTime = "17:30" --set to empty strint to disable
 
 --Useful information 
 TravelScheduleAutoNote = 1 -- Add Travel schedule to Seer Autonotes
@@ -96,6 +100,7 @@ local file = io.open(CombatLogFile,"r")
     end
 end
 nextbuffdurationcheck = 0
+nextalarmclockcheck = 0
 
 --need to add [mmv(nil, 0x5C88F0, 0x5E4CB0)].array(55).EditPChar  'GlobalTxt2'  after GlobalTxt
 

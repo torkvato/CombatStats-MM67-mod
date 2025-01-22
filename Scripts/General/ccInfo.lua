@@ -1,6 +1,6 @@
 function events.GameInitialized2()
     schedulenotealreadyadded = false
-    Game.GlobalTxt[144] = StrColor(255, 0, 0, '-'..Game.GlobalTxt[144] )
+    Game.GlobalTxt[144] = StrColor(255, 0, 0, Game.GlobalTxt[144] )
     Game.GlobalTxt[116] = StrColor(255, 128, 0, "Intellect")
     Game.GlobalTxt[163] = StrColor(0, 127, 255, "Personality")
     Game.GlobalTxt[75] = StrColor(0, 255, 0, "Endurance")
