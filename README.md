@@ -1,3 +1,7 @@
+[![en](https://img.shields.io/badge/lang-en-green.svg)](https://github.com/torkvato/CombatStats-MM7-mod/edit/master/README.md)
+[![ru](https://img.shields.io/badge/lang-ru-red.svg)](https://github.com/torkvato/CombatStats-MM7-mod/edit/master/README.ru.md)
+
+
 # CombatStats and Convenience MM7 mod
 
 ## Mod features
