@@ -1,3 +1,6 @@
+[![english](https://img.shields.io/badge/lang-English-green.svg)](https://github.com/torkvato/CombatStats-MM7-mod/blob/master/README.md)
+[![russian](https://img.shields.io/badge/lang-Russian-red.svg)](https://github.com/torkvato/CombatStats-MM7-mod/blob/master/README.ru.md)
+
 # CombatStats and Convenience MM7 mod
 
 ## Mod features
@@ -204,6 +207,3 @@ Set it in the init file with the simple 24h format, for example, "17:30". Leave 
 If corresponding option in mild cheats section is enabled, [ALT] while checking monster stats will give full GM information
 ![изображение](https://github.com/user-attachments/assets/3dab06e0-7dfb-44da-a8cd-d3c2e0be0c9f)
 
-
-[![en](https://img.shields.io/badge/lang-en-green.svg)](https://github.com/torkvato/CombatStats-MM7-mod/blob/master/README.md)
-[![ru](https://img.shields.io/badge/lang-ru-red.svg)](https://github.com/torkvato/CombatStats-MM7-mod/blob/master/README.ru.md)
