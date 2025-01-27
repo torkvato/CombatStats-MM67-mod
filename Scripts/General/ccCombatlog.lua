@@ -157,6 +157,10 @@ function events.CalcDamageToMonster(t)
             end
 
             objmsg = DamageTypeParsing(data)
+            
+            if t.Result>=t.Monster.HP then
+                objmsg = objmsg .. CombatLogSeparator .. "dies"
+            end
 
             if CombatLogEnabled>0 then
                 local z = CombatLogSeparator
@@ -199,6 +203,11 @@ function events.CalcDamageToPlayer(t)
 			
            objmsg = DamageTypeParsing(data)
 			
+           if t.Result>=t.Player.HP then
+           objmsg = objmsg .. CombatLogSeparator .. "dies"
+           end
+
+
 			-- minilog update
 			table.move(vars.minilog,1,#vars.minilog,1,vars.minilog)
 			vars.minilog[MinilogEntriesNumber] = {Player = monName, Hit = objmsg, Mob = t.Player.Name, Damage = t.Result, Kind = get_key_for_value(const.Damage, t.DamageKind), Type = 1 }
