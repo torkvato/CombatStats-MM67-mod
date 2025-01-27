@@ -148,8 +148,9 @@ For the calculation, we use rough monster progress skaling, and their AC (and Lv
 
 **Vitality (Effective HP)**
 Vitality is calculated by taking into account player physical hits avoidance chance (determined by AC) and magic resistances. 
-Currently, AC effect is taken with 65% weight, elemental magic resistances have 7.5% each, Mind and Body resistances 2.5% each. These weights are suitable for a party engaging in melee and having a thief.
-If you prefer traps that explode in your face and deal with with mobs from afar, surely the Elemental part should have a larger impact on the result. Alternative config is also included in the cmInit.lua file.  
+Weights of the damage resistances are calculated on the base of the incoming damage analysis for the full game combat log with highly buffed party (light side TKPS)
+To consider unavoidable damage types, like energy, dark and light, plain HP is also part of the final metric
+  
 ![image](https://github.com/user-attachments/assets/af850de2-4130-4086-9869-45d0ba30b621)
 
 ## Inventory management

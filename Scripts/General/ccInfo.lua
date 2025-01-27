@@ -1,12 +1,12 @@
 function events.GameInitialized2()
     schedulenotealreadyadded = false
-    Game.GlobalTxt[144] = StrColor(255, 0, 0, Game.GlobalTxt[144] )
-    Game.GlobalTxt[116] = StrColor(255, 128, 0, "Intellect")
-    Game.GlobalTxt[163] = StrColor(0, 127, 255, "Personality")
-    Game.GlobalTxt[75] = StrColor(0, 255, 0, "Endurance")
-    Game.GlobalTxt[1] = StrColor(250, 250, 0, "Accuracy")
-    Game.GlobalTxt[211] = StrColor(127, 0, 255, "Speed")
-    Game.GlobalTxt[136] = StrColor(255, 255, 255, "Luck")
+    Game.GlobalTxt[144] = StrColor(255, 0, 0,    Game.GlobalTxt[144])
+    Game.GlobalTxt[116] = StrColor(255, 128, 0,  Game.GlobalTxt[116])
+    Game.GlobalTxt[163] = StrColor(0, 127, 255,  Game.GlobalTxt[163])
+    Game.GlobalTxt[75] = StrColor(0, 255, 0,     Game.GlobalTxt[75])
+    Game.GlobalTxt[1] = StrColor(250, 250, 0,    Game.GlobalTxt[1] )
+    Game.GlobalTxt[211] = StrColor(127, 0, 255,  Game.GlobalTxt[211])
+    Game.GlobalTxt[136] = StrColor(255, 255, 255,Game.GlobalTxt[136])
     Game.GlobalTxt[108] = StrColor(0, 255, 0, "Hit Points")
     Game.GlobalTxt[212] = StrColor(0, 100, 255, "Spell Points")
     Game.GlobalTxt[12] = StrColor(230, 204, 128, "Armor Class")
@@ -108,8 +108,12 @@ function events.Tick()
 
         local coeff = CheckPlateChain(pl)
 
+        --local AvoidanceWeights = {Phys = 0.65, Fire=0.075, Air=0.075, Water=0.075, Earth = 0.075, Mind=0.025,Body = .025} -- first try
+        local AvoidanceWeights = {Phys = 0.45, Fire=0.25, Air=0.15, Water=0.8, Earth = 0.2, Mind=5,Body = 0}  -- on the base of full game damage percentages (TKPS party )
+ 
         local avoidance = coeff * monster_hit_chance * AvoidanceWeights.Phys + R0[10]*AvoidanceWeights.Fire + R0[11]*AvoidanceWeights.Air + R0[12]*AvoidanceWeights.Water + R0[13]*AvoidanceWeights.Earth + R0[14]*AvoidanceWeights.Mind + R0[15]*AvoidanceWeights.Body
-        local vitality = math.round(fullHP/avoidance)
+
+        local vitality = math.round(0.5*fullHP + 0.5*fullHP/avoidance)  --full HP added to take into account unavoidable damage like Light, Energy and Dark
 
         -- Attack and DPS calculations	
         local atk_m = pl:GetMeleeAttack()

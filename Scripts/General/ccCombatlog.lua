@@ -157,9 +157,14 @@ function events.CalcDamageToMonster(t)
             end
 
             objmsg = DamageTypeParsing(data)
+
+			-- minilog update
+			table.move(vars.minilog,1,#vars.minilog,1,vars.minilog)
+			vars.minilog[MinilogEntriesNumber] = {Player = data.Player.Name, Hit = objmsg, Mob = monName, Damage = t.Result, Kind = get_key_for_value(const.Damage, t.DamageKind), Type = 0 }
+
             
             if t.Result>=t.Monster.HP then
-                objmsg = objmsg .. CombatLogSeparator .. "dies"
+                objmsg = objmsg .. CombatLogSeparator .. "killed"
             end
 
             if CombatLogEnabled>0 then
@@ -172,9 +177,7 @@ function events.CalcDamageToMonster(t)
                 file:close()
             end
           
-			-- minilog update
-			table.move(vars.minilog,1,#vars.minilog,1,vars.minilog)
-			vars.minilog[MinilogEntriesNumber] = {Player = data.Player.Name, Hit = objmsg, Mob = monName, Damage = t.Result, Kind = get_key_for_value(const.Damage, t.DamageKind), Type = 0 }
+
 			
 			
         end
@@ -201,17 +204,16 @@ function events.CalcDamageToPlayer(t)
 				monName = "???"
 			end
 			
-           objmsg = DamageTypeParsing(data)
+            objmsg = DamageTypeParsing(data)
 			
-           if t.Result>=t.Player.HP then
-           objmsg = objmsg .. CombatLogSeparator .. "dies"
-           end
-
-
 			-- minilog update
 			table.move(vars.minilog,1,#vars.minilog,1,vars.minilog)
 			vars.minilog[MinilogEntriesNumber] = {Player = monName, Hit = objmsg, Mob = t.Player.Name, Damage = t.Result, Kind = get_key_for_value(const.Damage, t.DamageKind), Type = 1 }
 			
+            if t.Result>=t.Player.HP then
+                objmsg = objmsg .. CombatLogSeparator .. "killed"
+            end    
+
             vars.damagemeter[t.PlayerIndex].Damage_Received = vars.damagemeter[t.PlayerIndex].Damage_Received + t.Result
             vars.damagemeter1[t.PlayerIndex].Damage_Received = vars.damagemeter1[t.PlayerIndex].Damage_Received + t.Result
             mapvars.damagemeter[t.PlayerIndex].Damage_Received = mapvars.damagemeter[t.PlayerIndex].Damage_Received + t.Result

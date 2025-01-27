@@ -30,9 +30,7 @@ TrainingDummy = 1 -- ALT-L to call the Training Dummy
 
 
 --Stats and tooltips
-SkillTooltipsEnabled = 1; -- Enhanced skill tooltips. Disarm vs Map Disarm, Merchant discount, etc
-AvoidanceWeights = {Phys = 0.65, Fire=0.075, Air=0.075, Water=0.075, Earth = 0.075, Mind=0.025,Body = .025} --melee party with Thief
---AvoidanceWeights = {Phys = 0.55, Fire=0.1, Air=0.1, Water=0.1, Earth = 0.1, Mind=0.025,Body = .025} --
+SkillTooltipsEnabled = 1 -- Enhanced skill tooltips. Disarm vs Map Disarm, Merchant discount, etc
 
 
 --Keybinds
