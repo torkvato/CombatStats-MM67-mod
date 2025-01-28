@@ -5,18 +5,18 @@ function events.GameInitialized2()
     Game.GlobalTxt[163] = StrColor(0, 127, 255,  Game.GlobalTxt[163])
     Game.GlobalTxt[75] = StrColor(0, 255, 0,     Game.GlobalTxt[75])
     Game.GlobalTxt[1] = StrColor(250, 250, 0,    Game.GlobalTxt[1] )
-    Game.GlobalTxt[211] = StrColor(127, 0, 255,  Game.GlobalTxt[211])
+    Game.GlobalTxt[211] = StrColor(160,50, 255,  Game.GlobalTxt[211])
     Game.GlobalTxt[136] = StrColor(255, 255, 255,Game.GlobalTxt[136])
-    Game.GlobalTxt[108] = StrColor(0, 255, 0, "Hit Points")
-    Game.GlobalTxt[212] = StrColor(0, 100, 255, "Spell Points")
-    Game.GlobalTxt[12] = StrColor(230, 204, 128, "Armor Class")
+    Game.GlobalTxt[108] = StrColor(0, 255, 0, Game.GlobalTxt[108])
+    Game.GlobalTxt[212] = StrColor(0, 100, 255,  Game.GlobalTxt[212])
+    Game.GlobalTxt[12] = StrColor(230, 204, 128, Game.GlobalTxt[12])
 
-    Game.GlobalTxt[87] = StrColor(255, 70, 70, "Fire")
-    Game.GlobalTxt[6] = StrColor(173, 216, 230, "Air")
-    Game.GlobalTxt[240] = StrColor(100, 180, 255, "Water")
-    Game.GlobalTxt[70] = StrColor(153, 76, 0, "Earth")
-    Game.GlobalTxt[142] = StrColor(200, 200, 255, "Mind")
-    Game.GlobalTxt[29] = StrColor(255, 192, 203, "Body")
+    -- Game.GlobalTxt[87] = StrColor(255, 70, 70, Game.GlobalTxt[87])
+    -- Game.GlobalTxt[6] = StrColor(173, 216, 230, "Air")
+    -- Game.GlobalTxt[240] = StrColor(100, 180, 255, "Water")
+    -- Game.GlobalTxt[70] = StrColor(153, 76, 0, "Earth")
+    -- Game.GlobalTxt[142] = StrColor(200, 200, 255, "Mind")
+    -- Game.GlobalTxt[29] = StrColor(255, 192, 203, "Body")
 
 end
 
@@ -109,7 +109,7 @@ function events.Tick()
         local coeff = CheckPlateChain(pl)
 
         --local AvoidanceWeights = {Phys = 0.65, Fire=0.075, Air=0.075, Water=0.075, Earth = 0.075, Mind=0.025,Body = .025} -- first try
-        local AvoidanceWeights = {Phys = 0.45, Fire=0.25, Air=0.15, Water=0.8, Earth = 0.2, Mind=0.05,Body = 0}  -- on the base of full game damage percentages (TKPS party )
+        local AvoidanceWeights = {Phys = 0.45, Fire=0.25, Air=0.15, Water=0.8, Earth = 0.2, Mind=5,Body = 0}  -- on the base of full game damage percentages (TKPS party )
  
         local avoidance = coeff * monster_hit_chance * AvoidanceWeights.Phys + R0[10]*AvoidanceWeights.Fire + R0[11]*AvoidanceWeights.Air + R0[12]*AvoidanceWeights.Water + R0[13]*AvoidanceWeights.Earth + R0[14]*AvoidanceWeights.Mind + R0[15]*AvoidanceWeights.Body
 
@@ -190,18 +190,21 @@ function events.Tick()
     if Game.CurrentCharScreen == 101 and Game.CurrentScreen == 7 and SkillTooltipsEnabled then
         local pl = Party[Game.CurrentPlayer]
         local msg = StrColor(255, 255, 0,string.format("\nTotal Skill:%d, Map Reqired: %d",pl:GetDisarmTrapTotalSkill(),2*Game.MapStats[Game.Map.MapStatsIndex].Lock))
-        local addind = string.find(Game.GlobalTxt2[29], '\n')        
+        local sd =  Game.SkillDescriptions[const.Skills.DisarmTraps]
+        local addind = string.find(sd, '\n')        
         if addind then
-            Game.GlobalTxt2[29] = string.sub(Game.GlobalTxt2[29], 1, string.find(Game.GlobalTxt2[29], '\n')) .. msg            
+            Game.SkillDescriptions[const.Skills.DisarmTraps] = string.sub(sd, 1, string.find(sd, '\n')) .. msg            
         else
-            Game.GlobalTxt2[29] = Game.GlobalTxt2[29] .. msg           
+            Game.SkillDescriptions[const.Skills.DisarmTraps] = sd .. msg           
         end
+
         local msg = StrColor(255, 255, 0,string.format("\nTotal merchant discount:%d",pl:GetMerchantTotalSkill()))
-        local addind = string.find(Game.GlobalTxt2[22], '\n')        
+        sd =  Game.SkillDescriptions[const.Skills.Merchant]
+        local addind = string.find(sd, '\n')        
         if addind then
-            Game.GlobalTxt2[22] = string.sub(Game.GlobalTxt2[22], 1, string.find(Game.GlobalTxt2[22], '\n')) .. msg            
+            Game.SkillDescriptions[const.Skills.Merchant] = string.sub(sd, 1, string.find(sd, '\n')) .. msg            
         else
-            Game.GlobalTxt2[22] = Game.GlobalTxt2[22] .. msg           
+            Game.SkillDescriptions[const.Skills.Merchant] = sd.. msg           
         end
     end
 end

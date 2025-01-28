@@ -41,7 +41,7 @@ msg1 = msg1 .. "\n[The Pit ]-[Deyja]-[Tularean]  [LandGiants]"
 msg1 = msg1 .. "\n                    |              |                  |"
 msg1 = msg1 .. "\n[Tatalia ]-[Erathia]-[Harmondale] [Nighon]"
 msg1 = msg1 .. "\n                    |              |                  |"
-msg1 = msg1 .. "\n[Celeste]-[Bracada]-[Burrows]-[StoneCity]\n\n\n"
+msg1 = msg1 .. "\n[Celeste]-[Bracada]-[Burrows]-[StoneCity]\n\n\n\n\n"
 Autonote(':SeerWorldMap', 3, msg1)
 SuppressSound(true) -- disable annoying ding
 AddAutonote(':SeerWorldMap')

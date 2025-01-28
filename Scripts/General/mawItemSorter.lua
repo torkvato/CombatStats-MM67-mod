@@ -33,7 +33,7 @@ end
 function sortInventory(all)
 	local lastPlayer = Game.CurrentPlayer
 
-    evt.Add("Items", 0)
+    --evt.Add("Items", 0)
 
     local itemList = {}
     local j = 0
@@ -171,7 +171,8 @@ function sortInventory(all)
 					end
 					Game.CurrentPlayer = temp_alchemy_player
                 end
-            elseif vars.identifyPlayer >= 0 and not (itemList[i].Identified) then
+            end
+            if vars.identifyPlayer >= 0 and not (itemList[i].Identified) then
                 Game.CurrentPlayer = vars.identifyPlayer
             end
 			
@@ -191,10 +192,11 @@ function sortInventory(all)
             it.Refundable = itemList[i].Refundable
             it.Stolen = itemList[i].Stolen
             it.TemporaryBonus = itemList[i].TemporaryBonus
-			evt.Add("Items", 0) -- to give item to proper player 
+			--evt.Add("Items", 0) -- to give item to proper player 
 			Game.CurrentPlayer = lastPlayer            
         end
-         evt.Add("Inventory", 0)
+         --evt.Add("Inventory", 0)
+         Mouse:ReleaseItem()
     end
     table.clear(itemList)
 end
