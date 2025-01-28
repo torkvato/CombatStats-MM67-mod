@@ -109,7 +109,7 @@ function events.Tick()
         local coeff = CheckPlateChain(pl)
 
         --local AvoidanceWeights = {Phys = 0.65, Fire=0.075, Air=0.075, Water=0.075, Earth = 0.075, Mind=0.025,Body = .025} -- first try
-        local AvoidanceWeights = {Phys = 0.45, Fire=0.25, Air=0.15, Water=0.8, Earth = 0.2, Mind=5,Body = 0}  -- on the base of full game damage percentages (TKPS party )
+        local AvoidanceWeights = {Phys = 0.45, Fire=0.25, Air=0.15, Water=0.8, Earth = 0.2, Mind=0.05,Body = 0}  -- on the base of full game damage percentages (TKPS party )
  
         local avoidance = coeff * monster_hit_chance * AvoidanceWeights.Phys + R0[10]*AvoidanceWeights.Fire + R0[11]*AvoidanceWeights.Air + R0[12]*AvoidanceWeights.Water + R0[13]*AvoidanceWeights.Earth + R0[14]*AvoidanceWeights.Mind + R0[15]*AvoidanceWeights.Body
 
