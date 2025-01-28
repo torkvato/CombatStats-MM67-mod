@@ -22,9 +22,9 @@ AlarmClockTime = "17:30" --set to empty strint to disable
 
 --Useful information 
 TravelScheduleAutoNote = 1 -- Add Travel schedule to Seer Autonotes
-MapAutoNote = 1 -- Add Travel schedule to Seer Autonotes
-TeachersTableAutoNote = 1 -- Add Travel schedule to Seer Autonotes
-AlchemyRecipesAutoNote = 1 -- Add Travel schedule to Seer Autonotes
+MapAutoNote = 1 -- Add World Map to Seer Autonotes
+TeachersTableAutoNote = 1 -- Add Teachers Table to Seer Autonotes
+AlchemyRecipesAutoNote = 1 -- Add recipes schedule to Seer Autonotes
 
 TrainingDummy = 1 -- ALT-L to call the Training Dummy
 
@@ -100,7 +100,8 @@ end
 nextbuffdurationcheck = 0
 nextalarmclockcheck = 0
 
---need to add [mmv(nil, 0x5C88F0, 0x5E4CB0)].array(55).EditPChar  'GlobalTxt2'  after GlobalTxt
+-- need to add after GlobalTxt to structs lua
+-- [mmv(0x56B7E8, 0x5C88F0, 0x5E4CB0)].array(55).EditPChar  'GlobalTxt2' 
 
 -- KEYBIND VALUES--
 --[[

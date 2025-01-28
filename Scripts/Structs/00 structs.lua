@@ -528,7 +528,9 @@ end]=]
 	.i4  'OutdoorViewDiv'
 	 .Info "!Lua[[= math.floor(0x10000/Game.OutdoorViewMul)]]"
 	[mmv(0x56B830, 0x5E4000, 0x601448)].array(mmv(596, 677, 750)).EditPChar  'GlobalTxt'
-	[mmv(0x56F394, 0x5C88F0, 0x5E4CB0)].array(56).EditPChar  'GlobalTxt2' --Links to the SecondaryStats description starint from 38  
+
+	[mmv(0x56B7E8, 0x5C88F0, 0x5E4CB0)].array(55).EditPChar  'GlobalTxt2' -- for ccMod
+
 	[mmv(0x52D530, 0x5912B8, 0x5A5728)].array(mmv(558, 526, 526)).struct(structs.Events2DItem)  'Houses'  -- 2DEvents
 	 .Info "2DEvents.txt"
 	[mmv(0x4BE888, 0x4E5F40, 0x4F66D8)].array(mmv(119, 196, 161)).struct(structs.HouseMovie)  'HouseMovies'
