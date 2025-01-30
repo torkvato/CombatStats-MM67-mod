@@ -15,8 +15,10 @@ function events.Tick()
 			local s = const.Skills.IdentifyItem
 			local maxskill = 0
 			for _, pl in Party do
+				if (pl.Eradicated + pl.Dead + pl.Stoned + pl.Paralyzed + pl.Unconscious + pl.Asleep)==0 then
 				local sk = pl:GetSkill(s)
 				if maxskill<sk then maxskill = sk end
+				end
 			end					
 			id_item_skill_saved = {[0]=Party[0].Skills[s],[1]=Party[1].Skills[s],[2]=Party[2].Skills[s],[3]=Party[3].Skills[s]}
 			local current_bonus = Party[Game.CurrentPlayer]:GetSkill(s) - Party[Game.CurrentPlayer].Skills[s]
@@ -35,8 +37,10 @@ function events.Tick()
 			local s = const.Skills.Repair
 			local maxskill = 0
 			for _, pl in Party do
+				if (pl.Eradicated + pl.Dead + pl.Stoned + pl.Paralyzed + pl.Unconscious + pl.Asleep)==0 then
 				local sk = pl:GetSkill(s)
 				if maxskill<sk then maxskill = sk end
+				end
 			end					
 			repair_skill_saved = {[0]=Party[0].Skills[s],[1]=Party[1].Skills[s],[2]=Party[2].Skills[s],[3]=Party[3].Skills[s]}
 			local current_bonus = Party[Game.CurrentPlayer]:GetSkill(s) - Party[Game.CurrentPlayer].Skills[s]

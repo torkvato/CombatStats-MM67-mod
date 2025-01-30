@@ -527,7 +527,7 @@ end]=]
 	 .Info "Acts as the opposite of FOV"
 	.i4  'OutdoorViewDiv'
 	 .Info "!Lua[[= math.floor(0x10000/Game.OutdoorViewMul)]]"
-	[mmv(0x56B830, 0x5E4000, 0x601448)].array(mmv(596, 677, 750)).EditPChar  'GlobalTxt'
+	[mmv(0x56B830, 0x5E4000, 0x601448)].array(mmv(596, 677, 750)).EditPChar  'GlobalTxt'	
 
 	[mmv(0x56B7E8, 0x5C88F0, 0x5E4CB0)].array(55).EditPChar  'GlobalTxt2' -- for ccMod
 
