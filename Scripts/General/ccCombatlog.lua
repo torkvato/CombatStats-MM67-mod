@@ -44,7 +44,7 @@ function events.KeyDown(t)
         end
     end
 
-	if Game.CurrentScreen == const.Screens.Game and t.Key == MiniLogButton then
+	if Game.CurrentScreen == const.Screens.Game and t.Key == MiniLogButton and not(Keys.IsPressed(const.Keys.ALT)) then
 
 	Message(MinilogText())
 
@@ -348,21 +348,22 @@ function PartyRecordsTxt()
     return msg
 end
 
-
 function MinilogText()
 	local msg = ""
 	local pl1 = ""
 	local pl2 = ""
-	--local prefix = {[0] = "", [1] = ""}
+    local mob_db, pl_db
+
 	for i=1, #vars.minilog do
 	    local knd = StrColor(const.DamageColor[vars.minilog[i].Kind][1], const.DamageColor[vars.minilog[i].Kind][2], const.DamageColor[vars.minilog[i].Kind][3],  vars.minilog[i].Damage .. ' ' .. vars.minilog[i].Kind)
-		
+		mob_db = string.gsub(vars.minilog[i].Mob, "%s+", "")
+        pl_db  = string.gsub(vars.minilog[i].Player, "%s+", "")
 		if vars.minilog[i].Type==0 then
-			pl1 = StrColor(135,245,135, vars.minilog[i].Player)
-			pl2 = StrColor(245,164,160, vars.minilog[i].Mob)
+			pl1 = StrColor(135,245,135, pl_db)
+			pl2 = StrColor(245,164,160, mob_db)
 		else
-			pl1 = StrColor(245,175,170, vars.minilog[i].Player)
-			pl2 = StrColor(140,245,140, vars.minilog[i].Mob)
+			pl1 = StrColor(245,175,170, pl_db)
+			pl2 = StrColor(140,245,140, mob_db)
 		end		
 		msg = msg .. string.format("%s %s %s %s\n", pl1, vars.minilog[i].Hit, pl2, knd)
 	end
