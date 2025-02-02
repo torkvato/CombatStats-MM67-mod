@@ -159,6 +159,8 @@ function events.Tick()
         Game.GlobalTxt[47] = string.format("M/R DPS: %s/%s\n\n\n\n\n\n\n\n\n\n\n\n\n\n", StrColor(255, 0, 0, math.round(dps_m * 10) / 10), StrColor(255, 255, 50, math.round(dps_r * 10) / 10))
         Game.GlobalTxt[172] = string.format("Vit:%s Avoid:%s%%\n\n\n\n\n\n\n\n\n\n\n\n\n\n", StrColor(0, 255, 0, vitality),  StrColor(230, 204, 128,math.round(1000*(1-monster_hit_chance))/10))
 
+    Game.GlobalTxt2[40] = PartyRecordsTxt()
+    
     if Keys.IsPressed(const.Keys.ALT) then
         Game.GlobalTxt2[41] = "Full stats since game beginning, [E] for export\n" .. DamageMeterCalculation(vars.damagemeter)
         Game.GlobalTxt2[42] = "Full stats since game beginning, [E] for export\n" .. DamageReceivedCalculation(vars.damagemeter)   
