@@ -1,5 +1,6 @@
 [![english](https://img.shields.io/badge/lang-English-green.svg)](https://github.com/torkvato/CombatStats-MM7-mod/blob/master/README.md)
 [![russian](https://img.shields.io/badge/lang-Russian-red.svg)](https://github.com/torkvato/CombatStats-MM7-mod/blob/master/README.ru.md)
+[![anotherversion](https://img.shields.io/badge/anotherversion-MM6-yellow.svg)](https://github.com/torkvato/CombatStats-MM6-mod)
 
 # CombatStats and Convenience MM7 mod
 
@@ -7,7 +8,8 @@
 CombatStats and Convenience MM7 mod do not affect the gameplay, the game mechanics or difficulties of the original game. \
 Mod requires Grayface's patch and MMExtension, but adds nothing changing the game over this  
 Mod can work with any saved game, no need to start a new. Saves will be intact if you remove the mod (but why?).\
-Basically,it is the same good old vanilla Might and Magic 7, without any attempts to make the eternal classic more difficult/interesting/new.
+Basically,it is the same good old vanilla Might and Magic 7, without any attempts to make the eternal classic more difficult/interesting/new.\
+MM6 version also exist, link above.
 
 However, for the convenience and in-depth analyis of the party the following features were introduced:
 
