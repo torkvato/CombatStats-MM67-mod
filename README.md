@@ -21,7 +21,7 @@ However, for the convenience and in-depth analyis of the party the following fea
     -  MM9-style, showing the details of the last dozen party/monsters hits
     -  Colored for ease of use
 - **In-game damage statistics processing**
-    - Accumulation of the damage data such as total damage dealt and average [observed] DPS for melee/ranged/magic
+    - Accumulation of the damage data such as total damage dealt and received and average [observed] DPS for melee/ranged/magic
     - In-game tables for party members efficiency comparison
     - Selected segment / current map / overall game data in separate tables
     - Export of the statistics to the output file for future reference
@@ -34,9 +34,11 @@ However, for the convenience and in-depth analyis of the party the following fea
 - **Convenience features**	
     - Automatic items sorting. Borrowed from MAW MMMerge mod, with minor changes (alchemy/unidentified items sorting). 
     - Full Travel Schedule / World map / Teachers / Alchemy Recipes table in Autonotes (Seer tab) [Optional]	
-    - Sharing max ID Item and Repair skills over the party [Optional]
+    - Sharing max ID Item skill party [Optional]
+    - Sharing Repair skill or even automatic repair with sufficient skill [Optional]
     - Grandmaster ID Monster info with ALT pressed [Optional]
     - Buff expiration alert (No more weakness from missed Haste) [Optional]
+    - Alarm clock 
 
 ## Installation
  - MM7 GOG version (do not forget to set WinXP compatibility options)
@@ -95,7 +97,6 @@ Since the game treat each case of damage separately, hitting with elementrary en
 
 ### In-game combat history
 Besides output to the file, damage done and received can be viewed in MM9-style combat history (default key -[H] )
-In-game combat log have less field due to lack of space, but currently shows the mod level for reference
 
 ![image](https://github.com/user-attachments/assets/9d772466-850e-4028-a236-58e3fd3a6d5c)
 
@@ -109,9 +110,9 @@ Also, there are three distinct accumulation pools:
 - Full data: Overall stats from the very beginning
 - Segment data: statistics since last manual reset ([R] in Character page)
 
-Statistics summaries can be accessed by [Right=click] in the DPS/Vitality area of Character page\
+Statistics summaries can be accessed by [RightClick] in the DPS of Character page\
+Default is curren map data, [CTRL-RightClick] shows full game data, [ALT] for segment.
 Here you also can [E]xport this tables in the file for further usage.
-
 
 **Observed DPS**\
 DPS, or damage per second is the most important metric of the combat proficiency. Here we calculate is by a total damage inflicted by the player, divided by the total active time\
@@ -120,12 +121,12 @@ DPS is calculated for each party member independently and over the same three da
 
 ![image](https://github.com/user-attachments/assets/fc77963c-196b-4448-b2b7-a148eb8a0734)
 
-**Damage taken**
-Damage taken per each party member is accumulated over map/full game/segment and shoun in one of the [ALT-Click] tables.
-Currently it is divided between melee/ranged/spell.
-
-Only damage originated from monsters (and fellow casters) is counted. 
-Traps and fall damage have no "author" and is not [yet] included in the statictic.
+**Damage taken
+Damage taken per each party member is accumulated over map/full game/segment and shown by [RightClick] on vitality
+There is sorting by damage kind and also summary by party member.
+Simularly, map-segment-full data is accessible with [ALT] and [CTRL]
+Only damage originated from monsters (and fellow casters) and in-game traps (marked as "???") is counted. 
+Chest traps and fall damage have no "author" and is not included in the statictic.
 
 **Records**
 Mod will record best hits with melee, ranged and magic separately (also, independently for three data sets: map, full and segment)\
@@ -177,6 +178,9 @@ Useful information about game is summarized in the several convenient tables, in
 Each section can be independently enabled/disabled in the Scripts/ccInit.lua file.
 
 **Id item and Repair skill share**
+Id and Repair skill is shared when you're in the inventory screen only.
+Additionally, automatic repair can be enabled, repairing all items each regeneration tick. 
+Appropriate message appears for the last item repaired.
 
 **Buffs expiration alarm**
 List of tracked buffs can be configured in Scripts/ccInit.lua
