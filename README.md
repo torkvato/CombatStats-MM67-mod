@@ -189,10 +189,17 @@ Refer https://grayface.github.io/mm/ext/ref/#const.PartyBuff and https://grayfac
 **Simple alarm clock**
 Set it in the init file with the simple 24h format, for example, "17:30". Leave it empty "" to disable
 
+**Training dummy**
+[ALT-L] calls the training dummy in front of the party. 
+Basically it is paralyzed monster with 32k HP, negative AC and zero resistances for sure hits.
+Upon calling a dummy, combat log file is set to "cl_dummy.csv" to avoid interference with real game data. 
+Note that if you save game after this, new name for combat log will be also saved, so dont save after calling a dummy.
+
 ## Default keybinds
 
 **Combat history**\
 [H], as it was in MM9. This overlaps Wendell Tweed history notes, so if you really need his works, you can access them through book or rebind the key in the Menu
+[ALT-H] Runs the Lua parser that process the current csv log file
 **Damage statistics**\
 [Right-click] in the Player Stats screen: clicking on DPS stat will lead to segment data, clicking on Vitality will lead to map data\
 [ALT]+[Right-click] lead to Full stat since the beginning of the game\
