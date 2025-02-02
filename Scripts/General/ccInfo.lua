@@ -159,20 +159,28 @@ function events.Tick()
         Game.GlobalTxt[47] = string.format("M/R DPS: %s/%s\n\n\n\n\n\n\n\n\n\n\n\n\n\n", StrColor(255, 0, 0, math.round(dps_m * 10) / 10), StrColor(255, 255, 50, math.round(dps_r * 10) / 10))
         Game.GlobalTxt[172] = string.format("Vit:%s Avoid:%s%%\n\n\n\n\n\n\n\n\n\n\n\n\n\n", StrColor(0, 255, 0, vitality),  StrColor(230, 204, 128,math.round(1000*(1-monster_hit_chance))/10))
 
-    Game.GlobalTxt2[40] = PartyRecordsTxt()
+        Game.GlobalTxt2[40] = PartyRecordsTxt()
     
-    if Keys.IsPressed(const.Keys.ALT) then
-        Game.GlobalTxt2[41] = "Full stats since game beginning, [E] for export\n" .. DamageMeterCalculation(vars.damagemeter)
-        Game.GlobalTxt2[42] = "Full stats since game beginning, [E] for export\n" .. DamageReceivedCalculation(vars.damagemeter)   
-    elseif Keys.IsPressed(const.Keys.CONTROL) then
-        Game.GlobalTxt2[41] = string.format("Segment: %s since [R]eset\n", GameTimePassed()) .. DamageMeterCalculation(vars.damagemeter1)
-        Game.GlobalTxt2[42] = string.format("Segment: %s since [R]eset\n", GameTimePassed()) .. DamageReceivedCalculation(vars.damagemeter1)  
-    else
-        Game.GlobalTxt2[41] = string.format("Map: %s, [ALT]-Full, [CTRL]-Segment\n", Game.MapStats[Game.Map.MapStatsIndex].Name) .. DamageMeterCalculation(mapvars.damagemeter)
-        Game.GlobalTxt2[42] = string.format("Map: %s, [ALT]-Full, [CTRL]-Segment\n", Game.MapStats[Game.Map.MapStatsIndex].Name) .. DamageReceivedCalculation(mapvars.damagemeter)  
+        if Keys.IsPressed(const.Keys.ALT) then
+            Game.GlobalTxt2[41] = "Full stats since game beginning, [E] for export\n" .. DamageMeterCalculation(vars.damagemeter)
+            Game.GlobalTxt2[42] = "Full stats since game beginning, [E] for export\n" .. DamageReceivedCalculation(vars.damagemeter)   
+        elseif Keys.IsPressed(const.Keys.CONTROL) then
+            Game.GlobalTxt2[41] = string.format("Segment: %s since [R]eset\n", GameTimePassed()) .. DamageMeterCalculation(vars.damagemeter1)
+            Game.GlobalTxt2[42] = string.format("Segment: %s since [R]eset\n", GameTimePassed()) .. DamageReceivedCalculation(vars.damagemeter1)  
+        else
+            Game.GlobalTxt2[41] = string.format("Map: %s, [ALT]-Full, [CTRL]-Segment\n", Game.MapStats[Game.Map.MapStatsIndex].Name) .. DamageMeterCalculation(mapvars.damagemeter)
+            Game.GlobalTxt2[42] = string.format("Map: %s, [ALT]-Full, [CTRL]-Segment\n", Game.MapStats[Game.Map.MapStatsIndex].Name) .. DamageReceivedCalculation(mapvars.damagemeter)  
+        end
+        textsupdated = true
+    elseif textsupdated and Game.CurrentScreen ~= 7 then
+        Game.GlobalTxt[87]  = StrColor(255, 70, 70, "Fire")
+        Game.GlobalTxt[6]   = StrColor(173, 216, 230, "Air")
+        Game.GlobalTxt[240] = StrColor(100, 180, 255, "Water")
+        Game.GlobalTxt[70]  = StrColor(153, 76, 0, "Earth")
+        Game.GlobalTxt[142] = StrColor(200, 200, 255, "Mind")
+        Game.GlobalTxt[29]  = StrColor(255, 192, 203, "Body")
+        textsupdated = false
     end
-    textsupdated = true
-end
 
     if Game.CurrentCharScreen == 101 and Game.CurrentScreen == 7 and SkillTooltipsEnabled then
         local pl = Party[Game.CurrentPlayer]
