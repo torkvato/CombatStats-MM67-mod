@@ -121,7 +121,7 @@ DPS is calculated for each party member independently and over the same three da
 
 ![image](https://github.com/user-attachments/assets/fc77963c-196b-4448-b2b7-a148eb8a0734)
 
-**Damage taken
+**Damage taken**
 Damage taken per each party member is accumulated over map/full game/segment and shown by [RightClick] on vitality
 There is sorting by damage kind and also summary by party member.
 Simularly, map-segment-full data is accessible with [ALT] and [CTRL]
