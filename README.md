@@ -1,6 +1,6 @@
 [![english](https://img.shields.io/badge/lang-English-green.svg)](https://github.com/torkvato/CombatStats-MM7-mod/blob/master/README.md)
 [![russian](https://img.shields.io/badge/lang-Russian-red.svg)](https://github.com/torkvato/CombatStats-MM7-mod/blob/master/README.ru.md)
-[![MM6](https://img.shields.io/badge/MM6-yellow.svg)](https://github.com/torkvato/CombatStats-MM6-mod)
+[![MM6](https://img.shields.io/badge/MM6 version-yellow.svg)](https://github.com/torkvato/CombatStats-MM6-mod)
 
 # CombatStats and Convenience MM7 mod
 
