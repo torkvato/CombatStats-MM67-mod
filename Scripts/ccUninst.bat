@@ -12,4 +12,3 @@ del "Global\ccTrainingDummy.lua"
 
 del "ccUninst.bat"
 
-

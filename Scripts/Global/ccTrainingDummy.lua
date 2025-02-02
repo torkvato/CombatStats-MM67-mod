@@ -1,10 +1,12 @@
 function events.KeyDown(t)
     if Game.CurrentScreen == 0 and t.Key == const.Keys.L and Keys.IsPressed(const.Keys.ALT) and TrainingDummy==1 then
         -- vars.MonGenerated = true and not(vars.MonGenerated)
+        vars.CombatLogFile = 'cl_dummy.csv'
+        vars.StatsOutputFile = 'stats_dummy.csv'
 
-        MonId = 106 -- monk master
-
-        mon = SummonMonster(MonId, Party.X + 30, Party.Y, Party.Z)
+        local MonId = 106 -- monk master / minotaur
+        local anglerad = Party.Direction/2048*2*3.1415
+        local mon = SummonMonster(MonId, Party.X + 70*math.cos(anglerad), Party.Y + 70*math.sin(anglerad), Party.Z)
         mon.Group = 0
         mon.Hostile = false
         mon.ShowAsHostile = false
@@ -24,11 +26,11 @@ function events.KeyDown(t)
             mon.Resistances[i] = 0
         end
 
-        mon.ArmorClass = Party[0]:GetLevel() -- AC-Lvl as in DPS calculus
+        --mon.ArmorClass = Party[0]:GetLevel() -- AC-Lvl as in DPS calculus
+        mon.ArmorClass = -20
         -- mon.ArmorClass = -20 --sure hit
 
         mon.SpellBuffs[const.MonsterBuff.Paralyze]:Set(Game.Time + 3 * const.Minute * 100, 10)
-        mon:ShowSpellEffect()
     end
 
 --    if Game.CurrentScreen == 0 and t.Key==const.Keys.K and  Keys.IsPressed(const.Keys.ALT)  then
