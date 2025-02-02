@@ -3,21 +3,13 @@ function events.GameInitialized2()
     Game.GlobalTxt[144] = StrColor(255, 0, 0,    Game.GlobalTxt[144])
     Game.GlobalTxt[116] = StrColor(255, 128, 0,  Game.GlobalTxt[116])
     Game.GlobalTxt[163] = StrColor(0, 127, 255,  Game.GlobalTxt[163])
-    Game.GlobalTxt[75] = StrColor(0, 255, 0,     Game.GlobalTxt[75])
-    Game.GlobalTxt[1] = StrColor(250, 250, 0,    Game.GlobalTxt[1] )
+    Game.GlobalTxt[75]  = StrColor(0, 255, 0,    Game.GlobalTxt[75])
+    Game.GlobalTxt[1]   = StrColor(250, 250, 0,  Game.GlobalTxt[1] )
     Game.GlobalTxt[211] = StrColor(160,50, 255,  Game.GlobalTxt[211])
     Game.GlobalTxt[136] = StrColor(255, 255, 255,Game.GlobalTxt[136])
-    Game.GlobalTxt[108] = StrColor(0, 255, 0, Game.GlobalTxt[108])
+    Game.GlobalTxt[108] = StrColor(0, 255, 0,    Game.GlobalTxt[108])
     Game.GlobalTxt[212] = StrColor(0, 100, 255,  Game.GlobalTxt[212])
-    Game.GlobalTxt[12] = StrColor(230, 204, 128, Game.GlobalTxt[12])
-
-    -- Game.GlobalTxt[87] = StrColor(255, 70, 70, Game.GlobalTxt[87])
-    -- Game.GlobalTxt[6] = StrColor(173, 216, 230, "Air")
-    -- Game.GlobalTxt[240] = StrColor(100, 180, 255, "Water")
-    -- Game.GlobalTxt[70] = StrColor(153, 76, 0, "Earth")
-    -- Game.GlobalTxt[142] = StrColor(200, 200, 255, "Mind")
-    -- Game.GlobalTxt[29] = StrColor(255, 192, 203, "Body")
-
+    Game.GlobalTxt[12]  = StrColor(230, 204, 128,Game.GlobalTxt[12])
 end
 
 
@@ -167,29 +159,22 @@ function events.Tick()
         Game.GlobalTxt[47] = string.format("M/R DPS: %s/%s\n\n\n\n\n\n\n\n\n\n\n\n\n\n", StrColor(255, 0, 0, math.round(dps_m * 10) / 10), StrColor(255, 255, 50, math.round(dps_r * 10) / 10))
         Game.GlobalTxt[172] = string.format("Vit:%s Avoid:%s%%\n\n\n\n\n\n\n\n\n\n\n\n\n\n", StrColor(0, 255, 0, vitality),  StrColor(230, 204, 128,math.round(1000*(1-monster_hit_chance))/10))
 
-        if Keys.IsPressed(const.Keys.ALT) then
-            Game.GlobalTxt2[41] = PartyRecordsTxt()
-            Game.GlobalTxt2[42] = "Full stats since game beginning, [E] for export\n" .. DamageMeterCalculation(vars.damagemeter)             
-        else 
-        
-        Game.GlobalTxt2[41] = string.format("Current map: %s, [ALT] for more\n",Game.MapStats[Game.Map.MapStatsIndex].Name).. DamageMeterCalculation(mapvars.damagemeter)      
-        Game.GlobalTxt2[42] = string.format("Segment: %s since [r]eset, [ALT] for full\n",GameTimePassed()) .. DamageMeterCalculation(vars.damagemeter1) 
-        
-        end
-        textsupdated = true
-
-    elseif textsupdated and (Game.CurrentCharScreen ~= 100 or Game.CurrentScreen ~= 7) then
-        Game.GlobalTxt[87] = StrColor(255, 70, 70, "Fire")
-        Game.GlobalTxt[6] = StrColor(173, 216, 230, "Air")
-        Game.GlobalTxt[240] = StrColor(100, 180, 255, "Water")
-        Game.GlobalTxt[70] = StrColor(153, 76, 0, "Earth")
-        Game.GlobalTxt[142] = StrColor(200, 200, 255, "Mind")
-        Game.GlobalTxt[29] = StrColor(255, 192, 203, "Body")
-        textsupdated = false
+    if Keys.IsPressed(const.Keys.ALT) then
+        Game.GlobalTxt2[41] = "Full stats since game beginning, [E] for export\n" .. DamageMeterCalculation(vars.damagemeter)
+        Game.GlobalTxt2[42] = "Full stats since game beginning, [E] for export\n" .. DamageReceivedCalculation(vars.damagemeter)   
+    elseif Keys.IsPressed(const.Keys.CONTROL) then
+        Game.GlobalTxt2[41] = string.format("Segment: %s since [R]eset\n", GameTimePassed()) .. DamageMeterCalculation(vars.damagemeter1)
+        Game.GlobalTxt2[42] = string.format("Segment: %s since [R]eset\n", GameTimePassed()) .. DamageReceivedCalculation(vars.damagemeter1)  
+    else
+        Game.GlobalTxt2[41] = string.format("Map: %s, [ALT]-Full, [CTRL]-Segment\n", Game.MapStats[Game.Map.MapStatsIndex].Name) .. DamageMeterCalculation(mapvars.damagemeter)
+        Game.GlobalTxt2[42] = string.format("Map: %s, [ALT]-Full, [CTRL]-Segment\n", Game.MapStats[Game.Map.MapStatsIndex].Name) .. DamageReceivedCalculation(mapvars.damagemeter)  
     end
+    textsupdated = true
+end
+
     if Game.CurrentCharScreen == 101 and Game.CurrentScreen == 7 and SkillTooltipsEnabled then
         local pl = Party[Game.CurrentPlayer]
-        local msg = StrColor(255, 255, 0,string.format("\nTotal Skill:%d, Map Reqired: %d",pl:GetDisarmTrapTotalSkill(),2*Game.MapStats[Game.Map.MapStatsIndex].Lock))
+        local msg = StrColor(255, 255, 0,string.format("\nEffective Skill:%d, Map Reqired: %d",pl:GetDisarmTrapTotalSkill(),2*Game.MapStats[Game.Map.MapStatsIndex].Lock))
         local sd =  Game.SkillDescriptions[const.Skills.DisarmTraps]
         local addind = string.find(sd, '\n')        
         if addind then
@@ -198,7 +183,7 @@ function events.Tick()
             Game.SkillDescriptions[const.Skills.DisarmTraps] = sd .. msg           
         end
 
-        local msg = StrColor(255, 255, 0,string.format("\nTotal merchant discount:%d",pl:GetMerchantTotalSkill()))
+        local msg = StrColor(255, 255, 0,string.format("\nMerchant price changes: %d%%",pl:GetMerchantTotalSkill()))
         sd =  Game.SkillDescriptions[const.Skills.Merchant]
         local addind = string.find(sd, '\n')        
         if addind then

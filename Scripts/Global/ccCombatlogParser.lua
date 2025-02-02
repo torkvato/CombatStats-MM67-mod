@@ -12,8 +12,8 @@ function events.KeyDown(t)
             [3] = 0
         }
 
-        io.lines(CombatLogFile)() -- discard first line with titles
-        for line in io.lines(CombatLogFile) do -- browse through logfile
+        io.lines(vars.CombatLogFile)() -- discard first line with titles
+        for line in io.lines(vars.CombatLogFile) do -- browse through logfile
 
             local x = string.gmatch(line, ".-" .. CombatLogSeparator)
 
@@ -72,20 +72,20 @@ function events.KeyDown(t)
             msg = string.format("%s%s\t%18s\t%30s%%\n", msg, coloredkd, kd[i].dmg, math.round(kd[i].dmg * 100 / total_mobs_dmg))
         end
         msg = msg .. "Top mobs and their damage:\n"
-        for i = 1, 10 do
+        for i = 1, math.min(10,#md) do
             coloredkd = string.gsub(md[i].name, "%s+", "")
             msg = string.format("%s%s%s ", msg, StrColor(200, 200, 0, coloredkd), md[i].dmg)
         end
 
         Message(msg)
-        Game.ShowStatusText("Exporting full data to " .. StatsOutputFile, 6)
+        Game.ShowStatusText("Exporting full data to " .. vars.StatsOutputFile, 6)
 
         msg1 = msg1 .. "\nMobs and their damage:\n"
         for i = 1, #md do
 
             msg1 = string.format("%s%s%s%s\n", msg1, md[i].name, CombatLogSeparator, md[i].dmg)
         end
-        file = io.open(StatsOutputFile, "a")
+        file = io.open(vars.StatsOutputFile, "a")
 
         file:write(string.format("\nData exported: %s/%s/%s at %s:%s (%s)", Game.Year, Game.Month, Game.DayOfMonth, Game.Hour, Game.Minute, os.date("%Y/%m/%d %H:%M")))
         file:write(string.format("\n%s\n", msg1))

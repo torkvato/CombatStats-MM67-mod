@@ -1,5 +1,21 @@
 -- Segment stats reset and export
 function events.KeyDown(t)
+    if CombatLogEnabled > 0 and Game.CurrentScreen == 0 and t.Key == const.Keys.C and  Keys.IsPressed(const.Keys.ALT) then
+        local tag = Question('Combat Log file setup:.\nCurrent file: '.. vars.CombatLogFile.. '\nNew name will be kept per savegame, make save after the change\nEnter [tag] for cl_[tag].csv logfile', '[tag]>')
+        vars.CombatLogFile = 'cl_'..tag..'.csv'
+        vars.StatsOutputFile = 'stats_'..tag..'.csv'
+            local file = io.open(vars.CombatLogFile, "r")
+            if not (file) then
+                file = io.open(vars.CombatLogFile, "w")
+                file:write(string.format("Time    %s#%sClass(Lvl)%sPlayer%sDir%sMonster%sDamage%sKind%sSource\n", CombatLogSeparator, CombatLogSeparator, CombatLogSeparator, CombatLogSeparator,
+                CombatLogSeparator, CombatLogSeparator, CombatLogSeparator, CombatLogSeparator))
+                file:close()
+            else
+                file:close()
+            end
+
+    end
+
     if Game.CurrentScreen == const.Screens.Inventory and Game.CurrentCharScreen == const.CharScreens.Stats then
         if t.Key == DamageMeterResetButton then -- "r" key
             Game.ShowStatusText(string.format("Segment data reset, press Y to continue reset"))
@@ -23,21 +39,27 @@ function events.KeyDown(t)
             segment_data_reset_confirmation = 0;
             local i
             for i = 0, Party.High do
-                vars.damagemeter1[i]={Damage = 0, Damage_Melee = 0, Damage_Ranged = 0, Damage_Spell = 0,Damage_Received=0, ActiveTime = 1, ActiveTime_Melee = 1, ActiveTime_Ranged = 1,ActiveTime_Spell = 1}
+                vars.damagemeter1[i]={Damage = 0, Damage_Melee = 0, Damage_Ranged = 0, Damage_Spell = 0,Damage_Received=0, Damage_Kind={}, ActiveTime = 1, ActiveTime_Melee = 1, ActiveTime_Ranged = 1,ActiveTime_Spell = 1}
                 vars.timestamps[i].SegmentStart = Game.Time          
+                for _,id in pairs(const.Damage) do                             
+                    vars.damagemeter1[i].Damage_Kind[id] =  0                    
+                end
             end
             vars.Max1 = {Melee = {Dmg = 0, Player = 0}, Ranged = {Dmg = 0, Player = 0}, Spell = {Dmg = 0, Player = 0}} 
         end
         if t.Key == const.Keys.Y and (data_export_confirmation == 1) then -- "y" key
-			Game.ShowStatusText(string.format("Exporting stats data to file: %s",StatsOutputFile))
+			Game.ShowStatusText(string.format("Exporting stats data to file: %s",vars.StatsOutputFile))
             data_export_confirmation = 0; 
 			
-			file = io.open(StatsOutputFile,"a")
+			file = io.open(vars.StatsOutputFile,"a")
 			
 			file:write(string.format("Data exported: %s/%s/%s at %s:%s (%s)",Game.Year,Game.Month,Game.DayOfMonth,Game.Hour,Game.Minute, os.date("%Y/%m/%d %H:%M")) )
 			file:write(string.format("\nSegment: %s game min. since reset\n",GameTimePassed()) .. DamageMeterCalculation(vars.damagemeter1,1))
+            file:write(DamageReceivedCalculation(vars.damagemeter1,1))
 			file:write(string.format("\nCurrent map data: %s\n",Game.MapStats[Game.Map.MapStatsIndex].Name) .. DamageMeterCalculation(mapvars.damagemeter,1))
+            file:write(DamageReceivedCalculation(mapvars.damagemeter,1))
 			file:write(string.format("\nFull game data\n") .. DamageMeterCalculation(vars.damagemeter,1))
+            file:write(DamageReceivedCalculation(vars.damagemeter,1))
 			file:write("\n")
        
 			file:close()			
@@ -45,14 +67,12 @@ function events.KeyDown(t)
     end
 
 	if Game.CurrentScreen == const.Screens.Game and t.Key == MiniLogButton and not(Keys.IsPressed(const.Keys.ALT)) then
-
-	Message(MinilogText())
-
+    	Message(MinilogText())
 	end
 
 
 end
--- Combat logging
+--Combat logging
 function events.CalcDamageToMonster(t)
     if t.Result > 0 then
         -- t.Damage : damage BEFORE monster resistances, t.Result : final damage after monster resistances, mapvars - map
@@ -72,8 +92,10 @@ function events.CalcDamageToMonster(t)
             -- 128 "Game.time" ticks = 30 in-game seconds = 1 real second (const.RTSecond = 128)
             -- 60 "weapon recovery" = 1 real second  = 30 in-game seconds = 128 ticks
             -- One turn-based round = 100 "weapon recovery" = 50 game seconds = 46.8750 Game.time ticks (!)
-            -- Party[pl].RecoveryDelay = "recovery"/2.133333 = measured in Game.time ticks
-            -- 1s = 60r = 128gt = 30gs;  r = 128/60*gt
+            -- Party[pl].RecoveryDelay = "recovery" * 2.133333 = measured in Game.time ticks
+            -- 1sec = 60"rec" = 128 "game ticks" = 30 game sec; 
+            -- game ticks to "recovery" = ticks*60/128
+
 
             -- Active time - contuguous time when periods betwen successful hits less than 6 seconds
             local timedelta = Game.Time - vars.timestamps[i].LastTimeStamp;
@@ -161,7 +183,8 @@ function events.CalcDamageToMonster(t)
 			-- minilog update
 			table.move(vars.minilog,1,#vars.minilog,1,vars.minilog)
 			vars.minilog[MinilogEntriesNumber] = {Player = data.Player.Name, Hit = objmsg, Mob = monName, Damage = t.Result, Kind = get_key_for_value(const.Damage, t.DamageKind), Type = 0 }
-
+            
+            
             
             if t.Result>=t.Monster.HP then
                 objmsg = objmsg .. CombatLogSeparator .. "killed"
@@ -172,13 +195,10 @@ function events.CalcDamageToMonster(t)
                 playerid = string.format("%s%s%s(%s)%s%s", i, z, Game.ClassNames[data.Player.Class], data.Player:GetLevel(), z, data.Player.Name)
                 -- Timestamp #Player Name(Lvl) TargetName Damage DamageKind DamageSource
                 local msg = string.format("%s%s%s%s%s%s%s%s%s%s%s%s%s\n", Game.Time, z, playerid,  z,">>",z, monName, z, t.Result, z, get_key_for_value(const.Damage, t.DamageKind),z, objmsg)
-                file = io.open(CombatLogFile, "a")
+                file = io.open(vars.CombatLogFile, "a")
                 file:write(msg)
                 file:close()
             end
-          
-
-			
 			
         end
     end
@@ -218,12 +238,16 @@ function events.CalcDamageToPlayer(t)
             vars.damagemeter1[t.PlayerIndex].Damage_Received = vars.damagemeter1[t.PlayerIndex].Damage_Received + t.Result
             mapvars.damagemeter[t.PlayerIndex].Damage_Received = mapvars.damagemeter[t.PlayerIndex].Damage_Received + t.Result
 
+            vars.damagemeter[t.PlayerIndex].Damage_Kind[t.DamageKind] = vars.damagemeter[t.PlayerIndex].Damage_Kind[t.DamageKind] + t.Result
+            vars.damagemeter1[t.PlayerIndex].Damage_Kind[t.DamageKind] = vars.damagemeter1[t.PlayerIndex].Damage_Kind[t.DamageKind] + t.Result
+            mapvars.damagemeter[t.PlayerIndex].Damage_Kind[t.DamageKind] = mapvars.damagemeter[t.PlayerIndex].Damage_Kind[t.DamageKind] + t.Result
+
             if CombatLogEnabled==2 then
                 local z = CombatLogSeparator
                 playerid = string.format("%s%s%s(%s)%s%s", t.PlayerIndex, z, Game.ClassNames[t.Player.Class], t.Player:GetLevel(), z, t.Player.Name)
                 -- Timestamp #Player Name(Lvl) TargetName Damage DamageKind DamageSource
                 local msg = string.format("%s%s%s%s%s%s%s%s%s%s%s%s%s\n", Game.Time, z, playerid,  z, "<<",z,monName, z, t.Result, z, get_key_for_value(const.Damage, t.DamageKind),z, objmsg)
-                file = io.open(CombatLogFile, "a")
+                file = io.open(vars.CombatLogFile, "a")
                 file:write(msg)
                 file:close()
             end
@@ -258,13 +282,13 @@ function DamageMeterCalculation(V,mode)
     end
 
 	if not(mode) then
-    out = out .. "\nDamage done (% to party's total)"
+    out = out .. StrColor(230, 230, 0,"\nDamage done (% to party's total)")
     out = out..StrColor(50, 255, 255,string.format("\nClass\t%11s%-9.9s\t%24s%-9.9s\t%37s%-9.9s\t%50s%-9.9s",'|',Game.ClassNames[Party[0].Class],'|',Game.ClassNames[Party[1].Class], '|',Game.ClassNames[Party[2].Class], '|',Game.ClassNames[Party[3].Class]))
     out = out..string.format("\nMelee\t%11s%5s%%\t%24s%5s%%\t%37s%5s%%\t%50s%5s%%",'|',math.round(100 * V[0].Damage_Melee /party_damage_m),'|',math.round(100 * V[1].Damage_Melee /party_damage_m), '|',math.round(100 * V[2].Damage_Melee /party_damage_m), '|',math.round(100 * V[3].Damage_Melee /party_damage_m))
     out = out..string.format("\nRange\t%11s%5s%%\t%24s%5s%%\t%37s%5s%%\t%50s%5s%%",'|',math.round(100 * V[0].Damage_Ranged/party_damage_r),'|',math.round(100 * V[1].Damage_Ranged/party_damage_r), '|',math.round(100 * V[2].Damage_Ranged/party_damage_r), '|',math.round(100 * V[3].Damage_Ranged/party_damage_r))
     out = out..string.format("\nSpell\t%11s%5s%%\t%24s%5s%%\t%37s%5s%%\t%50s%5s%%",'|',math.round(100 * V[0].Damage_Spell /party_damage_s),'|',math.round(100 * V[1].Damage_Spell /party_damage_s), '|',math.round(100 * V[2].Damage_Spell /party_damage_s), '|',math.round(100 * V[3].Damage_Spell /party_damage_s))
     out = out .. StrColor(255, 100, 100,string.format("\nTotal\t%11s %4s%%\t%24s %4s%%\t%37s %4s%%\t%50s %4s%%",'|',math.round(100*V[0].Damage/party_damage),'|',math.round(100*V[1].Damage/party_damage),'|',math.round(100*V[2].Damage/party_damage),'|',math.round(100 * V[3].Damage/ party_damage)))
-    out = out .. "\n\nDPS (damage per real second)"
+    out = out .. StrColor(230, 230, 0,"\n\nDPS (damage per real second)")
     out = out..string.format("\nMelee\t%11s%5s\t%24s%5s\t%37s%5s\t%50s%5s",'|',player_dps_m[0],'|',player_dps_m[1], '|',player_dps_m[2], '|',player_dps_m[3])
     out = out..string.format("\nRange\t%11s%5s\t%24s%5s\t%37s%5s\t%50s%5s",'|',player_dps_r[0],'|',player_dps_r[1], '|',player_dps_r[2], '|',player_dps_r[3])
     out = out..string.format("\nSpell\t%11s%5s\t%24s%5s\t%37s%5s\t%50s%5s",'|',player_dps_s[0],'|',player_dps_s[1], '|',player_dps_s[2], '|',player_dps_s[3])
@@ -300,6 +324,65 @@ function DamageMeterCalculation(V,mode)
     return out
 end
 
+function DamageReceivedCalculation(V,mode)
+    local msg = ""
+    local total_kind_dmg = 0
+    for _,id in pairs(const.Damage) do                             
+        total_kind_dmg  = total_kind_dmg + V[0].Damage_Kind[id] + V[1].Damage_Kind[id] + V[2].Damage_Kind[id] + V[3].Damage_Kind[id]    
+    end
+
+    local kinds_dmg = {}
+    for k,id in pairs(const.Damage) do                             
+        kinds_dmg[k] = V[0].Damage_Kind[id] + V[1].Damage_Kind[id] + V[2].Damage_Kind[id] + V[3].Damage_Kind[id]        
+    end
+
+    local function sort_values(x) --sort table by values and create new table with keys and vals as content
+        local y = {
+            name = "",
+            dmg = 0
+        }
+        for n, v in pairs(x) do
+            table.insert(y, {
+                name = n,
+                dmg = v
+            })
+        end
+        table.sort(y, function(a, b)
+            return a.dmg > b.dmg
+        end)
+        return y
+    end
+
+    local kd = sort_values(kinds_dmg)
+    
+    if not(mode) then
+        msg = msg .. StrColor(230, 230,0, "\nDamage taken per kind\n")
+        -- for k,id in pairs(const.Damage) do        -- unsorted                     
+        --     local kind_dmg = V[0].Damage_Kind[id] + V[1].Damage_Kind[id] + V[2].Damage_Kind[id] + V[3].Damage_Kind[id]
+        --     local knd = StrColor(const.DamageColor[k][1], const.DamageColor[k][2], const.DamageColor[k][3],  k)
+        --     msg = msg..string.format("%s\t%12s %-9.9s\t%20s %-9.9s\n", knd,'|',kind_dmg, '|',math.round(100*kind_dmg/total_kind_dmg)..'%')        
+        -- end
+        for i = 1, #kd do --sorted
+            local coloredkd = StrColor(const.DamageColor[kd[i].name][1], const.DamageColor[kd[i].name][2], const.DamageColor[kd[i].name][3], kd[i].name)
+            msg = msg..string.format("%s\t%12s %-9.9s\t%20s %-9.9s\n", coloredkd,'|',kd[i].dmg, '|',math.round(100*kd[i].dmg/total_kind_dmg)..'%')        
+        end
+        local total_dmg  = V[0].Damage_Received + V[1].Damage_Received + V[2].Damage_Received + V[3].Damage_Received --should be equal with total_kind_dmg 
+        msg = msg .. StrColor(230, 230,0, "\nDamage taken by party")        
+        msg = msg..StrColor(50, 255, 255,string.format("\nClass\t%10s%-9.9s\t%24s%-9.9s\t%37s%-9.9s\t%50s%-9.9s",'|',Game.ClassNames[Party[0].Class],'|',Game.ClassNames[Party[1].Class], '|',Game.ClassNames[Party[2].Class], '|',Game.ClassNames[Party[3].Class]))
+        msg = msg..string.format("\nDmg\t%10s %-5s\t%24s %-5s\t%37s %-5s\t%50s %-5s",'|',V[0].Damage_Received,'|',V[1].Damage_Received, '|',V[2].Damage_Received, '|',V[3].Damage_Received)
+        msg = msg..string.format("\n%%%%\t%10s %-5s\t%24s %-5s\t%37s %-5s\t%50s %-5s",'|',math.round(100*V[0].Damage_Received/total_dmg)..'%','|',math.round(100*V[1].Damage_Received/total_dmg)..'%', '|',math.round(100*V[2].Damage_Received/total_dmg)..'%', '|',math.round(100*V[3].Damage_Received/total_dmg)..'%')
+        
+    
+    else
+        msg = msg .. "Damage taken per kind\n"
+        for i = 1, #kd do --sorted            
+            msg = msg..string.format("%s%s%s%s%s\n", kd[i].name,CombatLogSeparator,kd[i].dmg, CombatLogSeparator,math.round(100*kd[i].dmg/total_kind_dmg)..'%')        
+        end
+    end
+   
+return msg
+end
+
 function DamageTypeParsing(O)
     local objmsg
 	if not(O.Object) then
@@ -327,6 +410,7 @@ function CheckMax(concatDmg,i,mrs)
         if concatDmg>mapvars.Max.Spell.Dmg then mapvars.Max.Spell.Dmg = concatDmg mapvars.Max.Spell.Player = i end
     end
 end    
+
 
 function PartyRecordsTxt()
     local msg=StrColor(255, 100,100, "Record damage")
@@ -371,6 +455,23 @@ function MinilogText()
 end
 
 function events.LoadMap()
+   
+    vars.CombatLogFile   = vars.CombatLogFile or 'cl_'..CombatLogTag..'.csv'
+    vars.StatsOutputFile = vars.StatsOutputFile or 'stats_'..CombatLogTag..'.csv'
+     
+    if CombatLogEnabled > 0 then
+        local file = io.open(vars.CombatLogFile, "r")
+        if not (file) then
+            file = io.open(vars.CombatLogFile, "w")
+            file:write(string.format("Time    %s#%sClass(Lvl)%sPlayer%sDir%sMonster%sDamage%sKind%sSource\n", CombatLogSeparator, CombatLogSeparator, CombatLogSeparator, CombatLogSeparator,
+            CombatLogSeparator, CombatLogSeparator, CombatLogSeparator, CombatLogSeparator))
+            file:close()
+        else
+            file:close()
+        end
+    end
+
+
     --init combat stats if they are not yet filled
     vars.damagemeter = vars.damagemeter or {} -- overall game stats
 	vars.damagemeter1 = vars.damagemeter1 or {} -- current segment stats
@@ -424,6 +525,17 @@ function events.LoadMap()
         vars.damagemeter[i].Damage_Received = vars.damagemeter[i].Damage_Received or 0
         vars.damagemeter1[i].Damage_Received = vars.damagemeter1[i].Damage_Received or 0
         mapvars.damagemeter[i].Damage_Received = mapvars.damagemeter[i].Damage_Received or 0
+        
+        vars.damagemeter[i].Damage_Kind = vars.damagemeter[i].Damage_Kind or {}
+        vars.damagemeter1[i].Damage_Kind = vars.damagemeter1[i].Damage_Kind or {}
+        mapvars.damagemeter[i].Damage_Kind = mapvars.damagemeter[i].Damage_Kind or {}
+        for _,id in pairs(const.Damage) do             
+            vars.damagemeter[i].Damage_Kind[id] = vars.damagemeter[i].Damage_Kind[id] or 0
+            vars.damagemeter1[i].Damage_Kind[id] = vars.damagemeter1[i].Damage_Kind[id] or 0
+            mapvars.damagemeter[i].Damage_Kind[id] = mapvars.damagemeter[i].Damage_Kind[id] or 0
+        end
+        
+
     end
 
 
