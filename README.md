@@ -126,7 +126,7 @@ DPS is calculated for each party member independently and over the same three da
 
 ![image](https://github.com/user-attachments/assets/fc77963c-196b-4448-b2b7-a148eb8a0734)
 
-<img src="https://github.com/user-attachments/assets/fc77963c-196b-4448-b2b7-a148eb8a0734" alt="alt text" width="200"/>
+<img src="https://github.com/user-attachments/assets/fc77963c-196b-4448-b2b7-a148eb8a0734" alt="alt text" width="600"/>
 
 **Damage taken**
 Damage taken per each party member is accumulated over map/full game/segment and shown by [RightClick] on "Vitality" line
