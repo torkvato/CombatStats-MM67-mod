@@ -43,9 +43,9 @@ Mod introduces:
 
 ## Installation
  - MM6/MM7 GOG version (do not forget to set WinXP compatibility options)
- - Grayface latest MM6/MM7 patch (tested for 2.5.7):\
- -- https://grayface.github.io/mm/#GrayFace-MM6-Patch
- -- https://grayface.github.io/mm/#GrayFace-MM7-Patch
+ - Grayface latest MM6/MM7 patch (tested for 2.5.7):
+   - https://grayface.github.io/mm/#GrayFace-MM6-Patch
+   - https://grayface.github.io/mm/#GrayFace-MM7-Patch
        
  - Unreleased MMExtension v2.3: https://github.com/GrayFace/MMExtension 
  - This mod. Latest version in the repository
