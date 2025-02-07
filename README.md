@@ -210,25 +210,25 @@ Note that if you save game after this, new name for combat log will be also save
 ## Default keybinds
 
 **Combat history**\
-*[H], as it was in MM9. This overlaps Wendell Tweed history notes, so if you really need his works, you can access them through book or rebind the key in the Menu
-*[ALT-H] - Show kill count list on the screen (top 15 positions) and export whole killcount list to the killcount.txt in the game dir
-*[CTRL-H] Runs the Lua parser that process the current csv log file
+-[H], as it was in MM9. This overlaps Wendell Tweed history notes, so if you really need his works, you can access them through book or rebind the key in the Menu
+-[ALT-H] - Show kill count list on the screen (top 15 positions) and export whole killcount list to the killcount.txt in the game dir
+-[CTRL-H] Runs the Lua parser that process the current csv log file
 **Damage statistics**\
-*[Right-click] in the Player Stats screen: clicking on DPS stat will lead to segment data, clicking on Vitality will lead to map data\
-*[ALT]+[Right-click] lead to Full stat since the beginning of the game\
-*[E] followed by [Y] for export of the tables to file\
-*[R] followed by [Y] for segment data reset\
+-[Right-click] in the Player Stats screen: clicking on DPS stat will lead to segment data, clicking on Vitality will lead to map data\
+-[ALT]+[Right-click] lead to Full stat since the beginning of the game\
+-[E] followed by [Y] for export of the tables to file\
+-[R] followed by [Y] for segment data reset\
 **Inventory management**\
-*[R] for sorting current player inventory\
-*[T] for sorting party inventory\
-*[Y] for select/unselect designated player for Alchemy\
-*[U] for select/unselect designated player for Unidentified items\
+-[R] for sorting current player inventory\
+-[T] for sorting party inventory\
+-[Y] for select/unselect designated player for Alchemy\
+-[U] for select/unselect designated player for Unidentified items\
 **Extra Notes**\
-*[N] Extra notes added to the Seer tab in Autonotes
-  *Travel schedule
-  *World Map
-  *Teachers table
-  *Alchemy recipes
+-[N] Extra notes added to the Seer tab in Autonotes
+  -Travel schedule
+  -World Map
+  -Teachers table
+  -Alchemy recipes
 
 **ID Monster**\
 In MM7 [ALT] while checking monster stats will give full GM information
