@@ -1,4 +1,4 @@
--- MM7 convenience and combatlog mod settings
+-- MM6-7 convenience and combatlog mod settings
 
 -- Combat log options
 CombatLogEnabled = 2; -- Combatlog output to file 0: disabled, 1 - Player damage only, 2 - Player and Monster damage
@@ -8,7 +8,7 @@ MinilogEntriesNumber = 16  -- number of entries for in-game combat log (L)
 
 
 -- Convenience and Harmless cheats options
-AltIdMonsterGM = 1 -- Press alt while identifing the monster to get whole info at GM level
+IdMonsterGM = 1 -- Press G in MM6 or Alt-Rclick in MM7 to get whole info at GM level
 SharedIdentifyItem = 1 -- Id Item skill shared among party
 SharedRepair = 2 -- 0-off, 1-Max. Repair skill shared among party, 2 - Automatic repair with Max Skill
 
@@ -17,7 +17,7 @@ BuffExpirationAlert=1 -- Notification about buffs expiration
 BuffListAlert = {'Haste', 'Invisibility', 'FeatherFall', 'Bless', 'Heroism', 'Fly'}
 
 --Alarmclock
-AlarmClockTime = "17:30" --set to empty strint to disable
+AlarmClockTime = "17:30" --set to empty string to disable
 
 --Useful information 
 TravelScheduleAutoNote = 1 -- Add Travel schedule to Seer Autonotes
@@ -27,13 +27,12 @@ AlchemyRecipesAutoNote = 1 -- Add recipes schedule to Seer Autonotes
 
 TrainingDummy = 1 -- ALT-L to call the Training Dummy
 
-
 --Stats and tooltips
 SkillTooltipsEnabled = 1 -- Enhanced skill tooltips. Disarm vs Map Disarm, Merchant discount, etc
 
-
 --Keybinds
-MiniLogButton = const.Keys.H -- MM9-style mini combat log 
+MiniLogButton = const.Keys.H -- MM9-style mini combat log
+ID_MonsterButton = const.Keys.G -- ID monster Grandmastery (MM6 only, [Alt-RClick] in MM7)
 -- CharacterInfo Screen
 DamageMeterResetButton  = const.Keys.R -- 'R' button on the Char info screen to Reset segment statistics data
 DamageMeterExportButton = const.Keys.E -- 'E' button on the Char info screen to Export statistics data
@@ -43,51 +42,9 @@ PartyInventorySortButton   = const.Keys.T -- 'T' - Sort all inventories
 AlchemyPlayerSetButton     = const.Keys.Y -- 'Y' - Select/Unselect player for alchemy stuff
 IdentifyPlayerSetButton    = const.Keys.U -- 'U'  - Select/Unselect player for unidentified stuff
 
--- Table of average additional elem damage on weapons vs Bonus2 property value
-const.bonus2damage={}
-const.bonus2damage[0] = 0
-const.bonus2damage[4] = 3.5
-const.bonus2damage[5] = 7
-const.bonus2damage[6] = 10.5
-const.bonus2damage[7] = 3.5
-const.bonus2damage[8] = 7
-const.bonus2damage[9] = 10.5
-const.bonus2damage[10] = 3.5
-const.bonus2damage[11] = 7
-const.bonus2damage[12] = 10.5
-const.bonus2damage[13] = 5
-const.bonus2damage[14] = 8
-const.bonus2damage[15] = 12
-const.bonus2damage[46] = 15
-const.bonus2damage[67] = 5
-const.bonus2damage[68] = 7
 
-const.Mastery = {[0] = "x",[1] = "N", [2] = "E", [3] = "M", [4] = "G"}
-
-const.DamageColor = {
-Fire = {255, 70, 70}, 
-Air = {173, 216, 230}, 
-Water = {100, 180, 255},
-Earth = {153, 76, 0},
-
-Phys = {255, 255,255},
-Magic = {0, 255, 0},
-
-Spirit = {100, 200, 255},
-Mind = {200, 115, 255}, 
-Body = {75, 255, 255},
- 
-Light = {250, 250, 0},
-Dark = {127, 0, 255}, 
-Energy = {255, 0, 0}, 
- }
-
-
-nextbuffdurationcheck = 0
-nextalarmclockcheck = 0
-
--- need to add after GlobalTxt to structs lua
---[mmv(0x56B7E8, 0x5C88F0, 0x5E4CB0)].array(55).EditPChar  'GlobalTxt2' 
+-- need to add after GlobalTxt to structs.lua
+--[mmv(0x56B7E8, 0x5C8988, 0x5E4CB0)].array(56).EditPChar  'GlobalTxt2' -- for ccMod
 
 
 -- KEYBIND VALUES--

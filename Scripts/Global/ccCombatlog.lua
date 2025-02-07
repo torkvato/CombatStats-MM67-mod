@@ -2,6 +2,7 @@
 function events.KeyDown(t)
     if CombatLogEnabled > 0 and Game.CurrentScreen == 0 and t.Key == const.Keys.C and  Keys.IsPressed(const.Keys.ALT) then
         local tag = Question('Combat Log file setup:.\nCurrent file: '.. vars.CombatLogFile.. '\nNew name will be kept per savegame, make save after the change\nEnter [tag] for cl_[tag].csv logfile', '[tag]>')
+	if tag~='' then
         vars.CombatLogFile = 'cl_'..tag..'.csv'
         vars.StatsOutputFile = 'stats_'..tag..'.csv'
             local file = io.open(vars.CombatLogFile, "r")
@@ -13,7 +14,8 @@ function events.KeyDown(t)
             else
                 file:close()
             end
-
+	end
+		Game.ShowStatusText('Current combat log file: ' .. vars.CombatLogFile, 3)
     end
 
     if Game.CurrentScreen == const.Screens.Inventory and Game.CurrentCharScreen == const.CharScreens.Stats then
@@ -82,10 +84,8 @@ function events.CalcDamageToMonster(t)
 
         if data and data.Player then
 
-            local i = data.Player:GetIndex()
+            local i = data.Player:GetIndex()          
 
-            if t.Monster.NameId > 0 then monName = Game.PlaceMonTxt[t.Monster.NameId]  else monName = Game.MonstersTxt[t.Monster.Id].Name end
-            monName = string.format("%s(%s)",monName,t.Monster.Level)
             -- DPS is calculated as total damage done, divided by total active time in real seconds
             -- In-game time: 2 real seconds equal 1 in-game minute, 1 real second = 30 in-game seconds
             -- 256 "Game.time" ticks = 1 in-game minute, (const.Minute = 256)
@@ -99,6 +99,7 @@ function events.CalcDamageToMonster(t)
 
             -- Active time - contuguous time when periods betwen successful hits less than 6 seconds
             local timedelta = Game.Time - vars.timestamps[i].LastTimeStamp;
+            local monName = GetMonName(t.Monster)
 
             if timedelta < 6*const.RTSecond then
                 -- timedelta may be zero, in this case we do not modify time stats
@@ -113,7 +114,7 @@ function events.CalcDamageToMonster(t)
                     vars.damagemeter1[i].ActiveTime_Melee = vars.damagemeter1[i].ActiveTime_Melee + timedelta
                     mapvars.damagemeter[i].ActiveTime_Melee = mapvars.damagemeter[i].ActiveTime_Melee + timedelta
                     vars.timestamps[i].LastTimeStamp_Melee = Game.Time                      
-                elseif data.Object.Missile then
+                elseif data.Spell==100 or data.Spell==102 then
                     vars.damagemeter[i].ActiveTime_Ranged = vars.damagemeter[i].ActiveTime_Ranged + timedelta
                     vars.damagemeter1[i].ActiveTime_Ranged = vars.damagemeter1[i].ActiveTime_Ranged + timedelta
                     mapvars.damagemeter[i].ActiveTime_Ranged = mapvars.damagemeter[i].ActiveTime_Ranged + timedelta
@@ -136,7 +137,7 @@ function events.CalcDamageToMonster(t)
                     vars.damagemeter[i].ActiveTime_Melee = vars.damagemeter[i].ActiveTime_Melee + const.RTSecond -- Assume average hit delay about 1s 
                     vars.damagemeter1[i].ActiveTime_Melee = vars.damagemeter1[i].ActiveTime_Melee + const.RTSecond
                     mapvars.damagemeter[i].ActiveTime_Melee = mapvars.damagemeter[i].ActiveTime_Melee + const.RTSecond
-                elseif data.Object.Missile then
+                elseif data.Spell==100 or data.Spell==102 then
                     vars.timestamps[i].LastTimeStamp_Ranged = Game.Time
                     vars.damagemeter[i].ActiveTime_Ranged = vars.damagemeter[i].ActiveTime_Ranged + const.RTSecond -- Assume average hit delay about 1s 
                     vars.damagemeter1[i].ActiveTime_Ranged = vars.damagemeter1[i].ActiveTime_Ranged + const.RTSecond
@@ -166,7 +167,7 @@ function events.CalcDamageToMonster(t)
                 vars.damagemeter1[i].Damage_Melee = vars.damagemeter1[i].Damage_Melee + t.Result
                 mapvars.damagemeter[i].Damage_Melee = mapvars.damagemeter[i].Damage_Melee + t.Result
                 
-            elseif data.Object.Missile then
+            elseif data.Spell==100 or data.Spell==102 then
                 vars.damagemeter[i].Damage_Ranged = vars.damagemeter[i].Damage_Ranged + t.Result
                 vars.damagemeter1[i].Damage_Ranged = vars.damagemeter1[i].Damage_Ranged + t.Result
                 mapvars.damagemeter[i].Damage_Ranged = mapvars.damagemeter[i].Damage_Ranged + t.Result
@@ -213,18 +214,16 @@ function events.CalcDamageToPlayer(t)
             -- t.Object and t.ObjectIndex are set if player is hit by a missile.
             -- t.Spell, t.SpellSkill and t.SpellMastery are set if a spell is being used.
             -- Note that t.Object and t.Monster can be set at the same time if the projectile was fired by a monster. 
-
+            local monName
 			if data.Monster then
-				if data.Monster.NameId > 0 then monName = Game.PlaceMonTxt[data.Monster.NameId]  else monName = Game.MonstersTxt[data.Monster.Id].Name end
-				monName = string.format("%s(%s)",monName,data.Monster.Level)
+                monName = GetMonName(data.Monster)       
 			elseif data.Player then
 				monName = data.Player.Name
 			else
 				monName = "???"
 			end
 			
-            local objmsg = DamageTypeParsing(data)
-			
+            local objmsg = DamageTypeParsing(data)            
 			-- minilog update
 			table.move(vars.minilog,1,#vars.minilog,1,vars.minilog)
 			vars.minilog[MinilogEntriesNumber] = {Player = monName, Hit = objmsg, Mob = t.Player.Name, Damage = t.Result, Kind = get_key_for_value(const.Damage, t.DamageKind), Type = 1 }
@@ -356,22 +355,16 @@ function DamageReceivedCalculation(V,mode)
     
     if not(mode) then
         msg = msg .. StrColor(230, 230,0, "\nDamage taken per kind\n")
-        -- for k,id in pairs(const.Damage) do        -- unsorted                     
-        --     local kind_dmg = V[0].Damage_Kind[id] + V[1].Damage_Kind[id] + V[2].Damage_Kind[id] + V[3].Damage_Kind[id]
-        --     local knd = StrColor(const.DamageColor[k][1], const.DamageColor[k][2], const.DamageColor[k][3],  k)
-        --     msg = msg..string.format("%s\t%12s %-9.9s\t%20s %-9.9s\n", knd,'|',kind_dmg, '|',math.round(100*kind_dmg/total_kind_dmg)..'%')        
-        -- end
         for i = 1, #kd do --sorted
-            local coloredkd = StrColor(const.DamageColor[kd[i].name][1], const.DamageColor[kd[i].name][2], const.DamageColor[kd[i].name][3], kd[i].name)
+            --local coloredkd = StrColor(const.DamageColor[kd[i].name][1], const.DamageColor[kd[i].name][2], const.DamageColor[kd[i].name][3], kd[i].name)
+            local coloredkd = PaintKind(kd[i].name, kd[i].name)
             msg = msg..string.format("%s\t%12s %-9.9s\t%20s %-9.9s\n", coloredkd,'|',kd[i].dmg, '|',math.round(100*kd[i].dmg/total_kind_dmg)..'%')        
         end
         local total_dmg  = V[0].Damage_Received + V[1].Damage_Received + V[2].Damage_Received + V[3].Damage_Received --should be equal with total_kind_dmg 
         msg = msg .. StrColor(230, 230,0, "\nDamage taken by party")        
         msg = msg..StrColor(50, 255, 255,string.format("\nClass\t%10s%-9.9s\t%24s%-9.9s\t%37s%-9.9s\t%50s%-9.9s",'|',Game.ClassNames[Party[0].Class],'|',Game.ClassNames[Party[1].Class], '|',Game.ClassNames[Party[2].Class], '|',Game.ClassNames[Party[3].Class]))
         msg = msg..string.format("\nDmg\t%10s %-5s\t%24s %-5s\t%37s %-5s\t%50s %-5s",'|',V[0].Damage_Received,'|',V[1].Damage_Received, '|',V[2].Damage_Received, '|',V[3].Damage_Received)
-        msg = msg..string.format("\n%%%%\t%10s %-5s\t%24s %-5s\t%37s %-5s\t%50s %-5s",'|',math.round(100*V[0].Damage_Received/total_dmg)..'%','|',math.round(100*V[1].Damage_Received/total_dmg)..'%', '|',math.round(100*V[2].Damage_Received/total_dmg)..'%', '|',math.round(100*V[3].Damage_Received/total_dmg)..'%')
-        
-    
+        msg = msg..string.format("\n%%%%\t%10s %-5s\t%24s %-5s\t%37s %-5s\t%50s %-5s",'|',math.round(100*V[0].Damage_Received/total_dmg)..'%','|',math.round(100*V[1].Damage_Received/total_dmg)..'%', '|',math.round(100*V[2].Damage_Received/total_dmg)..'%', '|',math.round(100*V[3].Damage_Received/total_dmg)..'%')    
     else
         msg = msg .. "Damage taken per kind\n"
         for i = 1, #kd do --sorted            
@@ -386,7 +379,7 @@ function DamageTypeParsing(O)
     local objmsg
 	if not(O.Object) then
 		objmsg = 'hits'
-	elseif O.Spell and not(O.Object.Missile) then
+	elseif O.Spell~=100 and O.Spell~=102 and O.Spell~=101 and O.Spell then
         objmsg = get_key_for_value(const.Spells, O.Spell) .. const.Mastery[O.SpellMastery] .. O.SpellSkill  --get_key_for_value(const.Mastery, O.SpellMastery)
     else
 		objmsg = 'shoots' --.Spells Shoot = 100,ShootFire = 101,ShootBlaster = 102,        
@@ -422,7 +415,6 @@ function CheckMax(concatDmg,i)
     end
 end    
 
-
 function PartyRecordsTxt()
     local msg=StrColor(255, 100,100, "Record damage\n")
     msg = msg.. StrColor(230,230,0,string.format("Map: %s\n", Game.MapStats[Game.Map.MapStatsIndex].Name))  
@@ -447,7 +439,8 @@ function MinilogText()
     local mob_db, pl_db
 
 	for i=1, #vars.minilog do
-	    local knd = StrColor(const.DamageColor[vars.minilog[i].Kind][1], const.DamageColor[vars.minilog[i].Kind][2], const.DamageColor[vars.minilog[i].Kind][3],  vars.minilog[i].Damage .. ' ' .. vars.minilog[i].Kind)
+	    --local knd = StrColor(const.DamageColor[vars.minilog[i].Kind][1], const.DamageColor[vars.minilog[i].Kind][2], const.DamageColor[vars.minilog[i].Kind][3],  vars.minilog[i].Damage .. ' ' .. vars.minilog[i].Kind)
+        local knd = PaintKind( vars.minilog[i].Damage .. ' ' .. vars.minilog[i].Kind, vars.minilog[i].Kind)
 		mob_db = string.gsub(vars.minilog[i].Mob, "%s+", "")
         pl_db  = string.gsub(vars.minilog[i].Player, "%s+", "")
 		if vars.minilog[i].Type==0 then
@@ -525,7 +518,7 @@ function events.LoadMap()
 
 	vars.minilog = vars.minilog or {}
 	for i = 1, MinilogEntriesNumber do
-	vars.minilog[i] = vars.minilog[i] or {Player = "Nobody", Hit = "hits", Mob = "Me", Damage = 0, Kind = get_key_for_value(const.Damage, i%11), Type = 0}
+	vars.minilog[i] = vars.minilog[i] or {Player = "Nobody", Hit = "hits", Mob = "Me", Damage = 0, Kind = get_key_for_value(const.Damage, i%7), Type = 0}
 	end
 
     --temp init for old tables compatibility

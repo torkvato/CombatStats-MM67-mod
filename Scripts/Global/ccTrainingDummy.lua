@@ -3,6 +3,7 @@ function events.KeyDown(t)
         -- vars.MonGenerated = true and not(vars.MonGenerated)
         vars.CombatLogFile = 'cl_dummy.csv'
         vars.StatsOutputFile = 'stats_dummy.csv'
+	Game.ShowStatusText('Combat log file changed to: ' .. vars.CombatLogFile, 3)
 
         local MonId = 106 -- monk master / minotaur
         local anglerad = Party.Direction/2048*2*3.1415

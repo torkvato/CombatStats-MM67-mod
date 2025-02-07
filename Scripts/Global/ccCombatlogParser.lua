@@ -68,7 +68,7 @@ function events.KeyDown(t)
         local coloredkd
         for i = 1, #kd do
             msg1 = string.format("%s%s%s%s%s%s%%\n", msg1, kd[i].name, CombatLogSeparator, kd[i].dmg, CombatLogSeparator, math.round(kd[i].dmg * 100 / total_mobs_dmg))
-            coloredkd = StrColor(const.DamageColor[kd[i].name][1], const.DamageColor[kd[i].name][2], const.DamageColor[kd[i].name][3], kd[i].name)
+            coloredkd = PaintKind(kd[i].name,kd[i].name)
             msg = string.format("%s%s\t%18s\t%30s%%\n", msg, coloredkd, kd[i].dmg, math.round(kd[i].dmg * 100 / total_mobs_dmg))
         end
         msg = msg .. "Top mobs and their damage:\n"
