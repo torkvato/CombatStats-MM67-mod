@@ -182,7 +182,7 @@ Those who do not want to use even "mild" cheats and share ID. Item skills among 
 **Reference information**\
 Useful information about game is summarized in the several convenient tables, including full Stables/Boats schedule, inter-regions travel map, techer locations (region only) and full Alchemy compendium.
 Each section can be independently enabled/disabled in the Scripts/Global/ccInit.lua file.
-
+![изображение](https://github.com/user-attachments/assets/3dab06e0-7dfb-44da-a8cd-d3c2e0be0c9f)
 **Id item and Repair skill share**
 Id and Repair skill is shared when you're in the inventory screen only.
 Additionally, automatic repair can be enabled, repairing all items each regeneration tick. 
@@ -227,5 +227,7 @@ Note that if you save game after this, new name for combat log will be also save
 In MM7 [ALT] while checking monster stats will give full GM information
 For MM6, pressing [G] while pointing to the monster will bring up similar (or even more detailed) table on the mob stats, resistances, damage and spells.
 Both cheats can be fully disabled in the mild cheats section Scripts/Global/ccInit.lua
-![изображение](https://github.com/user-attachments/assets/3dab06e0-7dfb-44da-a8cd-d3c2e0be0c9f)
+![image](https://github.com/user-attachments/assets/fedc05cd-e62d-4b92-9ac0-c800243d727f)
+
+
 
