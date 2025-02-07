@@ -102,8 +102,7 @@ Since the game treat each case of damage separately, hitting with elementrary en
 
 ### In-game combat history
 Besides output to the file, damage done and received can be viewed in MM9-style combat history (default key -[H] )
-
-![image](https://github.com/user-attachments/assets/9d772466-850e-4028-a236-58e3fd3a6d5c)
+<img src="https://github.com/user-attachments/assets/9d772466-850e-4028-a236-58e3fd3a6d5c" alt="alt text" class="center" width="500"/>
 
 ### Combat statists
 **Damage done**\
@@ -124,7 +123,7 @@ DPS, or damage per second is the most important metric of the combat proficiency
 Calculation of active time can be tricky and controversial. Currently, active time is calculated from the first successful hit and ended if there are no successful hits within 5seconds.
 DPS is calculated for each party member independently and over the same three data accumulation pools: map, full, and resettable segment.
 
-<img src="https://github.com/user-attachments/assets/fc77963c-196b-4448-b2b7-a148eb8a0734" alt="alt text" width="500"/>
+<img src="https://github.com/user-attachments/assets/fc77963c-196b-4448-b2b7-a148eb8a0734" alt="alt text" class="center" width="500"/>
 
 **Damage taken**
 Damage taken per each party member is accumulated over map/full game/segment and shown by [RightClick] on "Vitality" line
@@ -159,10 +158,7 @@ For the calculation of the mobs armor class and level, we use rough monster prog
 Vitality is calculated by taking into account player physical hits avoidance chance (determined by AC) and magic resistances. 
 Weights of the damage resistances are calculated on the base of the incoming damage analysis for the full game combat log with highly buffed party (light side TKPS)
 To consider unavoidable damage types, like energy, dark and light, plain HP is also part of the final metric
-  
-![image](https://github.com/user-attachments/assets/af850de2-4130-4086-9869-45d0ba30b621)
-
-<img src="https://github.com/user-attachments/assets/af850de2-4130-4086-9869-45d0ba30b621" alt="alt text" width="500"/>
+<img src="https://github.com/user-attachments/assets/af850de2-4130-4086-9869-45d0ba30b621" alt="alt text" class="center" width="500"/>
 
 ## Inventory management
 Very useful feature of the mod is one-button sorting of the whole party or single player inventory ([T] and [R] buttons)
@@ -184,7 +180,7 @@ Those who do not want to use even "mild" cheats and share ID. Item skills among 
 **Reference information**\
 Useful information about game is summarized in the several convenient tables, including full Stables/Boats schedule, inter-regions travel map, techer locations (region only) and full Alchemy compendium.
 Each section can be independently enabled/disabled in the Scripts/Global/ccInit.lua file.
-![изображение](https://github.com/user-attachments/assets/3dab06e0-7dfb-44da-a8cd-d3c2e0be0c9f)
+<img src="https://github.com/user-attachments/assets/3dab06e0-7dfb-44da-a8cd-d3c2e0be0c9f" alt="alt text" class="center" width="500"/>
 
 **Id item and Repair skill share**
 Id and Repair skill is shared when you're in the inventory screen only.
@@ -205,38 +201,35 @@ Upon calling a dummy, combat log file is set to "cl_dummy.csv" to avoid interfer
 Note that if you save game after this, new name for combat log will be also saved, so dont save after calling a dummy unless you want to play with it more.
 
 **Kill count**
-![image](https://github.com/user-attachments/assets/8d982ff7-f992-4d97-be5a-f388f1e4b57a)
-
-<img src="https://github.com/user-attachments/assets/8d982ff7-f992-4d97-be5a-f388f1e4b57a" alt="alt text" width="500"/>
+<img src="https://github.com/user-attachments/assets/8d982ff7-f992-4d97-be5a-f388f1e4b57a" alt="alt text" class="center" width="500"/>
 
 ## Default keybinds
 
 **Combat history**\
-[H], as it was in MM9. This overlaps Wendell Tweed history notes, so if you really need his works, you can access them through book or rebind the key in the Menu
-[ALT-H] - Show kill count list on the screen (top 15 positions) and export whole killcount list to the killcount.txt in the game dir
-[CTRL-H] Runs the Lua parser that process the current csv log file
+*[H], as it was in MM9. This overlaps Wendell Tweed history notes, so if you really need his works, you can access them through book or rebind the key in the Menu
+*[ALT-H] - Show kill count list on the screen (top 15 positions) and export whole killcount list to the killcount.txt in the game dir
+*[CTRL-H] Runs the Lua parser that process the current csv log file
 **Damage statistics**\
-[Right-click] in the Player Stats screen: clicking on DPS stat will lead to segment data, clicking on Vitality will lead to map data\
-[ALT]+[Right-click] lead to Full stat since the beginning of the game\
-[E] followed by [Y] for export of the tables to file\
-[R] followed by [Y] for segment data reset\
+*[Right-click] in the Player Stats screen: clicking on DPS stat will lead to segment data, clicking on Vitality will lead to map data\
+*[ALT]+[Right-click] lead to Full stat since the beginning of the game\
+*[E] followed by [Y] for export of the tables to file\
+*[R] followed by [Y] for segment data reset\
 **Inventory management**\
-[R] for sorting current player inventory\
-[T] for sorting party inventory\
-[Y] for select/unselect designated player for Alchemy\
-[U] for select/unselect designated player for Unidentified items\
+*[R] for sorting current player inventory\
+*[T] for sorting party inventory\
+*[Y] for select/unselect designated player for Alchemy\
+*[U] for select/unselect designated player for Unidentified items\
 **Extra Notes**\
-[N] Extra notes added to the Seer tab in Autonotes
-- Travel schedule
-- World Map
-- Teachers table
-- Alchemy recipes
+*[N] Extra notes added to the Seer tab in Autonotes
+  *Travel schedule
+  *World Map
+  *Teachers table
+  *Alchemy recipes
 
 **ID Monster**\
 In MM7 [ALT] while checking monster stats will give full GM information
 For MM6, pressing [G] while pointing to the monster will bring up similar (or even more detailed) table on the mob stats, resistances, damage and spells.
 Both cheats can be fully disabled in the mild cheats section Scripts/Global/ccInit.lua
-![image](https://github.com/user-attachments/assets/fedc05cd-e62d-4b92-9ac0-c800243d727f)
-
+<img src="https://github.com/user-attachments/assets/fedc05cd-e62d-4b92-9ac0-c800243d727f" alt="alt text" class="center" width="500"/>
 
 
