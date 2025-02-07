@@ -68,11 +68,13 @@ function events.KeyDown(t)
         end
     end
 
-	if Game.CurrentScreen == const.Screens.Game and t.Key == MiniLogButton and not(Keys.IsPressed(const.Keys.ALT)) then
+	if Game.CurrentScreen == const.Screens.Game and t.Key == MiniLogButton and not(Keys.IsPressed(const.Keys.ALT)) and not(Keys.IsPressed(const.Keys.CONTROL)) then
     	Message(MinilogText())
 	end
-
-
+    if Game.CurrentScreen == const.Screens.Game and t.Key == MiniLogButton and Keys.IsPressed(const.Keys.ALT) and not(Keys.IsPressed(const.Keys.CONTROL)) then
+    	ShowKillCount()
+	end
+    
 end
 --Combat logging
 function events.CalcDamageToMonster(t)
@@ -188,6 +190,7 @@ function events.CalcDamageToMonster(t)
                        
             if t.Result>=t.Monster.HP then
                 objmsg = objmsg .. CombatLogSeparator .. "killed"
+                UpdateKillCount(monName)
             end
 
             if CombatLogEnabled>0 then
@@ -372,7 +375,7 @@ function DamageReceivedCalculation(V,mode)
         end
     end
    
-return msg
+    return msg
 end
 
 function DamageTypeParsing(O)
@@ -538,6 +541,52 @@ function events.LoadMap()
         
 
     end
+
+
+end
+
+function UpdateKillCount(monName)
+    vars.KillCount = vars.KillCount or {}
+    vars.KillCount[monName] = vars.KillCount[monName] or 0
+    vars.KillCount[monName] = vars.KillCount[monName] + 1
+end
+
+function ShowKillCount()
+
+    local function sort_values(x)
+        local y = {
+            name = "",
+            count = 0
+        }
+        for n, v in pairs(x) do
+            table.insert(y, {
+                name = n,
+                count = v
+            })
+        end
+        table.sort(y, function(a, b)
+            return a.count > b.count
+        end)
+        return y
+    end
+
+    local kc = sort_values(vars.KillCount)
+    local msg  = "Kills count:\n"
+    local msg1 = StrColor(230,230,0,"Kills count:")
+    for i = 1, #kc do        
+            msg = string.format("%s%s%s%s\n", msg, kc[i].name,CombatLogSeparator, kc[i].count)
+    end
+
+    for i = 1, math.min(15,#kc) do        
+        msg1 = string.format("%s\n%-5s\t%10s%s", msg1,  kc[i].count,' ',kc[i].name)
+    end
+
+        Message(msg1)
+        Game.ShowStatusText("Exporting full data to killcount.txt" , 6)
+        file = io.open('killcount.txt', "a")
+        file:write(string.format("\nData exported: %s/%s/%s at %s:%s (%s)\n", Game.Year, Game.Month, Game.DayOfMonth, Game.Hour, Game.Minute, os.date("%Y/%m/%d %H:%M")))
+        file:write(string.format("%s\n", msg))
+        file:close()
 
 
 end

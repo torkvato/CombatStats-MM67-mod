@@ -1,5 +1,5 @@
 function events.KeyDown(t)
-    if (Game.CurrentScreen == 0 or Game.CurrentScreen == 7) and t.Key == MiniLogButton and Keys.IsPressed(const.Keys.ALT) then
+    if (Game.CurrentScreen == 0 or Game.CurrentScreen == 7) and t.Key == MiniLogButton and Keys.IsPressed(const.Keys.CONTROL) then
 
         local mobs_dmg = {}
         local kinds_dmg = {}
