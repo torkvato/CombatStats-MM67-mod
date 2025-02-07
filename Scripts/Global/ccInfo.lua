@@ -48,10 +48,11 @@ function events.Tick()
         UpdStatsMsg('Resistances modifier', 6)
 
         -- Effective HP
+        local vitality
         if Game.Version < 7 then
-            local vitality = ResistancesInfoMM6(pl,monster_hit_chance)
+            vitality= ResistancesInfoMM6(pl,monster_hit_chance)
         else
-            local vitality = ResistancesInfoMM7(pl,monster_hit_chance)
+            vitality = ResistancesInfoMM7(pl,monster_hit_chance)
         end
         -- Attack and DPS calculations	
         local dmg_m = 0
