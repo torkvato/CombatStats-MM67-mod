@@ -235,7 +235,9 @@ Note that if you save game after this, new name for combat log will be also save
 
 **ID Monster**
 In MM7 [ALT] while checking monster stats will give full GM information
-For MM6, pressing [G] while pointing to the monster will bring up similar (or even more detailed) table on the mob stats, resistances, damage and spells.
+
+In MM6, pressing [G] while pointing to the monster will bring up similar (or even more detailed) table on the mob stats, resistances, damage and spells.
+
 Both cheats can be fully disabled in the mild cheats section Scripts/Global/ccInit.lua
 
 <img src="https://github.com/user-attachments/assets/fedc05cd-e62d-4b92-9ac0-c800243d727f" alt="alt text" class="center" width="500"/>
