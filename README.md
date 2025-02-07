@@ -124,9 +124,7 @@ DPS, or damage per second is the most important metric of the combat proficiency
 Calculation of active time can be tricky and controversial. Currently, active time is calculated from the first successful hit and ended if there are no successful hits within 5seconds.
 DPS is calculated for each party member independently and over the same three data accumulation pools: map, full, and resettable segment.
 
-![image](https://github.com/user-attachments/assets/fc77963c-196b-4448-b2b7-a148eb8a0734)
-
-<img src="https://github.com/user-attachments/assets/fc77963c-196b-4448-b2b7-a148eb8a0734" alt="alt text" width="600"/>
+<img src="https://github.com/user-attachments/assets/fc77963c-196b-4448-b2b7-a148eb8a0734" alt="alt text" width="500"/>
 
 **Damage taken**
 Damage taken per each party member is accumulated over map/full game/segment and shown by [RightClick] on "Vitality" line
@@ -164,6 +162,8 @@ To consider unavoidable damage types, like energy, dark and light, plain HP is a
   
 ![image](https://github.com/user-attachments/assets/af850de2-4130-4086-9869-45d0ba30b621)
 
+<img src="https://github.com/user-attachments/assets/af850de2-4130-4086-9869-45d0ba30b621" alt="alt text" width="500"/>
+
 ## Inventory management
 Very useful feature of the mod is one-button sorting of the whole party or single player inventory ([T] and [R] buttons)
 Sorting rearrange the inventorty by putting largest items first and filling the gaps with smaller ones, allowing to free some space.
@@ -185,6 +185,7 @@ Those who do not want to use even "mild" cheats and share ID. Item skills among 
 Useful information about game is summarized in the several convenient tables, including full Stables/Boats schedule, inter-regions travel map, techer locations (region only) and full Alchemy compendium.
 Each section can be independently enabled/disabled in the Scripts/Global/ccInit.lua file.
 ![изображение](https://github.com/user-attachments/assets/3dab06e0-7dfb-44da-a8cd-d3c2e0be0c9f)
+
 **Id item and Repair skill share**
 Id and Repair skill is shared when you're in the inventory screen only.
 Additionally, automatic repair can be enabled, repairing all items each regeneration tick. 
@@ -206,6 +207,7 @@ Note that if you save game after this, new name for combat log will be also save
 **Kill count**
 ![image](https://github.com/user-attachments/assets/8d982ff7-f992-4d97-be5a-f388f1e4b57a)
 
+<img src="https://github.com/user-attachments/assets/8d982ff7-f992-4d97-be5a-f388f1e4b57a" alt="alt text" width="500"/>
 
 ## Default keybinds
 
