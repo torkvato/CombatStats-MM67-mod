@@ -4,18 +4,18 @@
 # CombatStats and Convenience MM6-7 mod
 
 ## Mod features
-CombatStats and Convenience MM7 mod do not affect the gameplay, the game mechanics or difficulties of the original game. \
+CombatStats and Convenience MM67 mod do not affect the gameplay, the game mechanics or difficulties of the original game. \
 Mod requires Grayface's patch and MMExtension, but adds nothing changing the game over this  
 Mod can work with any saved game, no need to start a new. Saves will be intact if you remove the mod (but why?).\
-Basically,it is the same good old vanilla Might and Magic 7, without any attempts to make the eternal classic more difficult/interesting/new.\
-MM6 version also exist, link above.
-
-However, for the convenience and in-depth analyis of the party the following features were introduced:
+Basically,it is the same good old vanilla Might and Magic 6/7, without any attempts to make the eternal classic more difficult/interesting/new.\
+Mod works both on MM6 and MM7, with minor differences in features.
+Mod introduces:
 
 - **Classic Combat log file**
     - Logging every damage dealt (and received), with the timestamp, player, target, damage amount, kind and source (melee, ranged or specific spell)
     - CSV save format, customizable
     - You can do you own parsing and processing, but essential things already implemented in-game
+    - You can manually set up different log files for different save games
 - **In-game combat history**
     -  MM9-style, showing the details of the last dozen party/monsters hits
     -  Colored for ease of use
@@ -24,37 +24,39 @@ However, for the convenience and in-depth analyis of the party the following fea
     - In-game tables for party members efficiency comparison
     - Selected segment / current map / overall game data in separate tables
     - Export of the statistics to the output file for future reference
-- **Enhanced character page**
+- **Enhanced tooltips/info**
     - Barrel-Colored Attributes (thx MAW) with current modifier value and next attribute milestone in the tooltip
     - Elements-Colored Resistances with average resistance percentage and "bad things" chances
     - Final Melee and Ranged damage metric in the form of thoroughly [calculated] DPS, for best weapon combination selection
     - Effective health ("Vitality"), employing HP, Armor Class (physical avoidance) and Magic resistances in single metric
-    - Skill tooltips, like total Merchant discount or current Disarm skill vs. area difficulty [Optional]   
+    - Skill tooltips, like total Merchant discount or current Disarm skill vs. area difficulty [Optional]
+    - Average damage/healing, damager mana/damager per second in the SpellBook
 - **Convenience features**	
     - Automatic items sorting. Borrowed from MAW MMMerge mod, with minor changes (alchemy/unidentified items sorting). 
     - Full Travel Schedule / World map / Teachers / Alchemy Recipes table in Autonotes (Seer tab) [Optional]	
     - Sharing max ID Item skill party [Optional]
     - Sharing Repair skill or even automatic repair with sufficient skill [Optional]
-    - Grandmaster ID Monster info with ALT pressed [Optional]
+    - ID monser feature for MM6, Grandmaster ID Monster info with ALT pressed for MM7 [Optional]
     - Buff expiration alert (No more weakness from missed Haste) [Optional]
-    - Alarm clock 
+    - Alarm clock
+    - [Some additional useful feaures, undisclosed]
 
 ## Installation
- - MM7 GOG version (do not forget to set WinXP compatibility options)
- - Grayface latest MM7 patch (tested for 2.5.7): https://grayface.github.io/mm/#GrayFace-MM7-Patch
+ - MM6/MM7 GOG version (do not forget to set WinXP compatibility options)
+ - Grayface latest MM6/MM7 patch (tested for 2.5.7): https://grayface.github.io/mm/#GrayFace-MM6-Patch , https://grayface.github.io/mm/#GrayFace-MM7-Patch 
  - Unreleased MMExtension v2.3: https://github.com/GrayFace/MMExtension 
  - This mod. Latest version in the repository
  
 Instead of two last steps, one can download whole package with last stable release\
-**https://drive.google.com/file/d/1d-jrk6c59oIQVuf44gHe7W3GgHkodMEo**
+**tbd**
   
 **Important note: since minor fixes still issued, it is recommended to download latest version from repository, even if you downloaded full package**
 - Uninstall: run ccUninst.bat in Scripts folder. The game flow is not affected by mod installation and deinstallation
-- Bug reportin and support in the TG group - https://t.me/+WAc2jt1nvT1iMzIy
+- Bug reporting and support in the TG group - https://t.me/+WAc2jt1nvT1iMzIy
 
 
 **Configuration**
-You can check the available config options in the Scripts/General/ccInit.lua file
+You can check the available config options in the Scripts/Global/ccInit.lua file
 
 ## Acknowledgments
 This mod is the fulfillment of a long-standing dream, a dream to see in detail what is happening with a team of heroes, a dream to get real data for endless debates about who is better.\
@@ -91,6 +93,7 @@ Fields are:
 - Damage inflicted
 - Damage kind (Fire, Air, Dark, etc)
 - Damage source, either melee hit, ranged shoot (bow/blaster) or certain spell with its Skill and Mastery
+- Hit outcome ("killed")
 
 Since the game treat each case of damage separately, hitting with elementrary enchanted weapon will give two lines in combat log. Same with Shotgun/AoE spells (except Armageddon)
 
@@ -109,7 +112,7 @@ Also, there are three distinct accumulation pools:
 - Full data: Overall stats from the very beginning
 - Segment data: statistics since last manual reset ([R] in Character page)
 
-Statistics summaries can be accessed by [RightClick] in the DPS of Character page\
+Statistics summaries can be accessed by [RightClick] in the "DPS" line of Character page\
 Default is curren map data, [CTRL-RightClick] shows full game data, [ALT] for segment.
 Here you also can [E]xport this tables in the file for further usage.
 
@@ -121,17 +124,18 @@ DPS is calculated for each party member independently and over the same three da
 ![image](https://github.com/user-attachments/assets/fc77963c-196b-4448-b2b7-a148eb8a0734)
 
 **Damage taken**
-Damage taken per each party member is accumulated over map/full game/segment and shown by [RightClick] on vitality
+Damage taken per each party member is accumulated over map/full game/segment and shown by [RightClick] on "Vitality" line
 There is sorting by damage kind and also summary by party member.
 Simularly, map-segment-full data is accessible with [ALT] and [CTRL]
 Only damage originated from monsters (and fellow casters) and in-game traps (marked as "???") is counted. 
 Chest traps and fall damage have no "author" and is not included in the statictic.
 
-**Records**
+**Max Damage Records**
 Mod will record best hits with melee, ranged and magic separately (also, independently for three data sets: map, full and segment)\
 To overcome the problem of several damage kinds/several damage sources per hit, accumulation logic is added.\
 Damage counted as one hit if it happens in the same timestamp, done by same player and against monster with the same name.\
 So melee hit with Phys+Fire damage will be summed, Fireball against group of same-named monsters will be summed but againt group of different monsters not.
+Accessible by [RightClick] on the "Armor Class" line
 
 ### Calculated statistics
 **Damage per second, DPS**
@@ -174,7 +178,7 @@ Those who do not want to use even "mild" cheats and share ID. Item skills among 
 
 **Reference information**\
 Useful information about game is summarized in the several convenient tables, including full Stables/Boats schedule, inter-regions travel map, techer locations (region only) and full Alchemy compendium.
-Each section can be independently enabled/disabled in the Scripts/ccInit.lua file.
+Each section can be independently enabled/disabled in the Scripts/Global/ccInit.lua file.
 
 **Id item and Repair skill share**
 Id and Repair skill is shared when you're in the inventory screen only.
@@ -192,7 +196,7 @@ Set it in the init file with the simple 24h format, for example, "17:30". Leave 
 [ALT-L] calls the training dummy in front of the party. 
 Basically it is paralyzed monster with 32k HP, negative AC and zero resistances for sure hits.
 Upon calling a dummy, combat log file is set to "cl_dummy.csv" to avoid interference with real game data. 
-Note that if you save game after this, new name for combat log will be also saved, so dont save after calling a dummy.
+Note that if you save game after this, new name for combat log will be also saved, so dont save after calling a dummy unless you want to play with it more.
 
 ## Default keybinds
 
@@ -217,6 +221,8 @@ Note that if you save game after this, new name for combat log will be also save
 - Alchemy recipes
 
 **ID Monster**\
-If corresponding option in mild cheats section is enabled, [ALT] while checking monster stats will give full GM information
+In MM7 [ALT] while checking monster stats will give full GM information
+For MM6, pressing [G] while pointing to the monster will bring up similar (or even more detailed) table on the mob stats, resistances, damage and spells.
+Both cheats can be fully disabled in the mild cheats section Scripts/Global/ccInit.lua
 ![изображение](https://github.com/user-attachments/assets/3dab06e0-7dfb-44da-a8cd-d3c2e0be0c9f)
 
