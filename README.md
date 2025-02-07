@@ -139,9 +139,9 @@ Accessible by [RightClick] on the "Armor Class" line
 
 ### Calculated statistics
 **Damage per second, DPS**
-- Hit percentage is calculated on the base of current To-Hit modifier against the mob with AC equal to the current player level\
+For the calculation of the mobs armor class and level, we use rough monster progress scaling, and their AC/Lvl are assumed to be 3x Party Lvl (but not larger than 100)
+- Hit percentage is calculated on the base of current To-Hit modifier against the mob AC
  *P = (15 + PlayerAttack * 2) / (30 + PlayerAttack * 2 + AC)*\
-For the calculation, we use rough monster progress skaling, and their AC (and Lvl) assumed to be 3x Party Lvl (but not larger than 100)
 
 - Estimated DPS is calculated on the base average damage that take into account
     - Chance to miss
