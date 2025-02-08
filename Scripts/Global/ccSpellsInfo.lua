@@ -4,7 +4,7 @@ function events.Tick()
         local function UpdMsg(id, m, dmg, form)
             if m > 0 then
                 local pos = string.find(Game.SpellsTxt[id].Description, '\n')
-                local delay = Game.Spells[id].Delay[m] / RecoveryItems(Party[Game.CurrentPlayer]) -- in vanilla MM6 speed and Haste do not affect recovery, but Recovery Items DO(!)
+                local delay = Game.Spells[id].Delay[m] / RecoveryItems(Party[Game.CurrentPlayer]) -- in vanilla MM6-7 Armor Speed and Haste do not affect recovery, but "of Recovery" Items DO(!)
                 local msg
                 if form then
                     msg = string.format(form, dmg, dmg / Game.Spells[id].SpellPoints[m], 60 * dmg / delay)

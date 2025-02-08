@@ -50,7 +50,7 @@ function events.Tick()
         -- Effective HP
         local vitality
         if Game.Version < 7 then
-            vitality= ResistancesInfoMM6(pl,monster_hit_chance)
+            vitality = ResistancesInfoMM6(pl,monster_hit_chance)
         else
             vitality = ResistancesInfoMM7(pl,monster_hit_chance)
         end
