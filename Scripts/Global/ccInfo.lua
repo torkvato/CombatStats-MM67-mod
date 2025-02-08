@@ -33,10 +33,10 @@ function events.Tick()
         local function UpdStatsMsg(msg, id)
             local pos = string.find(Game.StatsDescriptions[id], '\n')
             if pos then
-                Game.StatsDescriptions[id] = string.format("%s\n%s: %d, next limit: %s", msg, string.sub(Game.StatsDescriptions[id], 1, pos),
+                Game.StatsDescriptions[id] = string.format("%s\n%s: %d, next limit: %s",string.sub(Game.StatsDescriptions[id], 1, pos), msg,
                     Stat2Modifier(attr[id]))
             else
-                Game.StatsDescriptions[id] = string.format("%s\n%s: %d, next limit: %s", msg, Game.StatsDescriptions[id], Stat2Modifier(attr[id]))
+                Game.StatsDescriptions[id] = string.format("%s\n%s: %d, next limit: %s", Game.StatsDescriptions[id], msg, Stat2Modifier(attr[id]))
             end
         end
         UpdStatsMsg('ToDamage modifier', 0)
