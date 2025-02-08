@@ -15,14 +15,21 @@ function events.Regeneration(t)
                 end
             end
         end
-        local rep,mas = SplitSkill(maxskill)
-
+        if maxskill == 0 then
+            return
+        end
+        local rep, mas = SplitSkill(maxskill)
+        local msg = ''
         for _, it in t.Player.Items do
-            if it.Broken and  it:T().IdRepSt<=rep*mas then
+            if it.Broken and it:T().IdRepSt <= rep * mas then
                 it.Broken = false
-                Game.ShowStatusText(it:T().Name .. ' repaired!', 2)
+                msg = msg .. it:T().Name .. ', '
+                --Game.ShowStatusText(it:T().Name .. ' repaired!', 1)                            
             end
-        end       
+        end
+        if msg~='' then 
+        Game.ShowStatusText(StrColor(230,230,0,'Repaired:' .. string.sub(msg,1,-3), 3))
+        end
     end
 end
 
