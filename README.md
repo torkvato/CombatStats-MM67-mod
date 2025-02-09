@@ -103,7 +103,7 @@ Since the game treat each case of damage separately, hitting with elementrary en
 ### In-game combat history
 Besides output to the file, damage done and received can be viewed in MM9-style combat history (default key -[H] )
 
-<img src="https://github.com/user-attachments/assets/9d772466-850e-4028-a236-58e3fd3a6d5c" alt="alt text" class="center" width="500"/>
+<center><img src="https://github.com/user-attachments/assets/9d772466-850e-4028-a236-58e3fd3a6d5c" alt="alt text" class="center" width="500"/></center>
 
 ### Combat statists
 **Damage done**\
