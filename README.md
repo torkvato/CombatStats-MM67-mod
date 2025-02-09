@@ -51,7 +51,7 @@ Mod introduces:
  - This mod. Latest version in the repository
  
 Instead of two last steps, one can download whole package with last stable release\
-**tbd**
+**https://drive.google.com/file/d/1PTUgZI5dy_-i55jeMWRD7cmfDV2XDPN6/view?usp=sharing**
   
 **Important note: since minor fixes still issued, it is recommended to download latest version from repository, even if you downloaded full package**
 - Uninstall: run ccUninst.bat in Scripts folder. The game flow is not affected by mod installation and deinstallation
