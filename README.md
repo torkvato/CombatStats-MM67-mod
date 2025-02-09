@@ -124,7 +124,7 @@ DPS, or damage per second is the most important metric of the combat proficiency
 Calculation of active time can be tricky and controversial. Currently, active time is calculated from the first successful hit and ended if there are no successful hits within 5seconds.
 DPS is calculated for each party member independently and over the same three data accumulation pools: map, full, and resettable segment.
 
-<img src="https://github.com/user-attachments/assets/fc77963c-196b-4448-b2b7-a148eb8a0734" alt="alt text" class="center" width="500"/>
+<img src="https://github.com/user-attachments/assets/fc77963c-196b-4448-b2b7-a148eb8a0734" alt="alt text" align="center" width="500"/>
 
 **Damage taken**
 Damage taken per each party member is accumulated over map/full game/segment and shown by [RightClick] on "Vitality" line
