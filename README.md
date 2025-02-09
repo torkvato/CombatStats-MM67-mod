@@ -51,7 +51,7 @@ Mod introduces:
  - This mod. Latest version in the repository
  
 Instead of two last steps, one can download whole package with last stable release\
-**https://drive.google.com/file/d/1PTUgZI5dy_-i55jeMWRD7cmfDV2XDPN6/view?usp=sharing**
+**https://drive.google.com/file/d/1PTUgZI5dy_-i55jeMWRD7cmfDV2XDPN6**
   
 **Important note: since minor fixes still issued, it is recommended to download latest version from repository, even if you downloaded full package**
 - Uninstall: run ccUninst.bat in Scripts folder. The game flow is not affected by mod installation and deinstallation
@@ -139,6 +139,8 @@ To overcome the problem of several damage kinds/several damage sources per hit, 
 Damage counted as one hit if it happens in the same timestamp, done by same player and against monster with the same name.\
 So melee hit with Phys+Fire damage will be summed, Fireball against group of same-named monsters will be summed but againt group of different monsters not.
 Accessible by [RightClick] on the "Armor Class" line
+<img src="https://github.com/user-attachments/assets/d948a054-1692-457a-b706-93c7b3841261" alt="alt text" class="center" width="500"/>
+
 
 ### Calculated statistics
 **Damage per second, DPS**
