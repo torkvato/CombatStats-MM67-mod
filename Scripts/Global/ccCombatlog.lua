@@ -102,8 +102,9 @@ function events.CalcDamageToMonster(t)
             -- Active time - contuguous time when periods betwen successful hits less than 6 seconds
             local timedelta = Game.Time - vars.timestamps[i].LastTimeStamp;
             local monName = GetMonName(t.Monster)
+            local objmsg = DamageTypeParsing(data)
 
-            if timedelta < 6*const.RTSecond then
+            if timedelta < 5*const.RTSecond then
                 -- timedelta may be zero, in this case we do not modify time stats
                 vars.damagemeter[i].ActiveTime = vars.damagemeter[i].ActiveTime + timedelta
                 vars.damagemeter1[i].ActiveTime = vars.damagemeter1[i].ActiveTime + timedelta
@@ -152,8 +153,9 @@ function events.CalcDamageToMonster(t)
                 end 
                 
             end
-            -- Maximal hits:concatenate damage of different kinds with same timestamps and same player, ignore blasters            
-            if timedelta==0 and  (data.Player.Name==vars.minilog[MinilogEntriesNumber].Player) and vars.minilog[MinilogEntriesNumber].Kind~='Energy' then	
+            -- Maximal hits:concatenate damage of different kinds with same timestamp, same player, same damage source, ignore blasters            
+            --if timedelta==0 and  (data.Player.Name==vars.minilog[MinilogEntriesNumber].Player) and objmsg==vars.minilog[MinilogEntriesNumber].Hit and  vars.minilog[MinilogEntriesNumber].Kind~='Energy' then	
+            if timedelta==0 and  (data.Player.Name==vars.minilog[MinilogEntriesNumber].Player) and  vars.minilog[MinilogEntriesNumber].Kind~='Energy' then	
 				concatDmg = concatDmg + t.Result
             else
                 concatDmg = t.Result			
@@ -180,7 +182,7 @@ function events.CalcDamageToMonster(t)
                 mapvars.damagemeter[i].Damage_Spell = mapvars.damagemeter[i].Damage_Spell + t.Result                
             end
 
-            local objmsg = DamageTypeParsing(data)
+            
 
 			-- minilog update
 			table.move(vars.minilog,1,#vars.minilog,1,vars.minilog)
@@ -229,7 +231,7 @@ function events.CalcDamageToPlayer(t)
             local objmsg = DamageTypeParsing(data)            
 			-- minilog update
 			table.move(vars.minilog,1,#vars.minilog,1,vars.minilog)
-			vars.minilog[MinilogEntriesNumber] = {Player = monName, Hit = objmsg, Mob = t.Player.Name, Damage = t.Result, Kind = get_key_for_value(const.Damage, t.DamageKind), Type = 1 }
+			vars.minilog[MinilogEntriesNumber] = {Player = t.Player.Name, Hit = objmsg, Mob = monName, Damage = t.Result, Kind = get_key_for_value(const.Damage, t.DamageKind), Type = 1 }
 			
             if t.Result>=t.Player.HP then
                 objmsg = objmsg .. CombatLogSeparator .. "killed"
@@ -439,21 +441,31 @@ function MinilogText()
 	local msg = ""
 	local pl1 = ""
 	local pl2 = ""
-    local mob_db, pl_db
-
+    local mob_db, pl_db, kind, len
+    local maxline = 40
 	for i=1, #vars.minilog do
 	    --local knd = StrColor(const.DamageColor[vars.minilog[i].Kind][1], const.DamageColor[vars.minilog[i].Kind][2], const.DamageColor[vars.minilog[i].Kind][3],  vars.minilog[i].Damage .. ' ' .. vars.minilog[i].Kind)
-        local knd = PaintKind( vars.minilog[i].Damage .. ' ' .. vars.minilog[i].Kind, vars.minilog[i].Kind)
+        --local knd = PaintKind( , vars.minilog[i].Kind)
+        kind = vars.minilog[i].Damage .. ' ' .. vars.minilog[i].Kind
 		mob_db = string.gsub(vars.minilog[i].Mob, "%s+", "")
         pl_db  = string.gsub(vars.minilog[i].Player, "%s+", "")
+        len = string.len(kind..mob_db..pl_db..vars.minilog[i].Hit)+3
+            if len>45 then
+                --debug.Message(kind..mob_db..pl_db..vars.minilog[i].Hit,len)
+              local lvl = string.find(mob_db,'(',1,true)--hell with this parenthesis search
+              local mobname = string.sub(mob_db,1,lvl-1)
+              local deficit = len-40
+              mob_db =  string.sub(mobname,1,-deficit+4) .. string.sub(mob_db,lvl,-1) 
+              --mob_db = mobname
+            end
 		if vars.minilog[i].Type==0 then
 			pl1 = StrColor(135,245,135, pl_db)
 			pl2 = StrColor(245,164,160, mob_db)
 		else
-			pl1 = StrColor(245,175,170, pl_db)
-			pl2 = StrColor(140,245,140, mob_db)
+			pl2 = StrColor(140,245,140, pl_db)
+			pl1 = StrColor(245,175,170, mob_db)
 		end		
-		msg = msg .. string.format("%s %s %s %s\n", pl1, vars.minilog[i].Hit, pl2, knd)
+		msg = msg .. string.format("%s %s %s %s\n", pl1, vars.minilog[i].Hit, pl2, PaintKind(kind, vars.minilog[i].Kind))
 	end
 	return string.sub(msg,1,-2)
 end

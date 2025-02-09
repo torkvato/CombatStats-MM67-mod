@@ -198,8 +198,9 @@ function GetMagicSkill(pl, sk)
 end
 
 -- for i=0,const.Spells.High do print(i,get_key_for_value(const.Spells,i)) end
+--Game.Spells[id].Delay[m]
 
-
+--for i=0,const.Spells.High do print(i,get_key_for_value(const.Spells,i),Game.Spells[i].Delay[3]) end
 
 
 
