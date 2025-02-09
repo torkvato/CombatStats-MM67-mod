@@ -1,14 +1,13 @@
-[![english](https://img.shields.io/badge/lang-English-green.svg)](https://github.com/torkvato/CombatStats-MM7-mod/blob/master/README.md)
-[![russian](https://img.shields.io/badge/lang-Russian-red.svg)](https://github.com/torkvato/CombatStats-MM7-mod/blob/master/README.ru.md)
-[![anotherversion](https://img.shields.io/badge/anotherversion-MM6-yellow.svg)](https://github.com/torkvato/CombatStats-MM6-mod)
+[![english](https://img.shields.io/badge/lang-English-green.svg)](https://github.com/torkvato/CombatStats-MM67-mod/blob/master/README.md)
+[![russian](https://img.shields.io/badge/lang-Russian-red.svg)](https://github.com/torkvato/CombatStats-MM67-mod/blob/master/README.ru.md)
 
-# CombatStats и Convenience MM7 mod
+# CombatStats и Convenience MM6-7 mod
 
 ## Возможности мода
-CombatStats и Convenience MM7 mod не влияет на игровой процесс, игровую механику или сложность оригинальной игры. \
+CombatStats и Convenience MM67 mod не влияет на игровой процесс, игровую механику или сложность оригинальной игры. \
 Мод требует патч Grayface и MMExtension, но ничего не добавляет и не меняет игру сверх этого
 Мод может работать с любой сохраненной игрой, нет необходимости начинать новую. Сохранения останутся нетронутыми, если вы удалите мод (но зачем?).\
-По сути, это тот же старый добрый ванильный Might and Magic 7, без каких-либо попыток сделать вечную классику сложнее/интереснее/новее (есть версия и для MM6, см выше).
+По сути, это тот же старый добрый ванильный Might and Magic 6-7, без каких-либо попыток сделать вечную классику сложнее/интереснее/новее.
 
 Для удобства и глубокого анализа группы были введены следующие функции:
 
@@ -43,7 +42,7 @@ CombatStats и Convenience MM7 mod не влияет на игровой про�
 - Версия MM7 от GOG (не забудьте установить параметры совместимости с WinXP)
 - Последний патч Grayface MM7 (протестирован для 2.5.7): https://grayface.github.io/mm/#GrayFace-MM7-Patch
 - MMExtension v2.3: https://github.com/GrayFace/MMExtension
-- Этот мод. Последняя версия в репозитории https://github.com/torkvato/CombatStats-MM7-mod (Code > Download ZIP)
+- Этот мод. Последняя версия в репозитории https://github.com/torkvato/CombatStats-MM67-mod (Code > Download ZIP)
 
 Вместо двух последних шагов можно загрузить весь пакет с последней стабильной версией\
 **https://drive.google.com/file/d/1PTUgZI5dy_-i55jeMWRD7cmfDV2XDPN6**
