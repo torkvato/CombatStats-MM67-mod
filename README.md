@@ -51,7 +51,7 @@ Mod introduces:
  - This mod. Latest version in the repository
  
 Instead of two last steps, one can download whole package with last stable release\
-**tbd**
+**https://drive.google.com/file/d/1PTUgZI5dy_-i55jeMWRD7cmfDV2XDPN6**
   
 **Important note: since minor fixes still issued, it is recommended to download latest version from repository, even if you downloaded full package**
 - Uninstall: run ccUninst.bat in Scripts folder. The game flow is not affected by mod installation and deinstallation
@@ -103,7 +103,7 @@ Since the game treat each case of damage separately, hitting with elementrary en
 ### In-game combat history
 Besides output to the file, damage done and received can be viewed in MM9-style combat history (default key -[H] )
 
-<img src="https://github.com/user-attachments/assets/9d772466-850e-4028-a236-58e3fd3a6d5c" alt="alt text" class="center" width="500"/>
+<center><img src="https://github.com/user-attachments/assets/9d772466-850e-4028-a236-58e3fd3a6d5c" alt="alt text" class="center" width="500"/></center>
 
 ### Combat statists
 **Damage done**\
@@ -124,7 +124,7 @@ DPS, or damage per second is the most important metric of the combat proficiency
 Calculation of active time can be tricky and controversial. Currently, active time is calculated from the first successful hit and ended if there are no successful hits within 5seconds.
 DPS is calculated for each party member independently and over the same three data accumulation pools: map, full, and resettable segment.
 
-<img src="https://github.com/user-attachments/assets/fc77963c-196b-4448-b2b7-a148eb8a0734" alt="alt text" class="center" width="500"/>
+<img src="https://github.com/user-attachments/assets/fc77963c-196b-4448-b2b7-a148eb8a0734" alt="alt text" align="center" width="500"/>
 
 **Damage taken**
 Damage taken per each party member is accumulated over map/full game/segment and shown by [RightClick] on "Vitality" line
@@ -136,9 +136,12 @@ Chest traps and fall damage have no "author" and is not included in the staticti
 **Max Damage Records**
 Mod will record best hits with melee, ranged and magic separately (also, independently for three data sets: map, full and segment)\
 To overcome the problem of several damage kinds/several damage sources per hit, accumulation logic is added.\
-Damage counted as one hit if it happens in the same timestamp, done by same player and against monster with the same name.\
-So melee hit with Phys+Fire damage will be summed, Fireball against group of same-named monsters will be summed but againt group of different monsters not.
+Damage counted as one hit if it happens in the same timestamp by the same player several consequent hits.\
+So melee hit with Phys+Elem damage will be summed, Fireball/Starburs against group of monsters will be accumulated.
+Unfortunately, if one player is "stuck" in Turn-Based and acting several times without passing initiative to another player, this will also be added.
 Accessible by [RightClick] on the "Armor Class" line
+<img src="https://github.com/user-attachments/assets/d948a054-1692-457a-b706-93c7b3841261" alt="alt text" class="center" width="500"/>
+
 
 ### Calculated statistics
 **Damage per second, DPS**
