@@ -136,8 +136,9 @@ Chest traps and fall damage have no "author" and is not included in the staticti
 **Max Damage Records**
 Mod will record best hits with melee, ranged and magic separately (also, independently for three data sets: map, full and segment)\
 To overcome the problem of several damage kinds/several damage sources per hit, accumulation logic is added.\
-Damage counted as one hit if it happens in the same timestamp, done by same player and against monster with the same name.\
-So melee hit with Phys+Fire damage will be summed, Fireball against group of same-named monsters will be summed but againt group of different monsters not.
+Damage counted as one hit if it happens in the same timestamp by the same player several consequent hits.\
+So melee hit with Phys+Elem damage will be summed, Fireball/Starburs against group of monsters will be accumulated.
+Unfortunately, if one player is "stuck" in Turn-Based and acting several times without passing initiative to another player, this will also be added.
 Accessible by [RightClick] on the "Armor Class" line
 <img src="https://github.com/user-attachments/assets/d948a054-1692-457a-b706-93c7b3841261" alt="alt text" class="center" width="500"/>
 
