@@ -3,7 +3,7 @@ nextalarmclockcheck = 0
 concat_damage = 0
 
 -- Color character page
-if string.sub(Game.GlobalTxt[144], 1, 1) ~= '\12' then
+if string.sub(Game.GlobalTxt[144], 1, 1) ~= '\012' then
     Game.GlobalTxt[144] = StrColor(255, 0, 0, Game.GlobalTxt[144])
     Game.GlobalTxt[116] = StrColor(255, 128, 0, Game.GlobalTxt[116])
     Game.GlobalTxt[163] = StrColor(0, 127, 255, Game.GlobalTxt[163])
@@ -14,14 +14,22 @@ if string.sub(Game.GlobalTxt[144], 1, 1) ~= '\12' then
     Game.GlobalTxt[108] = StrColor(0, 255, 0, Game.GlobalTxt[108])
     Game.GlobalTxt[212] = StrColor(0, 100, 255, Game.GlobalTxt[212])
     Game.GlobalTxt[12] = StrColor(230, 204, 128, Game.GlobalTxt[12])
-    -- if Game.Version < 7 then
-    --     Game.GlobalTxt[87] = StrColor(255, 70, 70, Game.GlobalTxt[87])
-    --     Game.GlobalTxt[71] = StrColor(173, 216, 230, Game.GlobalTxt[71])
-    --     Game.GlobalTxt[43] = StrColor(100, 180, 255, Game.GlobalTxt[43])
-    --     Game.GlobalTxt[166] = StrColor(0, 250, 0, Game.GlobalTxt[166])
-    --     Game.GlobalTxt[138] = StrColor(160, 50, 255, Game.GlobalTxt[138])
-    -- else
-    -- end
+
+    if Game.Version < 7 then
+        Game.GlobalTxt[87] = string.sub(StrColor(255, 70, 70, Game.GlobalTxt[87]),1,-7)
+        Game.GlobalTxt[71] = string.sub(StrColor(173, 216, 230, string.sub(Game.GlobalTxt[71],1,5)),1,-7)
+        Game.GlobalTxt[43] = string.sub(StrColor(100, 180, 255, Game.GlobalTxt[43]),1,-7)
+        Game.GlobalTxt[166] = string.sub(StrColor(0, 250, 0, Game.GlobalTxt[166]),1,-7)
+        Game.GlobalTxt[138] = string.sub(StrColor(160, 50, 255, Game.GlobalTxt[138]),1,-7)
+
+    else
+        Game.GlobalTxt[87] = string.sub(StrColor(255, 70, 70, Game.GlobalTxt[87]),1,-7)
+        Game.GlobalTxt[6] = string.sub(StrColor(173, 216, 230, Game.GlobalTxt[6]),1,-7)
+        Game.GlobalTxt[240] = string.sub(StrColor(100, 180, 255, Game.GlobalTxt[240]),1,-7)
+        Game.GlobalTxt[70] = string.sub(StrColor(153, 76, 0, Game.GlobalTxt[70]),1,-7)
+        Game.GlobalTxt[142] = string.sub(StrColor(200, 200, 255, Game.GlobalTxt[142]),1,-7)
+        Game.GlobalTxt[29] = string.sub(StrColor(255, 192, 203, Game.GlobalTxt[29]),1,-7)
+    end
 end
 -- Table of average additional elem damage on weapons vs Bonus2 property value
 const.bonus2damage = {
@@ -123,13 +131,13 @@ function DaggerTriple(pl)
 end
 
 function RecoveryItems(pl)
-    if Game.Version < 7 and CheckBonus2(pl,17) then
+    if Game.Version < 7 and CheckBonus2(pl, 17) then
         return 1.1
     end
     return 1
 end
 
-function CheckBonus2(pl,bonus2)
+function CheckBonus2(pl, bonus2)
     for slot = 0, 15 do
         if pl.EquippedItems[slot] > 0 then
             if pl.Items[pl.EquippedItems[slot]].Bonus2 == bonus2 then
@@ -140,7 +148,7 @@ function CheckBonus2(pl,bonus2)
     return false
 end
 
-function CheckItem(pl,itn)
+function CheckItem(pl, itn)
     for slot = 0, 15 do
         if pl.EquippedItems[slot] > 0 then
             if pl.Items[pl.EquippedItems[slot]].Number == itn then
@@ -159,12 +167,11 @@ function GetMonName(mon)
         else
             monName = Game.MonstersTxt[mon.Id].Name
         end
-    else 
+    else
         monName = mon.Name
     end
     return string.format("%s(%s)", monName, mon.Level)
 end
-
 
 function GameTimePassed()
     local gameminutes = math.floor((Game.Time - vars.timestamps[0].SegmentStart) / const.Minute)
@@ -174,7 +181,7 @@ function GameTimePassed()
     return string.format("%dd%02dh%02dm", days, hours, mins)
 end
 
-function CheckPlateChain(pl) --mm7 only
+function CheckPlateChain(pl) -- mm7 only
     local coeff = 1
     local s, mplate = SplitSkill(pl:GetSkill(const.Skills.Plate))
     local s, mchain = SplitSkill(pl:GetSkill(const.Skills.Chain))
@@ -192,7 +199,7 @@ function CheckPlateChain(pl) --mm7 only
     return coeff
 end
 
-function HammerhandsExtra(pl)--mm7 only
+function HammerhandsExtra(pl) -- mm7 only
     local extradamage = 0
     -- both hands empty and buffed
     if pl.SpellBuffs[const.PlayerBuff.Hammerhands].ExpireTime > 0 and pl.ItemMainHand == 0 and pl.ItemExtraHand == 0 then
@@ -253,13 +260,12 @@ end
 function table_contains(tbl, x)
     found = false
     for _, v in pairs(tbl) do
-        if v == x then 
-            found = true 
+        if v == x then
+            found = true
         end
     end
     return found
 end
-
 
 function pt(tbl)
     local msg = "{"

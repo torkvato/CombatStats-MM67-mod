@@ -1,17 +1,3 @@
--- function events.GameInitialized2()
---     schedulenotealreadyadded = false
---     Game.GlobalTxt[144] = StrColor(255, 0, 0, Game.GlobalTxt[144])
---     Game.GlobalTxt[116] = StrColor(255, 128, 0, Game.GlobalTxt[116])
---     Game.GlobalTxt[163] = StrColor(0, 127, 255, Game.GlobalTxt[163])
---     Game.GlobalTxt[75] = StrColor(0, 255, 0, Game.GlobalTxt[75])
---     Game.GlobalTxt[1] = StrColor(250, 250, 0, Game.GlobalTxt[1])
---     Game.GlobalTxt[211] = StrColor(160, 50, 255, Game.GlobalTxt[211])
---     Game.GlobalTxt[136] = StrColor(255, 255, 255, Game.GlobalTxt[136])
---     Game.GlobalTxt[108] = StrColor(0, 255, 0, Game.GlobalTxt[108])
---     Game.GlobalTxt[212] = StrColor(0, 100, 255, Game.GlobalTxt[212])
---     Game.GlobalTxt[12] = StrColor(230, 204, 128, Game.GlobalTxt[12])
--- end
-
 function events.Tick()
     if Game.CurrentCharScreen == 100 and Game.CurrentScreen == 7 then
         local pl = Party[Game.CurrentPlayer]
@@ -19,7 +5,7 @@ function events.Tick()
         local AC = pl:GetArmorClass()
         local monAC_LvL = math.min(100, 3 * lvl)
         local monster_hit_chance = (5 + monAC_LvL * 2) / (10 + monAC_LvL * 2 + AC)
-    
+
         local attr = {}
         attr[0] = pl:GetMight()
         attr[1] = pl:GetIntellect()
@@ -33,8 +19,7 @@ function events.Tick()
         local function UpdStatsMsg(msg, id)
             local pos = string.find(Game.StatsDescriptions[id], '\n')
             if pos then
-                Game.StatsDescriptions[id] = string.format("%s\n%s: %d, next limit: %s",string.sub(Game.StatsDescriptions[id], 1, pos), msg,
-                    Stat2Modifier(attr[id]))
+                Game.StatsDescriptions[id] = string.format("%s\n%s: %d, next limit: %s", string.sub(Game.StatsDescriptions[id], 1, pos), msg, Stat2Modifier(attr[id]))
             else
                 Game.StatsDescriptions[id] = string.format("%s\n%s: %d, next limit: %s", Game.StatsDescriptions[id], msg, Stat2Modifier(attr[id]))
             end
@@ -50,9 +35,9 @@ function events.Tick()
         -- Effective HP
         local vitality
         if Game.Version < 7 then
-            vitality = ResistancesInfoMM6(pl,monster_hit_chance)
+            vitality = ResistancesInfoMM6(pl, monster_hit_chance)
         else
-            vitality = ResistancesInfoMM7(pl,monster_hit_chance)
+            vitality = ResistancesInfoMM7(pl, monster_hit_chance)
         end
         -- Attack and DPS calculations	
         local dmg_m = 0
@@ -91,7 +76,7 @@ function events.Tick()
 
         dmg_m = dmg_m + DaggerTriple(pl)
         local elem_m, elem_r = WeaponElemDamage(pl)
-        
+
         local dps_m = (dmg_m + elem_m) * hitchance_m / (delay_m / 60)
         local dps_r = (dmg_r + elem_r) * hitchance_r / (delay_r / 60)
 
@@ -112,24 +97,23 @@ function events.Tick()
             Game.GlobalTxt2[4] = string.format("Map: %s, [ALT]-Full, [CTRL]-Segment\n", Game.MapStats[Game.Map.MapStatsIndex].Name) .. DamageReceivedCalculation(mapvars.damagemeter)
         end
         textsupdated = true
-elseif textsupdated and (Game.CurrentScreen ~= 7 or Game.CurrentCharScreen == 101) then
-    if Game.Version>6 then
-    Game.GlobalTxt[87]  = StrColor(255, 70, 70, "Fire")
-    Game.GlobalTxt[6]   = StrColor(173, 216, 230, "Air")
-    Game.GlobalTxt[240] = StrColor(100, 180, 255, "Water")
-    Game.GlobalTxt[70]  = StrColor(153, 76, 0, "Earth")
-    Game.GlobalTxt[142] = StrColor(200, 200, 255, "Mind")
-    Game.GlobalTxt[29]  = StrColor(255, 192, 203, "Body")
-    else
-        Game.GlobalTxt[138] = 'Magic'
+    elseif textsupdated and (Game.CurrentScreen ~= 7 or Game.CurrentCharScreen == 101) then
+        if Game.Version > 6 then
+            UpdResMsg(87, '')
+            UpdResMsg(6, '')
+            UpdResMsg(240, '')
+            UpdResMsg(70, '')
+            UpdResMsg(142, '')
+            UpdResMsg(29, '')
+        else    
+            UpdResMsg(87, '')
+            UpdResMsg(71, '')
+            UpdResMsg(43, '')
+            UpdResMsg(166, '')            
+            UpdResMsg(138, '')
+        end
+        textsupdated = false
     end
-    textsupdated = false
-    end
-
-    -- if Game.CurrentCharScreen == 101 and Game.CurrentScreen == 7 and textsupdated then
-        
-    --     textsupdated = false
-    -- end
 
     if Game.CurrentCharScreen == 101 and Game.CurrentScreen == 7 and SkillTooltipsEnabled then
         SkillToolTips()
@@ -139,7 +123,7 @@ end
 function ResistancesInfoMM6(pl, monster_hit_chance)
     local fullHP = pl:GetFullHP()
     local luck = pl:GetLuck()
-    
+
     local Resistances = {}
     local ResistancesPerc = {}
     local R0 = {}
@@ -160,11 +144,11 @@ function ResistancesInfoMM6(pl, monster_hit_chance)
         R0[i] = (1 - p) + .5 * (1 - p) * p + .25 * (1 - p) * p ^ 2 + .125 * (1 - p) * p ^ 3 + .0625 * p ^ 4;
     end
 
-    Game.GlobalTxt[87] = StrColor(255, 70, 70, string.format("Fire\t%15s%%", ResistancesPerc[1]))
-    Game.GlobalTxt[71] = StrColor(173, 216, 230, string.format("Elec\t%15s%%", ResistancesPerc[2]))
-    Game.GlobalTxt[43] = StrColor(100, 180, 255, string.format("Cold\t%15s%%", ResistancesPerc[3]))
-    Game.GlobalTxt[166] = StrColor(0, 250, 0, string.format("Poison\t%15s%%", ResistancesPerc[4]))
-    Game.GlobalTxt[138] = StrColor(160, 50, 255, string.format("Magic\t%15s%%", ResistancesPerc[5]))
+    UpdResMsg(87, ResistancesPerc[1]..'%')
+    UpdResMsg(71, ResistancesPerc[2]..'%')
+    UpdResMsg(43, ResistancesPerc[3]..'%')
+    UpdResMsg(166, ResistancesPerc[4]..'%')
+    UpdResMsg(138, ResistancesPerc[5]..'%')
 
     -- --Bad things TODO -ma
     -- --Chance that an enemy will succeed in doing some bad thing to you is 30/(30 + LuckEffect + OtherEffect), where OtherEffect depends on that particular thing:
@@ -195,7 +179,7 @@ function ResistancesInfoMM6(pl, monster_hit_chance)
     return vitality
 end
 
-function ResistancesInfoMM7(pl,monster_hit_chance)
+function ResistancesInfoMM7(pl, monster_hit_chance)
     local fullHP = pl:GetFullHP()
     local luck = pl:GetLuck()
 
@@ -211,17 +195,16 @@ function ResistancesInfoMM7(pl,monster_hit_chance)
         else
             p = 0;
         end
-        
+
         ResistancesPerc[i] = 100 - math.round(100 * (1 - p) + 50 * (1 - p) * p + 25 * (1 - p) * p ^ 2 + 12.5 * (1 - p) * p ^ 3 + 6.25 * p ^ 4);
         R0[i] = (1 - p) + .5 * (1 - p) * p + .25 * (1 - p) * p ^ 2 + .125 * (1 - p) * p ^ 3 + .0625 * p ^ 4;
     end
-
-    Game.GlobalTxt[87] = StrColor(255, 70, 70, string.format("Fire\t%15s%%", ResistancesPerc[10]))
-    Game.GlobalTxt[6] = StrColor(173, 216, 230, string.format("Air\t%15s%%", ResistancesPerc[11]))
-    Game.GlobalTxt[240] = StrColor(100, 180, 255, string.format("Water\t%15s%%", ResistancesPerc[12]))
-    Game.GlobalTxt[70] = StrColor(153, 76, 0, string.format("Earth\t%15s%%", ResistancesPerc[13]))
-    Game.GlobalTxt[142] = StrColor(200, 200, 255, string.format("Mind\t%15s%%", ResistancesPerc[14]))
-    Game.GlobalTxt[29] = StrColor(255, 192, 203, string.format("Body\t%15s%%", ResistancesPerc[15]))
+    UpdResMsg(87, ResistancesPerc[10]..'%')
+    UpdResMsg(6, ResistancesPerc[11]..'%')
+    UpdResMsg(240, ResistancesPerc[12]..'%')
+    UpdResMsg(70, ResistancesPerc[13]..'%')
+    UpdResMsg(142, ResistancesPerc[14]..'%')
+    UpdResMsg(29, ResistancesPerc[15]..'%')
 
     -- Bad things
     -- Chance that an enemy will succeed in doing some bad thing to you is 30/(30 + LuckEffect + OtherEffect), where OtherEffect depends on that particular thing:
@@ -313,5 +296,14 @@ function WeaponElemDamage(pl)
             elem_r = elem_r + const.bonus2damage[it2.Bonus2]
         end
     end
-return elem_m, elem_r
+    return elem_m, elem_r
+end
+
+function UpdResMsg(id, res)
+    pos = string.find(Game.GlobalTxt[id], '\t')
+    if pos then
+        Game.GlobalTxt[id] = string.format("%s\t%16s", string.sub(Game.GlobalTxt[id], 1, pos-1), res)
+    else
+        Game.GlobalTxt[id] = string.format("%s\t%16s", Game.GlobalTxt[id], res)
+    end
 end
