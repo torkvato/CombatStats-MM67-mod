@@ -602,3 +602,7 @@ function ShowKillCount()
 
 
 end
+
+function events.Action(t)  
+        concatDmg = 0
+end
