@@ -38,8 +38,8 @@ function sortInventory(all)
         }
     else
         a_item_range = {
-            [0] = 160,
-            [1] = 196
+            [0] = 200,
+            [1] = 300
         }
     end
 
