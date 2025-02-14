@@ -138,8 +138,8 @@ Mod will record best hits with melee, ranged and magic separately (also, indepen
 To overcome the problem of several damage kinds/several damage sources per hit, accumulation logic is added.\
 Damage counted as one hit if it happens in the same timestamp by the same player several consequent hits.\
 So melee hit with Phys+Elem damage will be summed, Fireball/Starburs against group of monsters will be accumulated.
-Unfortunately, if one player is "stuck" in Turn-Based and acting several times without passing initiative to another player, this will also be added.
 Accessible by [RightClick] on the "Armor Class" line
+
 <img src="https://github.com/user-attachments/assets/d948a054-1692-457a-b706-93c7b3841261" alt="alt text" class="center" width="500"/>
 
 
