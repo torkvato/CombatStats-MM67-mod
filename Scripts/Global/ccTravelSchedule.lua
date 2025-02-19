@@ -179,7 +179,7 @@ else
         msg3 = msg3 .. '\n'
         msg3 = msg3 .. string.format('LIGHT\t%13sDARK\t%22sMEDT\t%32sLRNG\t%41sPERC\t%50sSTEAL\t%61sBLSTR\n', '|', '|', '|', '|', '|', '|')
         msg3 = msg3 .. string.format('e Bra\t%13sDey\t%22sDey\t%32sBra\t%41sHar  \t%50sHar,Er   \t%61sCel,Pt\n', '|', '|', '|', '|', '|', '|')
-        msg3 = msg3 .. string.format('e    \t%13s\t%22sAvl\t%32sNig\t%41sDey\t%50sNig   \t%61sCel,Pt\n', '|', '|', '|', '|', '|', '|')
+        msg3 = msg3 .. string.format('e    \t%13s\t%22sNig\t%32sNig\t%41sDey\t%50sNig   \t%61sCel,Pt\n', '|', '|', '|', '|', '|', '|')
         msg3 = msg3 .. string.format('m Cel\t%13sPit\t%22sBra\t%32sNig\t%41sTul  \t%50sDey   \t%61sCel,Pt\n', '|', '|', '|', '|', '|', '|')
         msg3 = msg3 .. string.format('g Cel\t%13sPit\t%22sAvl\t%32sEve\t%41sDey  \t%50sTat   \t%61sCel,Pt\n\n\n\n\n\n', '|', '|', '|', '|', '|', '|')
 
